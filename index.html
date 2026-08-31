@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Redis · Kafka · MongoDB 운영</title>
+<style>
+:root{--ink:#16150F;--ink-2:#3A382F;--paper:#FBFAF7;--line:#E2DFD5;--accent:#C9603C;--mute:#8A8779;--code-bg:#1C1B16;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;}
+header{background:var(--ink);color:var(--paper);padding:40px 32px 34px;border-bottom:6px solid var(--accent);}
+header .wrap{max-width:820px;margin:0 auto;}
+header h1{font-size:29px;font-weight:800;letter-spacing:-.02em;margin:0;}
+header p{margin:12px 0 0;color:#B9B5A6;font-size:15px;}
+main{max-width:820px;margin:0 auto;padding:36px 32px 72px;}
+ul{list-style:none;margin:0;padding:0;}
+li{display:flex;align-items:stretch;gap:8px;margin-bottom:10px;}
+a{display:flex;align-items:center;gap:18px;padding:17px 22px;border:1px solid var(--line);
+ border-radius:10px;background:#fff;text-decoration:none;color:var(--ink);transition:.12s;}
+a.deck{flex:1 1 auto;}
+a.deck:hover{border-color:var(--accent);transform:translateX(3px);}
+a.pdf{flex:0 0 auto;padding:17px 18px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--mute);}
+a.pdf:hover{border-color:var(--accent);color:var(--accent);}
+.n{font-size:12.5px;letter-spacing:.09em;color:var(--accent);font-weight:700;min-width:62px;}
+.t{font-size:17.5px;font-weight:600;}
+.lab{margin-bottom:26px;padding:18px 22px;border:1px solid var(--line);border-radius:10px;background:#fff;}
+.lab .lb{font-size:12.5px;letter-spacing:.09em;color:var(--accent);font-weight:700;}
+.lab .ln{margin-top:9px;font-size:15px;}
+.lab code{display:block;margin-top:9px;padding:11px 14px;border-radius:7px;
+ background:var(--code-bg);color:#E6E2D6;font-size:13.5px;overflow-x:auto;
+ font-family:'SFMono-Regular',Menlo,Consolas,'DejaVu Sans Mono',monospace;}
+.lab a{display:inline;padding:0;border:0;background:none;color:var(--accent);text-decoration:underline;
+ text-underline-offset:2px;}
+.extra{margin-top:22px;padding-top:22px;border-top:1px solid var(--line);}
+.extra .n{min-width:62px;}
+.note{margin-top:28px;font-size:14px;color:var(--mute);line-height:1.8;}
+.note b{color:var(--ink-2);}
+</style></head>
+<body>
+<header><div class="wrap">
+  <h1>Redis · Kafka · MongoDB 운영</h1>
+  <p>강의자료 &nbsp;&middot;&nbsp; 세션을 선택하세요</p>
+</div></header>
+<main>
+  <div class="lab">
+    <div class="lb">실습 저장소</div>
+    <div class="ln">Terraform 과 Ansible 코드가 들어 있습니다. 세션 1 의 첫 단계에서 내려받습니다.
+      <a href="https://github.com/hagyutae/backing-service-ops-lab" target="_blank" rel="noopener">저장소 열기</a></div>
+    <code>git clone https://github.com/hagyutae/backing-service-ops-lab.git</code>
+  </div>
+  <ul>
+    <li><a class="deck" href="deck-00.html"><span class="n">세션 0</span><span class="t">과정 안내</span></a><a class="pdf" href="deck-00.pdf" download>PDF</a></li>
+    <li><a class="deck" href="deck-01.html"><span class="n">세션 1</span><span class="t">Redis 운영</span></a><a class="pdf" href="deck-01.pdf" download>PDF</a></li>
+    <li><a class="deck" href="deck-02.html"><span class="n">세션 2</span><span class="t">MongoDB 운영</span></a><a class="pdf" href="deck-02.pdf" download>PDF</a></li>
+    <li><a class="deck" href="deck-03.html"><span class="n">세션 3</span><span class="t">Kafka 운영</span></a><a class="pdf" href="deck-03.pdf" download>PDF</a></li>
+    <li><a class="deck" href="deck-04.html"><span class="n">세션 4</span><span class="t">장애대응 · 모니터링</span></a><a class="pdf" href="deck-04.pdf" download>PDF</a></li>
+  </ul>
+  <ul class="extra">
+    <li><a class="deck" href="quiz.html"><span class="n">사후평가</span><span class="t">4지선다 10문항</span></a></li>
+  </ul>
+  <div class="note">
+    <b>좌우 방향키</b>로 슬라이드를 넘깁니다. 스페이스바와 PageUp · PageDown 도 같습니다.<br>
+    <b>O</b> 나 <b>Esc</b> 를 누르면 전체 슬라이드를 한눈에 보고, 다시 누르면 발표 화면으로 돌아옵니다.<br>
+    <b>Home</b> 과 <b>End</b> 로 첫 장과 마지막 장으로 이동합니다.<br>
+    오른쪽 <b>PDF</b> 를 누르면 해당 세션을 파일로 내려받습니다.<br>
+    이 자료는 강의 기간에만 공개됩니다.
+  </div>
+</main>
+</body></html>

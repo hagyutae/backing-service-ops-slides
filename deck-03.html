@@ -400,7 +400,6 @@ a:hover{color:var(--accent);}
     <h2 class="head">변수 파일 작성</h2>
     <div class="headrule"></div>
     <div class="body">
-
       <div class="codewrap">
 <pre>subscription_id     = "00000000-0000-0000-0000-000000000000"
 resource_group_name = "rkm-&lt;계정 이름&gt;-kafka-rg"
@@ -409,17 +408,17 @@ allowed_cidrs       = ["xxx.xxx.xxx.xxx/32"]
 ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
       </div>
       <ul class="pts">
-        <li><b><code>resource_group_name</code></b>: <code>rkm-&lt;이름&gt;-kafka-rg</code> 형식. 이름이 겹치면 다른 수강생의 자원을 지우게 됨</li>
-        <li><b><code>allowed_cidrs</code></b>: 현재 PC 의 공인 IP 를 <code>/32</code> 로. 강의장 IP 가 바뀌면 다시 <code>apply</code></li>
-        <li><b><code>ssh_public_key_path</code></b>: 1일차에 만든 키를 그대로 씀</li>
+        <li><b><code>subscription_id</code></b>: <code>az account show --query id -o tsv</code></li>
+        <li><b><code>resource_group_name</code></b>: <code>rkm-&lt;계정 이름&gt;-kafka-rg</code>. 형식이 다르면 <code>apply</code> 전에 멈춤</li>
+        <li><b><code>allowed_cidrs</code></b>: <code>curl -s ifconfig.me</code> 로 확인한 자기 PC 공인 IP</li>
       </ul>
       <div class="warn">
-        <b>이 절차는 자기 PC 에서 실행합니다.</b><br>
-        ops 노드가 아닙니다. <code>cd lab/terraform/03-kafka</code> 후 <code>cp session.tfvars.example session.tfvars</code> 로 복사해 다섯 항목을 채웁니다.
+        <b>구독 ID와 키는 저장소에 커밋하지 않습니다.</b><br>
+        <code>session.tfvars</code> 는 <code>.gitignore</code> 에 들어 있습니다. 예제 파일만 저장소에 둡니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>session.tfvars</code> 는 저장소에 커밋하지 않습니다. 구독 ID 가 들어갑니다.</div><div class="no">5</div></div>
+  <div class="ft"><div>다섯 항목을 전부 채운 뒤 <code>session.tfvars</code> 로 저장합니다.</div><div class="no">5</div></div>
 </section></div>
 
 <!-- 6 · 구축 · 스택 생성 -->
@@ -707,7 +706,7 @@ log.dirs={{ kafka_log_dir }}</pre>
   <div class="ft"><div>세 Broker 노드의 <code>/opt/kafka/config/server.properties</code> 로 배포됩니다. 챕터 02 플레이북이 배포하므로 직접 쓰지 않습니다.</div><div class="no">16</div></div>
 </section></div>
 
-<!-- 17 · 구성 · advertised.listeners 근거 -->
+<!-- 17 · 구성 · advertised.listeners 를 사설 IP 로 두는 근거 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;Kafka 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -763,7 +762,7 @@ log.dirs={{ kafka_log_dir }}</pre>
   <div class="ft"><div>4.0 이전에는 이 메타데이터를 ZooKeeper 가 들고 있었습니다. 지금은 운영 대상이 하나 줄었습니다.</div><div class="no">18</div></div>
 </section></div>
 
-<!-- 19 · 구성 · JVM 힙 2 GiB 근거 -->
+<!-- 19 · 구성 · JVM 힙을 2 GiB 로 두는 근거 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;Kafka 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -828,7 +827,7 @@ ops-1    : ok=19  changed=15  unreachable=0  <span class="k">failed=0</span>  sk
   <div class="ft"><div><b>CLI 경로는 새 로그인 셸에서만 자동으로 잡힙니다.</b> 이미 접속해 있는 셸에서는 마지막 단계를 실행하거나 다시 접속합니다.</div><div class="no">20</div></div>
 </section></div>
 
-<!-- 21 · 구성 · 대시보드에서 확인 -->
+<!-- 21 · 구성 · 관측 스택 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;Kafka 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -888,7 +887,7 @@ kafka-broker-api-versions.sh --bootstrap-server 10.0.1.5:9092 | grep "id:"
   </div>
 </section></div>
 
-<!-- 24 · 개념 · 셋의 정의 -->
+<!-- 24 · 개념 · Broker · Topic · Partition -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Broker·Topic·Partition</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1165,7 +1164,7 @@ kafka-broker-api-versions.sh --bootstrap-server 10.0.1.5:9092 | grep "id:"
   <div class="ft"><div>키가 셋인데 Partition 이 넷이라 하나는 비어 있습니다. <b>해시 결과이므로 고르게 나뉘지 않습니다.</b></div><div class="no">29</div></div>
 </section></div>
 
-<!-- 30 · 개념 · Partition 수를 바꾸면 -->
+<!-- 30 · 개념 · Partition 수 변경의 영향 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Broker·Topic·Partition</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1284,7 +1283,7 @@ kafka-broker-api-versions.sh --bootstrap-server 10.0.1.5:9092 | grep "id:"
   <div class="ft"><div></div><div class="no">34</div></div>
 </section></div>
 
-<!-- 35 · 실습 · Topic 생성 -->
+<!-- 35 · 실습 · 실습 Topic 생성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Topic 구성<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1310,7 +1309,7 @@ kafka-broker-api-versions.sh --bootstrap-server 10.0.1.5:9092 | grep "id:"
   <div class="ft"><div>Topic 이름에 <code>.</code> 이나 <code>_</code> 가 있으면 다른 Topic 과 지표 이름이 겹칠 수 있다는 경고가 나옵니다. 생성은 정상입니다.</div><div class="no">35</div></div>
 </section></div>
 
-<!-- 36 · 실습 · 예상 출력 · Topic 배치 -->
+<!-- 36 · 실습 · --describe 출력 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Topic 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1340,7 +1339,7 @@ kafka-broker-api-versions.sh --bootstrap-server 10.0.1.5:9092 | grep "id:"
   <div class="ft"><div>leader 배치와 복제본 순서는 실행마다 다를 수 있습니다. <code>Elr</code>·<code>LastKnownElr</code> 은 <code>Isr</code> 열이 비었을 때 쓰는 후보이고 이 과정에서는 다루지 않습니다.</div><div class="no">36</div></div>
 </section></div>
 
-<!-- 37 · 실습 · 예상 출력 · RF=4 거부 -->
+<!-- 37 · 실습 · RF=4 가 거부되는 이유 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Topic 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1389,7 +1388,7 @@ kafka-broker-api-versions.sh --bootstrap-server 10.0.1.5:9092 | grep "id:"
   <div class="ft"><div><code>--timeout-ms</code> 를 주지 않으면 Consumer 가 종료되지 않고 계속 기다립니다.</div><div class="no">38</div></div>
 </section></div>
 
-<!-- 39 · 실습 · 예상 출력 · 키와 Partition -->
+<!-- 39 · 실습 · Partition 별 내용 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Topic 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1441,7 +1440,7 @@ F    1</pre>
   <div class="ft"><div><b>완료 판정</b>: <code>A</code> 가 Partition 1에서 2로, <code>D</code> 가 0에서 1로 옮겨 간 것을 확인하고 줄이는 시도가 거부되면 완료입니다.</div><div class="no">40</div></div>
 </section></div>
 
-<!-- 41 · 실습 · 예상 출력 · Partition 수 축소 거부 -->
+<!-- 41 · 실습 · Partition 수를 줄일 수 없는 이유 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Topic 구성</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1531,7 +1530,7 @@ F    1</pre>
   <div class="ft"><div></div><div class="no">43</div></div>
 </section></div>
 
-<!-- 44 · 개념 · 배치와 지연 -->
+<!-- 44 · 개념 · Producer 배치 설정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;Producer</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1558,7 +1557,7 @@ F    1</pre>
   <div class="ft"><div>버퍼는 Partition 마다 따로 있고 <code>buffer.memory</code> 는 그 총합의 상한입니다. <b>총합이 상한에 닿으면 <code>send()</code> 가 막히고</b>, <code>max.block.ms</code> 를 넘으면 예외가 납니다.</div><div class="no">44</div></div>
 </section></div>
 
-<!-- 45 · 개념 · 멱등성 -->
+<!-- 45 · 개념 · enable.idempotence -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;Producer</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1611,7 +1610,7 @@ F    1</pre>
   <div class="ft"><div></div><div class="no">46</div></div>
 </section></div>
 
-<!-- 47 · 개념 · 압축 -->
+<!-- 47 · 개념 · compression.type -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;Producer</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1702,7 +1701,7 @@ F    1</pre>
   <div class="ft"><div></div><div class="no">49</div></div>
 </section></div>
 
-<!-- 50 · 개념 · Partition 할당 -->
+<!-- 50 · 개념 · Consumer 수와 Partition 할당 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Consumer Group</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1803,7 +1802,7 @@ F    1</pre>
   <div class="ft"><div>4.0에서 새 Consumer Group 프로토콜(KIP-848)이 정식 기능이 됐지만 <b>기본으로 켜지지 않습니다.</b> <code>group.protocol=consumer</code> 로 켜면 할당을 서버가 정하고 <code>partition.assignment.strategy</code> 는 쓰이지 않습니다. 출처 · Apache Kafka 문서 Consumer Rebalance Protocol</div><div class="no">52</div></div>
 </section></div>
 
-<!-- 53 · 개념 · 세 timeout -->
+<!-- 53 · 개념 · timeout 세 가지 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Consumer Group</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1877,7 +1876,7 @@ F    1</pre>
   <div class="ft"><div><code>--formatter-property print.partition=true</code> 를 주면 어느 Partition 에서 온 메시지인지 함께 나옵니다.</div><div class="no">55</div></div>
 </section></div>
 
-<!-- 56 · 실습 · 예상 출력 · 그룹 할당 -->
+<!-- 56 · 실습 · --describe --group 출력 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Consumer Group</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1906,7 +1905,7 @@ lab-cg   lab.orders   3          2               2               0    consumer-2
   <div class="ft"><div>Rebalance 가 진행되는 중에 <code>--describe</code> 를 실행하면 할당이 비어 보입니다. 끝난 뒤에 확인합니다.</div><div class="no">56</div></div>
 </section></div>
 
-<!-- 57 · 실습 · 할당을 받지 못한 Consumer 확인 -->
+<!-- 57 · 실습 · Partition 수를 넘는 Consumer 의 할당 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Consumer Group<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -1930,7 +1929,7 @@ lab-cg   lab.orders   3          2               2               0    consumer-2
   <div class="ft"><div>백그라운드 Consumer 의 출력은 <code>/tmp/consumer-4.out</code> 부터 <code>/tmp/consumer-7.out</code> 에 쌓입니다. 할당은 <code>--members</code> 로 봅니다.</div><div class="no">57</div></div>
 </section></div>
 
-<!-- 58 · 실습 · 예상 출력 · 멤버별 할당 -->
+<!-- 58 · 실습 · --describe --members 출력 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Consumer Group</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -2021,7 +2020,7 @@ lab-cg   consumer-7-...    /10.0.1.4    consumer-7  <span class="k">0</span></pr
   <div class="ft"><div></div><div class="no">60</div></div>
 </section></div>
 
-<!-- 61 · 개념 · Offset 저장 -->
+<!-- 61 · 개념 · __consumer_offsets -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Offset</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -2313,7 +2312,7 @@ lab-cg   consumer-7-...    /10.0.1.4    consumer-7  <span class="k">0</span></pr
   <div class="ft"><div>커밋된 Offset 이 있으면 이 설정은 쓰이지 않습니다. 그 위치에서 이어 읽습니다.</div><div class="no">67</div></div>
 </section></div>
 
-<!-- 68 · 개념 · Offset 조정 -->
+<!-- 68 · 개념 · Consumer Group Offset 조정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Offset</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -2365,7 +2364,7 @@ lab-cg   consumer-7-...    /10.0.1.4    consumer-7  <span class="k">0</span></pr
   <div class="ft"><div><b>완료 판정</b>: <code>CURRENT-OFFSET</code> 이 0이 되고 Consumer 가 처음부터 다시 읽으면 완료입니다.</div><div class="no">69</div></div>
 </section></div>
 
-<!-- 70 · 실습 · 예상 출력 · 되감기 -->
+<!-- 70 · 실습 · --dry-run 과 --execute -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Offset</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -2617,7 +2616,7 @@ lab-cg   lab.orders   2          0
   <div class="ft"><div>Producer 가 압축한 메시지를 Broker 가 풀지 않는 것도 같은 이유입니다. 복사 횟수는 NIC 와 커널 지원에 따라 달라집니다.</div><div class="no">76</div></div>
 </section></div>
 
-<!-- 77 · 개념 · 디스크를 고르는 기준 -->
+<!-- 77 · 개념 · 디스크 성능 지표와 Kafka 의 병목 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;로그 기반 메시징과 저장 구조</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -2946,7 +2945,7 @@ lab-cg   lab.orders   2          0
   <div class="ft"><div>controller 를 셋 이상 홀수로 두는 이유가 과반 계산입니다. 4대를 두어도 과반은 3이라 견딜 수 있는 장애 수가 같습니다.</div><div class="no">85</div></div>
 </section></div>
 
-<!-- 86 · 개념 · combined 와 isolated -->
+<!-- 86 · 개념 · combined 모드와 isolated 모드 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;KRaft 와 클러스터 메타데이터</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3026,7 +3025,7 @@ lab-cg   lab.orders   2          0
   <div class="ft"><div>모두 ops 노드에서 실행합니다.</div><div class="no">88</div></div>
 </section></div>
 
-<!-- 89 · 실습 · 예상 출력 · quorum 상태 -->
+<!-- 89 · 실습 · describe --status 출력 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;KRaft 와 클러스터 메타데이터</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3194,7 +3193,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div><code>acks=all</code> 은 ISR 전체를 기다립니다. ISR 이 1이면 한 곳만 기다리는 것이라 사실상 <code>acks=1</code> 과 같아집니다.</div><div class="no">94</div></div>
 </section></div>
 
-<!-- 95 · 개념 · min.insync.replicas -->
+<!-- 95 · 개념 · min.insync.replicas 와 acks=all -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;복제와 ISR</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3248,7 +3247,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div></div><div class="no">96</div></div>
 </section></div>
 
-<!-- 97 · 개념 · unclean leader 선출 -->
+<!-- 97 · 개념 · unclean.leader.election.enable -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;복제와 ISR</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3273,7 +3272,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div>기본값은 <code>false</code> 입니다. 이 실습에서 값을 바꾸지 않습니다.</div><div class="no">97</div></div>
 </section></div>
 
-<!-- 98 · 개념 · High Watermark -->
+<!-- 98 · 개념 · High Watermark 와 Log End Offset -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;복제와 ISR</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3376,7 +3375,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div><b>Broker 를 정지시키지 않습니다.</b> 모두 ops 노드에서 실행합니다.</div><div class="no">100</div></div>
 </section></div>
 
-<!-- 101 · 실습 · 예상 출력 · Topic 설정 -->
+<!-- 101 · 실습 · kafka-configs.sh --describe 출력 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;복제와 ISR</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3567,7 +3566,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div>설정 변경은 ops 노드에서, 파일 확인은 <code>ansible</code> 로 합니다.</div><div class="no">107</div></div>
 </section></div>
 
-<!-- 108 · 실습 · 예상 출력 · segment 파일 -->
+<!-- 108 · 실습 · Partition 디렉터리 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Retention 과 segment</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3594,7 +3593,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div>파일 크기와 개수는 적재량에 따라 달라집니다. <b>여러 개로 나뉘었는지만 봅니다.</b></div><div class="no">108</div></div>
 </section></div>
 
-<!-- 109 · 실습 · Retention 조정 -->
+<!-- 109 · 실습 · Retention 조정과 삭제 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Retention 과 segment<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3619,7 +3618,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div><b>완료 판정</b>: 2단계와 3단계의 파일 목록이 다르고, 3단계에 <code>.deleted</code> 가 붙은 파일과 새 segment 가 보이면 완료입니다.</div><div class="no">109</div></div>
 </section></div>
 
-<!-- 110 · 실습 · 예상 출력 · 삭제 뒤 -->
+<!-- 110 · 실습 · 삭제 전후 대비 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Retention 과 segment</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3703,7 +3702,7 @@ CurrentObservers:  []</pre>
   <div class="ft"><div><b>측정값</b>: 정지부터 ISR 에서 빠질 때까지 6초에서 11초였습니다. 정상 종료라 <code>replica.lag.time.max.ms</code> 30초를 기다리지 않습니다. <b>exporter 가 Broker JVM 안에 있어 <code>kafka_jmx</code> 대상도 끊깁니다.</b></div><div class="no">113</div></div>
 </section></div>
 
-<!-- 114 · 동작 확인 · 예상 출력 · ISR 축소 -->
+<!-- 114 · 동작 확인 · ISR 이 줄어든 상태 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Broker 정지와 복귀</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3865,4 +3864,4 @@ terraform destroy -var-file=session.tfvars</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 58dbf336796ed31f -->
+<!-- deck-src 12924d9d9294e034 -->

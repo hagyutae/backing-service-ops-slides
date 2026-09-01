@@ -1648,7 +1648,7 @@ Filesystem      Size  Used Avail Use% Mounted on
   <div class="ft"><div>가르는 기준은 「지금 사람이 개입하지 않으면 나빠지는가」입니다. 같은 지표라도 상태에 따라 등급이 갈립니다.</div><div class="no">46</div></div>
 </section></div>
 
-<!-- 47 · 개념 · 디스크 알람의 기준 -->
+<!-- 47 · 개념 · 디스크 알람의 기준: 잔량이 아닌 감소 속도 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;알람 설계</div><div>Prometheus · Grafana</div></div>
   <main>
@@ -1918,7 +1918,7 @@ predict_linear(node_filesystem_avail_bytes{
   <div class="ft"><div></div><div class="no">55</div></div>
 </section></div>
 
-<!-- 56 · 실습 · RB-OBS 뼈대 만들기 -->
+<!-- 56 · 실습 · RB-OBS 뼈대 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;장애 대응 절차와 런북<span class="lab">실습</span></div><div>Prometheus · Grafana</div></div>
   <main>
@@ -2677,7 +2677,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
   <div class="ft"><div></div><div class="no">82</div></div>
 </section></div>
 
-<!-- 83 · 실습 · RB-R01 replica 하나 이탈 -->
+<!-- 83 · 실습 · 장애: replica 하나 이탈 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -2876,7 +2876,7 @@ ansible &lt;replica&gt; -m systemd -a <span class="s">"name=redis-server state=s
   <div class="ft"><div></div><div class="no">89</div></div>
 </section></div>
 
-<!-- 90 · 실습 · RB-R01 과 RB-OBS 채우기 -->
+<!-- 90 · 실습 · RB-R01 과 RB-OBS 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -2943,7 +2943,7 @@ ansible &lt;replica&gt; -m systemd -a <span class="s">"name=redis-server state=s
   <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">91</div></div>
 </section></div>
 
-<!-- 92 · 실습 · RB-R02 히트율 하락과 쓰기 실패 -->
+<!-- 92 · 실습 · 장애: 히트율 하락과 쓰기 실패 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -3108,7 +3108,7 @@ redis-cli CONFIG SET maxmemory-policy noeviction</pre>
   <div class="ft"><div><code>CONFIG SET</code> 은 실행 중 값만 바꾸므로 <code>redis.conf</code> 는 그대로입니다. <code>--restore</code> 가 <code>~/.rb-r02</code> 에 적어 둔 원래 값으로 되돌립니다.</div><div class="no">97</div></div>
 </section></div>
 
-<!-- 98 · 실습 · RB-R02 와 RB-OBS 채우기 -->
+<!-- 98 · 실습 · RB-R02 와 RB-OBS 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -3673,7 +3673,7 @@ redis-cli CONFIG SET maxmemory-policy noeviction</pre>
   <div class="ft"><div>디스크 고갈의 근본 대응은 용량 재산정입니다.</div><div class="no">117</div></div>
 </section></div>
 
-<!-- 118 · 실습 · RB-M01 복제 지연 증가 -->
+<!-- 118 · 실습 · 장애: 복제 지연 증가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3873,7 +3873,7 @@ ansible &lt;SECONDARY&gt; -m shell -a <span class="s">"pkill -CONT -x mongod"</s
   <div class="ft"><div></div><div class="no">124</div></div>
 </section></div>
 
-<!-- 125 · 실습 · RB-M01 과 RB-OBS 채우기 -->
+<!-- 125 · 실습 · RB-M01 과 RB-OBS 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4594,7 +4594,7 @@ sum(kafka_controller_active_controller_count)</pre>
   <div class="ft"><div></div><div class="no">148</div></div>
 </section></div>
 
-<!-- 149 · 실습 · RB-K01 Consumer Lag 증가 -->
+<!-- 149 · 실습 · 장애: Consumer Lag 증가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4645,7 +4645,7 @@ sum(kafka_controller_active_controller_count)</pre>
   <div class="ft"><div>완료 판정: 여섯 후보 중 하나로 좁혀집니다. 5단계와 6단계는 지표로 갈리지 않습니다.</div><div class="no">150</div></div>
 </section></div>
 
-<!-- 151 · 장애 대응 · RB-K01 분포 확인 출력 -->
+<!-- 151 · 장애 대응 · Lag 분포 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4671,7 +4671,7 @@ lab-cg  lab.events  2          -               235875          -</pre>
   <div class="ft"><div><code>kafka-consumer-groups.sh --describe --group lab-cg</code> 의 실제 출력입니다. 남은 후보는 Consumer 처리 지연, Partition 수 부족, Producer 급증, Rebalance 반복 넷입니다. 조회 시점에 따라 표가 비거나 「has no active members」가 나오기도 합니다.</div><div class="no">151</div></div>
 </section></div>
 
-<!-- 152 · 장애 대응 · RB-K01 유입량 배제 -->
+<!-- 152 · 장애 대응 · Producer 급증 배제 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4854,7 +4854,7 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
   <div class="ft"><div>완료 판정: 네 명령이 모두 결과를 냅니다. Broker 에는 공인 IP 가 없습니다.</div><div class="no">157</div></div>
 </section></div>
 
-<!-- 158 · 실습 · RB-K01 과 RB-OBS 채우기 -->
+<!-- 158 · 실습 · RB-K01 과 RB-OBS 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -5275,4 +5275,4 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 0eeac51ec97a971e -->
+<!-- deck-src 772965a01812dc4a -->

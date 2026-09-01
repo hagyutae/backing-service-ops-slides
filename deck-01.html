@@ -559,7 +559,7 @@ Changes to Outputs:
   <div class="ft"><div></div><div class="no">9</div></div>
 </section></div>
 
-<!-- 10 · 구축 · 생성 결과 확인 (1) -->
+<!-- 10 · 구축 · 생성 결과 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>Redis 8.10.x</div></div>
   <main>
@@ -581,7 +581,7 @@ Changes to Outputs:
   <div class="ft"><div></div><div class="no">10</div></div>
 </section></div>
 
-<!-- 11 · 구축 · 생성 결과 확인 (2) -->
+<!-- 11 · 구축 · 네트워크와 디스크 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>Redis 8.10.x</div></div>
   <main>
@@ -623,7 +623,7 @@ Changes to Outputs:
   <div class="ft"><div>서비스 노드에는 공인 IP가 없습니다.<br>접속은 ops 노드를 거칩니다. 방법은 다음 장에 있습니다.</div><div class="no">12</div></div>
 </section></div>
 
-<!-- 13 · 구축 · 서비스 노드 다루기 -->
+<!-- 13 · 구축 · 서비스 노드 접근 방식 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>Redis 8.10.x</div></div>
   <main>
@@ -679,7 +679,7 @@ ssh 10.0.1.6
   <div class="ft"><div></div><div class="no">15</div></div>
 </section></div>
 
-<!-- 16 · 구성 · 인벤토리 노드 목록 -->
+<!-- 16 · 구성 · 인벤토리: 노드 목록 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;Redis 구성</div><div>Redis 8.10.x</div></div>
   <main>
@@ -717,7 +717,7 @@ ansible_ssh_private_key_file=~/.ssh/id_rsa</pre>
   <div class="ft"><div>노드를 늘리면 이 파일을 직접 고칩니다. Terraform 이 다시 배치하지 않습니다.</div><div class="no">16</div></div>
 </section></div>
 
-<!-- 17 · 구성 · 인벤토리 공용 변수 -->
+<!-- 17 · 구성 · 인벤토리: 공용 변수 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;Redis 구성</div><div>Redis 8.10.x</div></div>
   <main>
@@ -961,7 +961,7 @@ ops-1   : ok=11 changed=10 unreachable=0 failed=0 skipped=2</pre>
   <div class="ft"><div>출처: Redis 공식 문서 Data types</div><div class="no">25</div></div>
 </section></div>
 
-<!-- 26 · 개념 · String -->
+<!-- 26 · 개념 · String: 캐시 값과 카운터 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Redis 주요 개념</div><div>Redis 8.10.x</div></div>
   <main>
@@ -988,7 +988,7 @@ GET user:1001:profile</pre>
   <div class="ft"><div></div><div class="no">26</div></div>
 </section></div>
 
-<!-- 27 · 개념 · Hash -->
+<!-- 27 · 개념 · Hash: 객체 한 건의 필드 묶음 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Redis 주요 개념</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1021,7 +1021,7 @@ HMGET user:1001 name points</pre>
   <div class="ft"><div></div><div class="no">27</div></div>
 </section></div>
 
-<!-- 28 · 개념 · List -->
+<!-- 28 · 개념 · List: 큐와 최근 항목 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Redis 주요 개념</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1055,7 +1055,7 @@ LRANGE user:1001:recent 0 -1</pre>
   <div class="ft"><div></div><div class="no">28</div></div>
 </section></div>
 
-<!-- 29 · 개념 · Set -->
+<!-- 29 · 개념 · Set: 중복 없는 집합 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Redis 주요 개념</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1089,7 +1089,7 @@ SCARD user:1001:liked</pre>
   <div class="ft"><div></div><div class="no">29</div></div>
 </section></div>
 
-<!-- 30 · 개념 · Sorted Set -->
+<!-- 30 · 개념 · Sorted Set: 순위와 시간 범위 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Redis 주요 개념</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1123,7 +1123,7 @@ ZRANGE events 1756100000 1756200000 BYSCORE</pre>
   <div class="ft"><div></div><div class="no">30</div></div>
 </section></div>
 
-<!-- 31 · 개념 · Stream -->
+<!-- 31 · 개념 · Stream: 추가 전용 로그 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;Redis 주요 개념</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1682,7 +1682,7 @@ redis.delete(key)          <span class="c"># 갱신이 아니라 삭제</span></
   <div class="ft"><div>Refresh-ahead는 Look-aside 위에 얹는 갱신 방식이므로 읽기 경로가 Look-aside와 같습니다.</div><div class="no">46</div></div>
 </section></div>
 
-<!-- 47 · 개념 · 캐시 스탬피드 -->
+<!-- 47 · 개념 · 캐시 스탬피드 (Cache Stampede) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Cache 패턴과 캐시 문제</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1744,7 +1744,7 @@ redis.delete(key)          <span class="c"># 갱신이 아니라 삭제</span></
   <div class="ft"><div></div><div class="no">47</div></div>
 </section></div>
 
-<!-- 48 · 개념 · 캐시 관통 -->
+<!-- 48 · 개념 · 캐시 관통 (Cache Penetration) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Cache 패턴과 캐시 문제</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1797,7 +1797,7 @@ redis.delete(key)          <span class="c"># 갱신이 아니라 삭제</span></
   <div class="ft"><div></div><div class="no">48</div></div>
 </section></div>
 
-<!-- 49 · 개념 · 캐시 눈사태 -->
+<!-- 49 · 개념 · 캐시 눈사태 (Cache Avalanche) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;Cache 패턴과 캐시 문제</div><div>Redis 8.10.x</div></div>
   <main>
@@ -1885,7 +1885,7 @@ redis.delete(key)          <span class="c"># 갱신이 아니라 삭제</span></
   </div>
 </section></div>
 
-<!-- 52 · 개념 · Persistence의 목표 -->
+<!-- 52 · 개념 · Persistence의 목표: RTO와 RPO -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;Persistence</div><div>Redis 8.10.x</div></div>
   <main>
@@ -2551,7 +2551,7 @@ aof_last_write_status:ok</pre>
   <div class="ft"><div><code>allkeys-*</code> 는 저장된 데이터가 전부 캐시일 때, <code>volatile-*</code> 는 영속 데이터와 캐시가 한 인스턴스에 섞여 있을 때 씁니다.</div><div class="no">71</div></div>
 </section></div>
 
-<!-- 72 · 개념 · LRU -->
+<!-- 72 · 개념 · LRU: 마지막 접근 시각 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Eviction 정책</div><div>Redis 8.10.x</div></div>
   <main>
@@ -2606,7 +2606,7 @@ aof_last_write_status:ok</pre>
   <div class="ft"><div></div><div class="no">72</div></div>
 </section></div>
 
-<!-- 73 · 개념 · LFU -->
+<!-- 73 · 개념 · LFU: 접근 빈도와 감쇠 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Eviction 정책</div><div>Redis 8.10.x</div></div>
   <main>
@@ -3535,7 +3535,7 @@ sentinel parallel-syncs mymaster 1</pre>
   <div class="ft"><div>어느 master 를, 몇 대가 동의해야 죽었다고 볼지, 얼마나 기다릴지를 이 파일이 정합니다. 자동 기동은 꺼 두었습니다. 복제가 없으면 승격시킬 대상이 없기 때문입니다. <b>Sentinel 은 기동 뒤 이 파일을 스스로 고쳐 씁니다.</b></div><div class="no">104</div></div>
 </section></div>
 
-<!-- 105 · 실습 · sentinel.conf 감시 대상 -->
+<!-- 105 · 실습 · sentinel.conf: 감시 대상 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Sentinel과 Cluster</div><div>Redis 8.10.x</div></div>
   <main>
@@ -3561,7 +3561,7 @@ sentinel monitor mymaster {{ redis_master_host }} {{ redis_port }} {{ sentinel_q
   <div class="ft"><div>화면의 <code>{{ }}</code> 자리는 Ansible이 배포할 때 인벤토리 값으로 바뀝니다. Sentinel은 기동 뒤 이 파일을 스스로 갱신하므로 실제 노드의 파일은 화면의 템플릿과 내용이 다릅니다.</div><div class="no">105</div></div>
 </section></div>
 
-<!-- 106 · 실습 · sentinel.conf 타이밍 -->
+<!-- 106 · 실습 · sentinel.conf: 타이밍 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Sentinel과 Cluster</div><div>Redis 8.10.x</div></div>
   <main>
@@ -3820,4 +3820,4 @@ sentinel parallel-syncs mymaster 1</pre>
 </script>
 </body>
 </html>
-<!-- deck-src d7d2ea282ecbf3a7 -->
+<!-- deck-src 3837153b6e74851f -->

@@ -298,7 +298,7 @@ a:hover{color:var(--accent);}
   /* 슬라이드가 transform 을 갖고 있어 이 고정 위치는 뷰포트가 아니라
      슬라이드를 기준으로 잡힌다. 원래 페이지 번호가 있던 자리에 그대로 놓인다. */
   body.cs .stage.on::after{
-    content:counter(stg) " / 146";
+    content:counter(stg) " / 150";
     position:fixed; right:72px; bottom:34px; z-index:20;
     font-family:'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif;
     font-size:14px; font-variant-numeric:tabular-nums; color:#8A8779;
@@ -330,7 +330,7 @@ a:hover{color:var(--accent);}
   <div class="meta">
     <div><b>대상 버전</b><span>MongoDB 8.3.x</span></div>
     <div><b>OS</b><span>Ubuntu 24.04 LTS</span></div>
-    <div><b>실습 환경</b><span>Azure 한국 중부</span></div>
+    <div><b>실습 환경</b><span>Azure</span></div>
   </div>
 </section></div>
 
@@ -343,11 +343,35 @@ a:hover{color:var(--accent);}
   </div>
 </section></div>
 
-<!-- 3 · 개념 · 인스턴스 크기의 근거 -->
+<!-- 3 · 구축 · 02-mongodb 스택 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>MongoDB 8.3.x</div></div>
   <main>
-    <h2 class="head">인스턴스 크기의 근거</h2>
+    <h2 class="head"><code>02-mongodb</code> 스택</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <table class="cmp" style="table-layout:fixed">
+        <colgroup><col style="width:30%"><col style="width:30%"><col style="width:40%"></colgroup>
+        <thead><tr><th>노드</th><th class="hi">사양</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><th><code>mongo-1</code><br><code>mongo-2</code><br><code>mongo-3</code></th><td>Standard_E2bds_v5<br>2 vCPU / 16 GiB<br><b>데이터 디스크 128 GiB</b></td><td>MongoDB 노드</td></tr>
+          <tr><th><code>ops-1</code></th><td>Standard_D2ds_v5<br>2 vCPU / 8 GiB<br>데이터 디스크 64 GiB</td><td>명령 실행, Prometheus·Grafana</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <b>세션 1 스택과 다른 것은 서비스 노드의 데이터 디스크 하나입니다.</b><br>
+        MongoDB 는 데이터를 디스크에 두고, 세션 1 의 Redis 는 메모리에 둡니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div></div><div class="no">3</div></div>
+</section></div>
+
+<!-- 4 · 개념 · 인스턴스 스펙 근거 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head">인스턴스 스펙 근거</h2>
     <div class="headrule"></div>
     <div class="body">
       <table class="cmp">
@@ -366,30 +390,6 @@ a:hover{color:var(--accent);}
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">3</div></div>
-</section></div>
-
-<!-- 4 · 구축 · 02-mongodb 스택 -->
-<div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>MongoDB 8.3.x</div></div>
-  <main>
-    <h2 class="head"><code>02-mongodb</code> 스택</h2>
-    <div class="headrule"></div>
-    <div class="body">
-      <table class="cmp" style="table-layout:fixed">
-        <colgroup><col style="width:30%"><col style="width:30%"><col style="width:40%"></colgroup>
-        <thead><tr><th>노드</th><th class="hi">사양</th><th>역할</th></tr></thead>
-        <tbody>
-          <tr><th><code>mongo-1</code>·<code>mongo-2</code>·<code>mongo-3</code></th><td>Standard_E2bds_v5<br>2 vCPU / 16 GiB<br><b>데이터 디스크 128 GiB</b></td><td>MongoDB 노드</td></tr>
-          <tr><th><code>ops-1</code></th><td>Standard_D2ds_v5<br>2 vCPU / 8 GiB<br>데이터 디스크 64 GiB</td><td>명령 실행, Prometheus·Grafana</td></tr>
-        </tbody>
-      </table>
-      <div class="callout">
-        <b>세션 1 스택과 다른 것은 서비스 노드의 데이터 디스크 하나입니다.</b><br>
-        MongoDB 는 데이터를 디스크에 두고, 세션 1 의 Redis 는 메모리에 둡니다.
-      </div>
-    </div>
-  </main>
   <div class="ft"><div></div><div class="no">4</div></div>
 </section></div>
 
@@ -402,9 +402,9 @@ a:hover{color:var(--accent);}
     <div class="body">
       <div class="codewrap">
 <pre>subscription_id     = "00000000-0000-0000-0000-000000000000"
-resource_group_name = "rkm-student07-mongo-rg"
+resource_group_name = "rkm-&lt;계정 이름&gt;-mongo-rg"
 location            = "koreacentral"
-allowed_cidrs       = ["203.0.113.10/32"]
+allowed_cidrs       = ["xxx.xxx.xxx.xxx/32"]
 ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
       </div>
       <ul class="pts">
@@ -544,8 +544,8 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
 ssh -i <span class="s">~/.ssh/rkm</span> azureuser@<span class="p">&lt;ops 공인 IP&gt;</span></pre>
       </div>
       <ul class="pts">
-        <li><b>접속 대상은 ops 노드뿐입니다.</b> 서비스 노드에는 공인 IP 가 없습니다</li>
-        <li><b>키의 출처</b>: 세션 1에서 <code>ssh-keygen</code> 으로 만든 자기 키입니다. <code>session.tfvars</code> 의 <code>ssh_public_key_path</code> 가 그 공개키를 가리킵니다</li>
+        <li><b>접속 대상은 ops 노드뿐.</b> 서비스 노드에는 공인 IP 가 없음</li>
+        <li><b>키의 출처</b>: 세션 1에서 <code>ssh-keygen</code> 으로 만든 자기 키. <code>session.tfvars</code> 의 <code>ssh_public_key_path</code> 가 그 공개키를 가리킴</li>
       </ul>
       <div class="callout">
         <b>PuTTY 를 쓰면 키를 <code>.ppk</code> 로 변환해야 합니다.</b><br>
@@ -558,7 +558,7 @@ ssh -i <span class="s">~/.ssh/rkm</span> azureuser@<span class="p">&lt;ops 공�
 
 <!-- 12 · 구축 · 서비스 노드 접근 방식 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">서비스 노드 접근 방식</h2>
     <div class="headrule"></div>
@@ -588,7 +588,7 @@ ssh 10.0.1.6</pre>
   <div class="row"><div class="num">02</div></div>
   <h2>MongoDB 구성</h2>
   <div class="items">
-    <span>인벤토리</span><span>디스크 마운트</span><span>접속 범위</span><span>내부 인증</span><span>관측 스택</span>
+    <span>인벤토리</span><span>디스크 마운트</span><span>관측 스택</span>
   </div>
 </section></div>
 
@@ -602,11 +602,11 @@ ssh 10.0.1.6</pre>
       <table class="cmp">
         <thead><tr><th>role</th><th>수행 작업</th><th class="hi">필요한 이유</th></tr></thead>
         <tbody>
-          <tr><th><code>common</code></th><td>디스크 마운트, readahead 축소, THP 비활성</td><td>데이터 경로를 OS 디스크에서 떼고, 랜덤 IO 에 맞춥니다</td></tr>
-          <tr><th><code>mongodb</code></th><td>설치와 <code>mongod.conf</code> 배포</td><td>세 노드가 같은 설정으로 기동합니다</td></tr>
-          <tr><th><code>mongodb</code></th><td>keyFile 생성과 배치</td><td>나중에 인증을 켤 때 필요합니다</td></tr>
-          <tr><th><code>mongodb</code></th><td><b>ops 노드에 <code>mongosh</code>·<code>mongodb-database-tools</code>·<code>mongos</code> 설치</b>. 서비스 노드에도 <code>mongosh</code> 설치</td><td>명령은 ops 노드에서 실행합니다. 챕터 12 의 초기화만 노드 안에서 치므로 서비스 노드에도 셸이 필요합니다</td></tr>
-          <tr><th><code>monitoring</code></th><td>exporter 와 Prometheus·Grafana</td><td>이 세션에서 바로 확인합니다</td></tr>
+          <tr><th><code>common</code></th><td>디스크 마운트, readahead 축소, THP 비활성</td><td>데이터 경로를 OS 디스크에서 떼고, 랜덤 IO 에 맞춤</td></tr>
+          <tr><th><code>mongodb</code></th><td>설치와 <code>mongod.conf</code> 배포</td><td>세 노드가 같은 설정으로 기동함</td></tr>
+          <tr><th><code>mongodb</code></th><td>keyFile 생성과 배치</td><td>나중에 인증을 켤 때 필요</td></tr>
+          <tr><th><code>mongodb</code></th><td><b>ops 노드에 <code>mongosh</code>·<code>mongodb-database-tools</code>·<code>mongos</code> 설치</b>. 서비스 노드에도 <code>mongosh</code> 설치</td><td>명령은 ops 노드에서 실행. 챕터 12 의 초기화만 노드 안에서 치므로 서비스 노드에도 셸이 필요</td></tr>
+          <tr><th><code>monitoring</code></th><td>exporter 와 Prometheus·Grafana</td><td>이 세션에서 바로 확인</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -652,58 +652,7 @@ ansible_ssh_private_key_file=~/.ssh/id_rsa</pre>
   <div class="ft"><div>노드를 늘리면 이 파일을 직접 고칩니다. 챕터 12에서 실제로 늘립니다.</div><div class="no">15</div></div>
 </section></div>
 
-<!-- 16 · 구성 · bindIp 를 사설 IP 로 여는 근거 -->
-<div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;MongoDB 구성</div><div>MongoDB 8.3.x</div></div>
-  <main>
-    <h2 class="head"><code>bindIp</code> 를 사설 IP로 여는 근거</h2>
-    <div class="headrule"></div>
-    <div class="body">
-      <table class="cmp">
-        <thead><tr><th>항목</th><th class="hi">내용</th></tr></thead>
-        <tbody>
-          <tr><th>기본값</th><td><code>127.0.0.1</code>. <b>그 노드 안에서만 접속을 받습니다</b></td></tr>
-          <tr><th>문제가 되는 지점</th><td>ops 노드에서 <code>mongosh --host</code> 로 접속하는 구조이므로 <b>챕터 03 실습부터 전부 막힙니다</b></td></tr>
-          <tr><th>노드 간 통신</th><td>노드 사이의 연결도 같이 막힙니다</td></tr>
-          <tr><th>허용 범위</th><td>사설 IP 와 루프백만 허용하도록 배포합니다</td></tr>
-        </tbody>
-      </table>
-      <div class="callout">
-        <b>열어 두는 대신 다른 두 겹으로 막습니다.</b><br>
-        서비스 노드에 공인 IP 가 없고, 네트워크 보안 그룹이 서브넷 안에서 오는 것만 허용합니다.
-      </div>
-    </div>
-  </main>
-  <div class="ft"><div>운영에서는 인증을 함께 겁니다. 이 세션에서는 챕터 10에서 켭니다.</div><div class="no">16</div></div>
-</section></div>
-
-<!-- 17 · 구성 · keyFile 내부 인증 -->
-<div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;MongoDB 구성</div><div>MongoDB 8.3.x</div></div>
-  <main>
-    <h2 class="head">keyFile 내부 인증</h2>
-    <div class="headrule"></div>
-    <div class="body">
-      <table class="cmp">
-        <thead><tr><th>항목</th><th class="hi">내용</th></tr></thead>
-        <tbody>
-          <tr><th>저장 내용</th><td>세 노드가 서로를 인증하는 공유 비밀</td></tr>
-          <tr><th>배치 시점</th><td><b>챕터 02의 구성 단계에서 파일을 만들어 둡니다.</b> 인증을 켜는 순간 노드 간 통신도 이 파일을 요구하므로, 나중에 만들려면 세 노드에 다시 배포해야 합니다</td></tr>
-          <tr><th>이 단계의 범위</th><td>파일만 둡니다. <code>mongod.conf</code> 의 <code>security.keyFile</code> 은 챕터 10에서 넣습니다. <b>이 설정을 넣는 순간 인가도 함께 켜집니다</b></td></tr>
-          <tr><th>권한</th><td>600 이어야 하며, 그렇지 않으면 <code>mongod</code> 가 기동을 거부합니다</td></tr>
-          <tr><th>세 노드의 동일성</th><td>파일이 다르면 노드가 서로를 거부합니다</td></tr>
-        </tbody>
-      </table>
-      <div class="callout">
-        <b>사용자 인증이 아니라 노드 간 인증입니다.</b><br>
-        계정과 암호는 챕터 10에서 만들고, 이 단계에서는 노드끼리 서로를 확인할 공유 비밀만 배치합니다.
-      </div>
-    </div>
-  </main>
-  <div class="ft"><div></div><div class="no">17</div></div>
-</section></div>
-
-<!-- 18 · 구성 · mongod.conf 주요 설정 -->
+<!-- 16 · 구성 · mongod.conf 주요 설정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;MongoDB 구성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -720,18 +669,16 @@ systemLog:
   logAppend: true</pre>
       </div>
       <ul class="pts">
+        <li><b>배포 위치</b>: 세 MongoDB 노드의 <code>/etc/mongod.conf</code>. <b>Ansible 플레이북이 배포하므로 직접 쓰지 않음</b></li>
         <li><b><code>storage.dbPath</code></b>: 데이터 디스크 마운트 지점</li>
-        <li><b><code>systemLog</code></b>: 로그 파일 경로. <code>logAppend</code> 로 재기동 때 덮어쓰지 않습니다</li>
+        <li><b><code>systemLog</code></b>: 로그 파일 경로. <code>logAppend</code> 로 재기동 때 덮어쓰지 않음</li>
       </ul>
-      <div class="callout">
-        <b><code>replication</code> 과 <code>security</code> 는 아직 없습니다.</b> 복제는 챕터 06, 인증은 챕터 10에서 더합니다.
-      </div>
     </div>
   </main>
-  <div class="ft"><div>세 노드의 <code>/etc/mongod.conf</code> 로 배포됩니다. 챕터 02 플레이북이 배포하므로 직접 쓰지 않습니다. <code>mongod.conf</code> 에 캐시 크기를 적지 않고 기본값을 씁니다.</div><div class="no">18</div></div>
+  <div class="ft"><div></div><div class="no">16</div></div>
 </section></div>
 
-<!-- 19 · 구성 · 구성 실행 -->
+<!-- 17 · 구성 · 구성 실행 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;MongoDB 구성<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -756,10 +703,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>mongo-1</code> 만 <code>changed</code> 가 하나 많습니다. keyFile 을 첫 노드에서 만들어 나머지에 복사하기 때문입니다.</div><div class="no">19</div></div>
+  <div class="ft"><div><code>mongo-1</code> 만 <code>changed</code> 가 하나 많습니다. keyFile 을 첫 노드에서 만들어 나머지에 복사하기 때문입니다.</div><div class="no">17</div></div>
 </section></div>
 
-<!-- 20 · 구성 · 대시보드에서 확인 -->
+<!-- 18 · 구성 · 대시보드에서 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 02</span> &nbsp;MongoDB 구성<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -777,10 +724,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>여기서는 지표가 보이는 것까지만 확인합니다.</div><div class="no">20</div></div>
+  <div class="ft"><div>여기서는 지표가 보이는 것까지만 확인합니다.</div><div class="no">18</div></div>
 </section></div>
 
-<!-- 21 · 챕터 · 문서 모델과 저장 구조 -->
+<!-- 19 · 챕터 · 문서 모델과 저장 구조 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">03</div></div>
   <h2>문서 모델과 저장 구조</h2>
@@ -789,7 +736,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   </div>
 </section></div>
 
-<!-- 22 · 개념 · 문서와 BSON -->
+<!-- 20 · 개념 · 문서와 BSON -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -812,7 +759,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
           <ul class="pts">
             <li><b>BSON</b>: Binary JSON. JSON 의 구조를 바이너리로 담은 형식</li>
             <li><b>JSON 에 없는 타입</b>: <code>ObjectId</code>, <code>Date</code>, <code>Decimal128</code>, 정수 폭 구분</li>
-            <li><b>길이 정보의 선행 배치</b>: 통째로 파싱하지 않고 건너뜁니다</li>
+            <li><b>길이 정보의 선행 배치</b>: 통째로 파싱하지 않고 건너뜀</li>
             <li><b>문서 하나의 상한</b>: 16 MB</li>
           </ul>
         </div>
@@ -823,10 +770,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">22</div></div>
+  <div class="ft"><div></div><div class="no">20</div></div>
 </section></div>
 
-<!-- 23 · 개념 · Embedding과 Reference -->
+<!-- 21 · 개념 · Embedding과 Reference -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -863,10 +810,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>문서 상한 16 MB 를 넘길 수 있는 배열은 한 문서에 담지 않습니다.</div><div class="no">23</div></div>
+  <div class="ft"><div>문서 상한 16 MB 를 넘길 수 있는 배열은 한 문서에 담지 않습니다.</div><div class="no">21</div></div>
 </section></div>
 
-<!-- 24 · 개념 · 스토리지 엔진의 역할 -->
+<!-- 22 · 개념 · 스토리지 엔진의 역할 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -898,9 +845,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>질의 계층의 역할</b>: 질의를 해석하고 어떤 인덱스를 쓸지 정하며 권한을 확인합니다</li>
-            <li><b>엔진의 역할</b>: 디스크에 어떤 형식으로 놓을지, 동시 접근을 어떻게 다룰지, 메모리에 무엇을 얼마나 둘지, 프로세스가 정지해도 무엇이 남을지를 정합니다</li>
-            <li><b>기본 엔진이 된 시점</b>: MongoDB 3.2 부터. MMAPv1 은 4.2 에서 제거됐습니다</li>
+            <li><b>질의 계층의 역할</b>: 질의를 해석하고 어떤 인덱스를 쓸지 정하며 권한을 확인</li>
+            <li><b>엔진의 역할</b>: 디스크에 어떤 형식으로 놓을지, 동시 접근을 어떻게 다룰지, 메모리에 무엇을 얼마나 둘지, 프로세스가 정지해도 무엇이 남을지를 정함</li>
+            <li><b>기본 엔진이 된 시점</b>: MongoDB 3.2 부터. MMAPv1 은 4.2 에서 제거됨</li>
           </ul>
         </div>
       </div>
@@ -910,10 +857,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">24</div></div>
+  <div class="ft"><div></div><div class="no">22</div></div>
 </section></div>
 
-<!-- 25 · 개념 · 컬렉션 B-tree의 구조 -->
+<!-- 23 · 개념 · 컬렉션 B-tree의 구조 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -924,7 +871,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <div class="dgm">
           <svg viewBox="0 0 520 252" role="img" aria-label="파일 하나 안에 루트와 internal 페이지와 leaf 페이지 넷">
             <rect class="nd" x="2" y="0" width="516" height="206" rx="9" fill="none"></rect>
-            <text class="lb sm" x="260" y="228">이 컬렉션의 파일 하나 · B-tree 전체가 그 안에</text>
+            <text class="lb sm" x="260" y="228">컬렉션 파일 하나에 B-tree 전체가 저장됨</text>
             <rect class="nd hi" x="170" y="6" width="180" height="40" rx="7"></rect>
             <text class="lb" x="260" y="24">루트 internal 페이지</text>
             <text class="lb sm" x="260" y="40">구분 키와 자식 주소</text>
@@ -937,10 +884,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
             <rect class="nd" x="330" y="90" width="140" height="32" rx="7"></rect>
             <text class="lb sm" x="400" y="110">internal 페이지</text>
 
-            <path class="ln arw" d="M90 124 V150"></path>
-            <path class="ln arw" d="M150 124 V150"></path>
-            <path class="ln arw" d="M370 124 V150"></path>
-            <path class="ln arw" d="M430 124 V150"></path>
+            <path class="ln arw" d="M90 124 V138 H86 V150"></path>
+            <path class="ln arw" d="M150 124 V138 H206 V150"></path>
+            <path class="ln arw" d="M370 124 V138 H326 V150"></path>
+            <path class="ln arw" d="M430 124 V138 H446 V150"></path>
 
             <rect class="nd" x="30" y="152" width="112" height="46" rx="7"></rect>
             <text class="lb sm" x="86" y="172">leaf 페이지</text>
@@ -958,10 +905,11 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>페이지</b>: WiredTiger 가 디스크와 메모리 사이를 오갈 때 쓰는 단위. <b>문서 하나를 읽어도 그 페이지 전체가 캐시로 올라옵니다</b></li>
-            <li><b>컬렉션 하나가 파일 하나</b>: 루트·internal·leaf 가 전부 그 안에 있습니다</li>
-            <li><b>인덱스 하나도 파일 하나</b>: 인덱스를 셋 만들면 파일도 그만큼 늘어납니다</li>
-            <li><b>컬렉션 B-tree 의 키</b>: 내부 번호인 <code>RecordId</code> 입니다</li>
+            <li><b>페이지</b>: WiredTiger 가 디스크와 메모리 사이를 오갈 때 쓰는 단위. <b>문서 하나를 읽어도 그 페이지 전체가 캐시로 올라옴</b></li>
+            <li><b>컬렉션 파일</b>: 루트·internal·leaf 가 전부 그 안에 있고, <b>문서는 leaf 페이지에 들어 있음</b></li>
+            <li><b>인덱스 파일</b>: 인덱스마다 따로 생김. 셋 만들면 파일도 셋</li>
+            <li><b>컬렉션 B-tree 키</b>: 내부 번호인 <code>RecordId</code></li>
+            <li><b>인덱스 B-tree 키</b>: 인덱스를 건 필드의 값</li>
           </ul>
         </div>
       </div>
@@ -971,10 +919,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>컬렉션을 만들면 <code>_id</code> 인덱스가 자동으로 붙어 파일이 둘 생깁니다. internal 층의 수는 데이터 양이 정하고, 이 그림은 이 실습 규모에 맞춘 것입니다.</div><div class="no">25</div></div>
+  <div class="ft"><div>컬렉션을 만들면 <code>_id</code> 인덱스가 자동으로 붙어 파일이 둘 생깁니다.</div><div class="no">23</div></div>
 </section></div>
 
-<!-- 26 · 개념 · 페이지 구조 -->
+<!-- 24 · 개념 · 페이지 구조 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -988,9 +936,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </tbody>
       </table>
       <ul class="pts">
-        <li><b>구분 키</b>: 자식들의 키 범위를 가르는 경계값입니다. 길잡이라서 작고, 그래서 internal 하나가 자식을 수백 개까지 가리킵니다</li>
-        <li><b>페이지당 문서 수</b>: 이 실습의 문서가 186 바이트이므로 32 KB 페이지에 150건 안팎이 들어갑니다</li>
-        <li><b>읽기의 지역성</b>: 이웃 문서가 함께 캐시로 올라옵니다</li>
+        <li><b>구분 키</b>: 자식들의 키 범위를 가르는 경계값. 길잡이라서 작고, internal 하나가 자식을 수백 개까지 가리킴</li>
+        <li><b>페이지당 문서 수</b>: 186 바이트 문서 기준으로 32 KB 페이지에 150건 안팎</li>
+        <li><b>읽기의 지역성</b>: 이웃 문서가 함께 캐시로 올라옴</li>
       </ul>
       <div class="callout">
         <b>자주 갱신되는 작은 필드를 큰 문서에 두지 않습니다.</b><br>
@@ -998,39 +946,83 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>탐색은 층마다 구분 키로 자식을 고르는 판단을 반복하는 것이고, 자식 주소는 <b>오프셋 · 길이 · 체크섬</b>입니다. 상한을 넘는 문서는 페이지 하나를 통째로 씁니다. 컬렉션은 leaf 32 KB · internal 4 KB, 인덱스는 둘 다 16 KB. 출처 · WiredTiger 기본값(컬렉션) · MongoDB 8.3 서버 소스(인덱스)</div><div class="no">26</div></div>
+  <div class="ft"><div></div><div class="no">24</div></div>
 </section></div>
 
-<!-- 27 · 개념 · B-tree 를 쓰는 이유 -->
+<!-- 25 · 개념 · 문서 하나의 크기 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
-    <h2 class="head">B-tree 를 쓰는 이유</h2>
+    <h2 class="head">문서 하나의 크기</h2>
     <div class="headrule"></div>
     <div class="body">
-      <p class="lead"><b>비교 대상은 「순차 저장」입니다.</b> 문서를 들어온 순서대로 파일 뒤에 이어 붙이기만 하고 트리를 두지 않는 구조입니다.</p>
-      <table class="cmp">
-        <thead><tr><th>기준</th><th>순차 저장</th><th class="hi">B-tree</th></tr></thead>
-        <tbody>
-          <tr><th>키로 찾기</th><td>처음부터 훑습니다</td><td>몇 단계 내려가면 닿습니다</td></tr>
-          <tr><th>범위 조회</th><td>삽입 순서라 정렬이 없어 전체를 훑습니다</td><td>정렬돼 있어 leaf 를 옆으로 훑으면 끝납니다</td></tr>
-          <tr><th>중간 삽입</th><td>정렬을 유지하려면 뒤를 전부 밀어야 합니다</td><td>그 페이지만 둘로 쪼갭니다</td></tr>
-        </tbody>
-      </table>
-      <ul class="pts">
-        <li><b>fan-out</b>: internal 하나가 가리키는 자식의 수입니다. 구분 키와 주소만 들어가므로 수백 개까지 들어갑니다</li>
-        <li><b>깊이</b>: fan-out 이 F 이고 데이터가 N 건이면 대략 <code>log_F(N)</code> 입니다. F 가 160 이면 <b>3단에 약 450만 건, 4단에 약 7억 건</b>이 담깁니다</li>
-      </ul>
+      <div class="split">
+        <div class="col">
+          <div class="codewrap">
+<pre style="font-size:11.5px;line-height:1.38;padding:10px 14px;">{
+  <span class="k">_id</span>:        <span class="p">ObjectId(</span><span class="s">"64f8a123bc45de6789012345"</span><span class="p">)</span>,
+  <span class="k">customerId</span>: <span class="s">"C003456"</span>,
+  <span class="k">status</span>:     <span class="s">"paid"</span>,
+  <span class="k">amount</span>:     <span class="p">48064</span>,
+  <span class="k">createdAt</span>:  <span class="p">ISODate(</span><span class="s">"2026-09-01T07:00:00Z"</span><span class="p">)</span>,
+  <span class="k">region</span>:     <span class="s">"seoul"</span>,
+  <span class="k">items</span>:      <span class="p">2</span>,
+  <span class="k">note</span>:       <span class="s">"order 123456 placed by ..."</span>
+}</pre>
+          </div>
+        </div>
+        <div class="col">
+          <table class="cmp">
+            <colgroup><col style="width:44%"><col style="width:30%"><col class="hi" style="width:26%"></colgroup>
+            <thead><tr><th>필드</th><th>타입</th><th class="hi">바이트</th></tr></thead>
+            <tbody>
+              <tr><th>_id</th><td>ObjectId</td><td>17</td></tr>
+              <tr><th>문자열</th><td>7 · 4 · 5 · 50자</td><td>120</td></tr>
+              <tr><th>정수</th><td>amount · items</td><td>23</td></tr>
+              <tr><th>날짜</th><td>createdAt</td><td>19</td></tr>
+              <tr><th>문서 머리와 종료</th><td>길이 4 · 종료 1</td><td>5</td></tr>
+              <tr><th><b>합계</b></th><td></td><td><b>184</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="callout">
-        <b>조회가 느려졌을 때 원인은 데이터가 늘어난 것이 아닙니다.</b><br>
-        건수가 백 배 늘어도 트리 깊이는 한 단 늘어나는 정도에 그칩니다. 느려졌다면 그 조회가 인덱스를 쓰지 못하고 있거나 데이터가 캐시에서 밀려난 것입니다.
+        <b>BSON 은 필드마다 타입 1바이트와 이름을 값 앞에 붙입니다.</b> 이름을 줄이면 한 페이지에 담기는 문서 수가 늘어납니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div>깊이가 곧 디스크 접근 횟수입니다. 위 건수는 fan-out 을 160, 문서를 186 바이트로 잡은 자릿수 계산입니다.</div><div class="no">27</div></div>
+  <div class="ft"><div>값의 길이에 따라 문서마다 달라지므로 컬렉션 평균은 <code>db.orders.stats().avgObjSize</code> 로 봅니다. 이 데이터는 186 바이트입니다.</div><div class="no">25</div></div>
 </section></div>
 
-<!-- 28 · 개념 · RecordId와 _id -->
+<!-- 26 · 개념 · B-tree 선택 근거 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head">B-tree 선택 근거</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <table class="cmp">
+        <thead><tr><th>기준</th><th>순차 저장</th><th class="hi">B-tree</th></tr></thead>
+        <tbody>
+          <tr><th>키로 찾기</th><td>처음부터 훑음</td><td>몇 단계 내려가면 닿음</td></tr>
+          <tr><th>범위 조회</th><td>정렬이 없어 전체를 훑음</td><td>정렬돼 있어 leaf 를 옆으로 훑음</td></tr>
+          <tr><th>중간 삽입</th><td>정렬을 유지하려면 뒤를 전부 밀어야 함</td><td>그 페이지만 둘로 쪼갬</td></tr>
+        </tbody>
+      </table>
+      <ul class="pts">
+        <li><b>fan-out (F)</b>: <b>페이지 크기 ÷ (구분 키 + 자식 주소)</b>. 컬렉션은 키가 <code>RecordId</code> 라 거의 일정하고, 인덱스는 건 필드의 값 길이에 따라 갈림</li>
+        <li><b>페이지당 문서 수 (L)</b>: leaf 하나에 담기는 문서 수. 150건 안팎</li>
+        <li><b>깊이</b>: 문서 N 건이면 대략 <code>log_F(N ÷ L)</code> 단. F 160 · L 150 이면 <b>3단에 약 380만 건, 4단에 약 6억 건</b></li>
+      </ul>
+      <div class="callout">
+        <b>조회가 느려진 원인은 데이터가 늘어난 것이 아닙니다.</b> 건수가 백 배 늘어도 깊이는 한 단입니다. 인덱스를 못 쓰거나 캐시에서 밀려난 것입니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div></div><div class="no">26</div></div>
+</section></div>
+
+<!-- 27 · 개념 · RecordId와 _id -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1061,15 +1053,15 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
             <text class="lb sm" x="564" y="112">leaf</text>
             <text class="lb sm" x="564" y="138">문서</text>
 
-            <text class="lb sm l" x="4" y="200">조회가 두 트리를 차례로 탑니다</text>
+            <text class="lb sm l" x="4" y="200">조회가 두 트리를 차례로 탐</text>
           </svg>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>키 길이</b>: <code>_id</code> 를 저장 키로 쓰면 구분 키가 커져 fan-out 이 줄고 트리가 깊어집니다. <code>RecordId</code> 는 고정 길이 정수입니다</li>
-            <li><b>보조 인덱스의 목적지</b>: <code>RecordId</code> 를 가리키므로 조회가 두 번에 끝납니다</li>
-            <li><b>삽입 위치</b>: <code>RecordId</code> 는 단조 증가라 삽입이 오른쪽 끝에만 붙습니다</li>
-            <li><b>불변</b>: <code>RecordId</code> 는 문서가 있는 동안 바뀌지 않아 보조 인덱스를 고칠 일이 없습니다</li>
+            <li><b>키 길이</b>: <code>_id</code> 를 저장 키로 쓰면 구분 키가 커져 fan-out 이 줄고 트리가 깊어짐. <code>RecordId</code> 는 고정 길이 정수</li>
+            <li><b>보조 인덱스의 목적지</b>: <code>RecordId</code> 를 가리키므로 조회가 두 번에 끝남</li>
+            <li><b>삽입 위치</b>: <code>RecordId</code> 는 단조 증가라 삽입이 오른쪽 끝에만 붙음</li>
+            <li><b>불변</b>: <code>RecordId</code> 는 문서가 있는 동안 바뀌지 않아 보조 인덱스를 고칠 일이 없음</li>
           </ul>
         </div>
       </div>
@@ -1079,10 +1071,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>MongoDB 5.3 부터 clustered collection 으로 <code>_id</code> 를 저장 키로 직접 쓸 수 있습니다. 기본값은 아닙니다.</div><div class="no">28</div></div>
+  <div class="ft"><div></div><div class="no">27</div></div>
 </section></div>
 
-<!-- 29 · 개념 · 컬렉션 B-tree 에서의 갱신 -->
+<!-- 28 · 개념 · 컬렉션 B-tree 에서의 갱신 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1099,7 +1091,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
             <text class="lb sm ac" x="400" y="49">파일 오프셋 8,192</text>
 
             <path class="ln arw" d="M260 68 V92"></path>
-            <text class="lb sm" x="260" y="110">문서 하나의 필드 하나를 고침</text>
+            <text class="lb sm" x="260" y="110">필드 하나를 고친 뒤 eviction 또는 체크포인트</text>
 
             <text class="lb sm l" x="4" y="126">갱신 후</text>
             <rect class="nd hi" x="4" y="132" width="512" height="46" rx="7"></rect>
@@ -1107,28 +1099,27 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
             <text class="lb sm" x="150" y="170">키 범위 1000 .. 1176 · 같음</text>
             <text class="lb sm ac" x="400" y="161">파일 오프셋 65,536</text>
 
-            <text class="lb sm l" x="4" y="202">트리에서의 자리는 그대로. 파일 안의 자리만 바뀝니다</text>
+            <text class="lb sm l" x="4" y="202">트리에서의 자리는 그대로. 파일 안의 자리만 바뀜</text>
           </svg>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>갱신 범위</b>: 그 문서가 든 leaf 페이지 하나입니다. 형제 페이지와 부모 페이지는 그대로입니다</li>
-            <li><b>문서의 자리</b>: 키인 <code>RecordId</code> 가 바뀌지 않아 같은 leaf 에 남습니다</li>
-            <li><b>internal</b>: 어느 자식으로 갈지가 달라지지 않아 그대로입니다</li>
-            <li><b>파일 안의 자리</b>: 원래 자리를 <b>덮어쓰지 않고</b> 그 컬렉션의 파일 안에 있는 빈 자리에 새로 씁니다. 옛 자리는 빈 구간으로 남습니다</li>
+            <li><b>갱신 단위</b>: leaf 페이지 하나. 문서 한 건이 아님</li>
+            <li><b>페이지 내용</b>: 같은 페이지의 이웃 문서까지 <b>통째로 다시 직렬화됨</b></li>
+            <li><b>파일 위치</b>: 원래 자리를 <b>덮어쓰지 않고</b> 빈 자리에 새로 놓임. 옛 자리는 빈 구간으로 남음</li>
+            <li><b>트리 위치</b>: 키인 <code>RecordId</code> 가 바뀌지 않아 키 범위가 그대로. 부모는 자식의 새 파일 주소만 고쳐 씀</li>
           </ul>
         </div>
       </div>
       <div class="callout">
-        <b>문서를 고쳐도 트리 모양은 바뀌지 않습니다.</b><br>
-        바뀌는 것은 그 페이지가 파일 안에서 놓인 자리뿐입니다. 트리가 바뀌는 것은 페이지에 자리가 없어 쪼개질 때뿐입니다.
+        <b>수정한 문서가 포함된 페이지가 통째로 다시 만들어집니다.</b>
       </div>
     </div>
   </main>
-  <div class="ft"><div>갱신된 페이지가 전부 새 자리에 쓰이므로, 루트가 새 위치를 가리키도록 바뀌기 전에 프로세스가 정지해도 옛 루트가 가리키는 트리는 온전합니다.</div><div class="no">29</div></div>
+  <div class="ft"><div></div><div class="no">28</div></div>
 </section></div>
 
-<!-- 30 · 개념 · 인덱스 B-tree 에서의 갱신 -->
+<!-- 29 · 개념 · 인덱스 B-tree 에서의 갱신 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1138,7 +1129,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <div class="split l">
         <div class="dgm">
           <svg viewBox="0 0 520 200" role="img" aria-label="인덱스 필드를 고치면 항목이 다른 leaf 로 옮겨 간다">
-            <text class="lb sm l" x="4" y="14">status 를 paid 에서 refunded 로 고침</text>
+            <text class="lb sm l" x="4" y="14"><tspan font-weight="600">status</tspan> 를 paid 에서 refunded 로 고침</text>
 
             <rect class="nd" x="4" y="30" width="230" height="60" rx="7"></rect>
             <text class="lb sm" x="119" y="52">leaf · &quot;paid&quot; 구간</text>
@@ -1152,16 +1143,16 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
 
             <rect class="nd" x="140" y="118" width="240" height="46" rx="7"></rect>
             <text class="lb sm" x="260" y="138">컬렉션 leaf</text>
-            <text class="lb sm" x="260" y="156">문서 자체도 다시 쓰임</text>
+            <text class="lb sm" x="260" y="156">문서도 다시 쓰임</text>
 
-            <text class="lb sm l" x="4" y="190">인덱스 하나에 페이지 둘, 컬렉션에 하나. 모두 dirty 가 됩니다</text>
+            <text class="lb sm l" x="4" y="190">인덱스 페이지 둘과 컬렉션 페이지 하나가 모두 dirty</text>
           </svg>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>키가 바뀝니다</b>: 인덱스 B-tree 의 키는 그 필드의 값입니다</li>
-            <li><b>항목이 옮겨 갑니다</b>: 옛 값의 leaf 에서 빠져 새 값의 leaf 로 들어갑니다</li>
-            <li><b>걸리지 않은 필드</b>: 그 필드에 인덱스가 없으면 인덱스 페이지는 손대지 않습니다</li>
+            <li><b>키 변경</b>: 인덱스 B-tree 의 키는 그 필드의 값</li>
+            <li><b>항목의 이동</b>: 옛 값의 leaf 에서 빠지고 새 값의 leaf 로 들어감</li>
+            <li><b>걸리지 않은 필드</b>: 그 필드에 인덱스가 없으면 인덱스 페이지는 손대지 않음</li>
           </ul>
         </div>
       </div>
@@ -1171,10 +1162,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>컬렉션 B-tree 와 달리 인덱스 B-tree 에서는 중간 삽입이 흔합니다. 키가 필드 값이라 값에 따라 아무 자리에나 들어갑니다.</div><div class="no">30</div></div>
+  <div class="ft"><div>컬렉션 B-tree 와 달리 인덱스 B-tree 에서는 중간 삽입이 흔합니다. 키가 필드 값이라 값에 따라 아무 자리에나 들어갑니다.</div><div class="no">29</div></div>
 </section></div>
 
-<!-- 31 · 개념 · 압축 방식 -->
+<!-- 30 · 개념 · 압축 방식 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1190,19 +1181,18 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </tbody>
       </table>
       <ul class="pts">
-        <li><b>압축 단위</b>: 문서 하나가 아니라 leaf 페이지를 통째로 압축해 디스크에 씁니다</li>
-        <li><b>인덱스는 다른 방식</b>: <b>접두어 압축</b>. 키가 정렬돼 있어 이웃한 키의 앞부분이 겹치므로 <b>겹치는 길이를 적고 나머지만 저장</b>합니다. <code>seoul-001</code> 다음의 <code>seoul-002</code> 는 앞 6자를 생략합니다</li>
+        <li><b>압축 단위</b>: 문서 하나가 아니라 leaf 페이지 전체. 압축한 뒤 디스크에 씀</li>
       </ul>
       <div class="callout">
         <b>블록 압축률을 높여도 캐시 여유는 늘지 않습니다.</b><br>
-        컬렉션 데이터는 캐시에 올라올 때 압축이 풀리기 때문입니다. <b>인덱스는 캐시에서도 접두어 압축을 유지합니다.</b>
+        컬렉션 데이터는 캐시에 올라올 때 압축이 풀리기 때문입니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div>블록 압축은 CPU와 디스크를 맞바꾸는 선택입니다. 접두어 압축은 <code>storage.wiredTiger.indexConfig.prefixCompression</code> 이 정하고 기본값이 켬입니다.</div><div class="no">31</div></div>
+  <div class="ft"><div>블록 압축은 CPU와 디스크를 맞바꾸는 선택입니다.</div><div class="no">30</div></div>
 </section></div>
 
-<!-- 32 · 개념 · 저장 구조가 정하는 설계 판단 -->
+<!-- 31 · 개념 · 저장 구조가 정하는 설계 판단 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1225,7 +1215,34 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">32</div></div>
+  <div class="ft"><div></div><div class="no">31</div></div>
+</section></div>
+
+<!-- 32 · 개념 · seed-mongo.sh 적재 스크립트 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head"><code>seed-mongo.sh</code> 적재 스크립트</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># ops 노드에서</span>
+MONGO_HOST=10.0.1.5 ~/loadgen/seed-mongo.sh <span class="c">              # lab.orders 에 20만 건</span>
+MONGO_HOST=10.0.1.5 ~/loadgen/seed-mongo.sh <span class="p">50000</span> <span class="c">        # 건수 지정</span>
+MONGO_HOST=10.0.1.5 ~/loadgen/seed-mongo.sh <span class="p">50000</span> events <span class="c"> # 컬렉션 지정</span></pre>
+      </div>
+      <ul class="pts">
+        <li><b>문서 필드</b>: <code>customerId</code>(5,000 가지) · <code>status</code> · <code>amount</code> · <code>createdAt</code> · <code>region</code> · <code>items</code> · <code>note</code></li>
+        <li><b>값을 순번에서 계산</b>: 무작위가 아니므로 같은 인자면 모두가 같은 데이터를 봄. <code>explain()</code> 출력을 서로 대조할 수 있음</li>
+        <li><b>지우지 않음</b>: 두 번 돌리면 문서가 그만큼 늘어남. 지우고 넣으려면 <code>SEED_DROP=1</code></li>
+      </ul>
+      <div class="callout">
+        <b>적재를 마치며 <code>fsync</code> 를 한 번 실행합니다.</b><br>
+        WiredTiger 는 60초마다 디스크에 확정하므로, 적재 직후 바로 조회하면 <code>storageSize</code> 가 4096 으로 나옵니다. 스크립트가 그 구간을 넘겨 줍니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div>저장 구조 확인과 캐시 지표 확인과 인덱스 실습이 이 컬렉션을 함께 씁니다. 인증을 켠 뒤에는 <code>MONGO_USER</code> 와 <code>MONGO_PASS</code> 를 함께 줍니다.</div><div class="no">32</div></div>
 </section></div>
 
 <!-- 33 · 실습 · 저장 구조 확인 -->
@@ -1237,7 +1254,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="body">
       <ol class="steps">
         <li><code>MONGO_HOST=10.0.1.5 ~/loadgen/seed-mongo.sh 200000</code> 으로 <code>lab.orders</code> 에 20만 건 적재</li>
-        <li><code>mongosh "mongodb://10.0.1.5:27017/lab"</code> 로 접속. <b>적재 대상이 <code>lab</code> 데이터베이스입니다</b></li>
+        <li><code>mongosh "mongodb://10.0.1.5:27017/lab"</code> 로 접속. <b>적재 대상이 <code>lab</code> 데이터베이스</b></li>
         <li><code>db.orders.stats()</code> 로 <code>count</code>·<code>size</code>·<code>storageSize</code>·<code>totalIndexSize</code> 확인 후 기록</li>
         <li><code>size</code> 와 <code>storageSize</code> 의 비로 압축률 계산</li>
         <li><code>db.orders.getIndexes()</code> 로 인덱스가 별도로 존재하는 것 확인</li>
@@ -1253,7 +1270,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
 
 <!-- 34 · 실습 · 예상 출력 · 저장 구조 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;문서 모델과 저장 구조</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head"><code>stats()</code> 출력</h2>
     <div class="headrule"></div>
@@ -1265,7 +1282,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <ul class="pts">
         <li><b><code>size</code></b>: 압축을 풀었을 때의 논리 크기</li>
         <li><b><code>storageSize</code></b>: 파일이 디스크에서 차지하는 크기</li>
-        <li><b><code>totalIndexSize</code></b>: 컬렉션 크기와 별개로 캐시를 씁니다</li>
+        <li><b><code>totalIndexSize</code></b>: 컬렉션 크기와 별개로 캐시를 씀</li>
       </ul>
       <div class="warn">
         <b><code>storageSize</code> 가 <code>size</code> 보다 클 수도 있습니다.</b><br>
@@ -1281,7 +1298,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   <div class="row"><div class="num">04</div></div>
   <h2>동시성 제어</h2>
   <div class="items">
-    <span>MVCC</span><span>스냅샷</span><span>문서 단위</span><span>쓰기 충돌</span><span>재시도</span>
+    <span>MVCC</span><span>스냅샷</span><span>문서 단위</span><span>실행 슬롯</span><span>쓰기 충돌</span><span>재시도</span>
   </div>
 </section></div>
 
@@ -1330,10 +1347,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>MVCC</b>: Multi-Version Concurrency Control. 값을 덮어쓰지 않고 버전을 새로 만듭니다</li>
-            <li><b>스냅샷</b>: 시작 시점의 상태를 배정받고 끝날 때까지 그것만 봅니다</li>
-            <li><b>읽기와 쓰기의 독립</b>: 읽는 쪽은 옛 버전을, 쓰는 쪽은 새 버전을 봅니다</li>
-            <li><b>버전의 자리</b>: 캐시에 두되 필요하면 history store 파일(<code>WiredTigerHS.wt</code>)로 내립니다</li>
+            <li><b>MVCC</b>: Multi-Version Concurrency Control. 값을 덮어쓰지 않고 버전을 새로 만듦</li>
+            <li><b>스냅샷</b>: 시작 시점의 상태를 배정받고 끝날 때까지 그것만 봄</li>
+            <li><b>읽기와 쓰기의 독립</b>: 읽는 쪽은 옛 버전을, 쓰는 쪽은 새 버전을 봄</li>
+            <li><b>버전의 자리</b>: 캐시에 두되 필요하면 history store 파일(<code>WiredTigerHS.wt</code>)로 내림</li>
           </ul>
         </div>
       </div>
@@ -1354,10 +1371,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>동시성 제어 단위</b>: 문서 하나입니다. 컬렉션이나 데이터베이스 전체가 아닙니다</li>
-        <li><b>동시 진행의 범위</b>: 서로 다른 문서를 고치는 쓰기는 같은 컬렉션이어도 동시에 진행됩니다</li>
-        <li><b>병목이 되는 자리</b>: 같은 문서에 쓰기가 몰릴 때입니다</li>
-        <li><b>설계로 푸는 방법</b>: 카운터를 한 문서에 몰지 않고 나눈 뒤 합산합니다</li>
+        <li><b>동시성 제어 단위</b>: 문서 하나. 컬렉션이나 데이터베이스 전체가 아님</li>
+        <li><b>동시 진행의 범위</b>: 서로 다른 문서를 고치는 쓰기는 같은 컬렉션이어도 동시에 진행됨</li>
+        <li><b>병목이 되는 자리</b>: 같은 문서에 쓰기가 몰릴 때</li>
+        <li><b>설계로 푸는 방법</b>: 카운터를 한 문서에 몰지 않고 나눈 뒤 합산</li>
       </ul>
       <div class="callout">
         <b>제어 단위가 문서인 것은 MVCC 덕분입니다.</b><br>
@@ -1376,17 +1393,18 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>동시 실행 슬롯</b>: WiredTiger 안에서 <b>동시에 실행될 수 있는 연산 수의 상한</b>입니다. 읽기용과 쓰기용이 따로 있고, 엔진이 감당하지 못할 만큼 몰리지 않게 <b>입구에서 수를 제한하는 장치</b>입니다</li>
-        <li><b>얻고 놓는 시점</b>: 연산이 엔진 작업을 시작할 때 하나 얻고 끝날 때 놓습니다. 얻지 못하면 큐에서 기다리고, <b>기다리는 연산은 <code>out</code> 에 잡히지 않습니다</b></li>
-        <li><b>낙관적 동시성 제어</b>: 먼저 잠그지 않고 진행한 뒤 끝낼 때 겹쳤으면 되돌립니다. <b>같은 문서</b>를 동시에 고칠 때만 <code>WriteConflict</code> 가 납니다</li>
-        <li><b>서버의 자동 재시도</b>: 단일 문서 쓰기는 <code>mongod</code> 가 스스로 재시도해 애플리케이션에 오류가 가지 않습니다</li>
+        <li><b>동시 실행 슬롯</b>: WiredTiger 안에서 <b>동시에 실행될 수 있는 연산 수의 상한</b>. 읽기용과 쓰기용이 따로 있고, 엔진이 감당하지 못할 만큼 몰리지 않게 <b>입구에서 수를 제한하는 장치</b></li>
+        <li><b>얻고 놓는 시점</b>: 연산이 엔진 작업을 시작할 때 하나 얻고 끝날 때 놓음. 얻지 못하면 큐에서 기다리고, <b>기다리는 연산은 <code>out</code> 에 잡히지 않음</b></li>
+        <li><b>낙관적 동시성 제어</b>: 먼저 잠그지 않고 진행한 뒤 끝낼 때 겹쳤으면 되돌림. <b>같은 문서</b>를 동시에 고칠 때만 <code>WriteConflict</code> 가 남</li>
+        <li><b>슬롯 수의 결정</b>: MongoDB 8 이 CPU 수와 부하를 보며 <b>실행 중에 조정</b>. 고정값이 아님</li>
+        <li><b>서버의 자동 재시도</b>: 단일 문서 쓰기는 <code>mongod</code> 가 스스로 재시도해 애플리케이션에 오류가 가지 않음</li>
       </ul>
       <table class="cmp" style="table-layout:fixed">
         <colgroup><col style="width:330px"><col class="hi"></colgroup>
         <thead><tr><th>지표</th><th class="hi">읽는 법</th></tr></thead>
         <tbody>
           <tr><th style="width:auto"><code>queues.execution</code></th><td><code>out</code> 은 실행 중인 수, <code>available</code> 은 남은 슬롯. <b>신호는 <code>available</code> 이 0 에 붙는 것</b></td></tr>
-          <tr><th style="width:auto"><code>metrics.operation.writeConflicts</code></th><td>충돌 누계. 기동 이후 값이라 증가분을 봅니다</td></tr>
+          <tr><th style="width:auto"><code>metrics.operation.writeConflicts</code></th><td>충돌 누계. 기동 이후 값이라 증가분을 봄</td></tr>
         </tbody>
       </table>
     </div>
@@ -1394,28 +1412,59 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   <div class="ft"><div><b><code>out</code> 은 동시에 도착한 연산이 여럿일 때만 오릅니다.</b> 연결 하나가 순차로 보내면 1 을 넘지 않습니다. 둘 다 <code>db.serverStatus()</code> 아래에 있고, <code>queues.execution</code> 은 8.0 에서 <code>wiredTiger.concurrentTransactions</code> 가 바뀐 이름입니다. 여러 문서를 묶는 트랜잭션의 재시도는 애플리케이션이 맡습니다.</div><div class="no">38</div></div>
 </section></div>
 
-<!-- 39 · 실습 · 동시성 지표 확인 -->
+<!-- 39 · 개념 · contend-mongo.sh 경합 스크립트 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;동시성 제어</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head"><code>contend-mongo.sh</code> 경합 스크립트</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># ops 노드에서. 부하를 주는 쪽과 받는 쪽을 나눕니다</span>
+MONGO_HOST=10.0.1.5 ~/loadgen/contend-mongo.sh <span class="p">8</span> <span class="p">60</span> <span class="c">   # 8개로 60초</span></pre>
+      </div>
+      <table class="cmp">
+        <colgroup><col style="width:12%"><col style="width:12%"><col class="hi" style="width:76%"></colgroup>
+        <thead><tr><th>인자</th><th>기본값</th><th class="hi">뜻</th></tr></thead>
+        <tbody>
+          <tr><th>1번째</th><td>8</td><td>동시에 도는 프로세스 수. 각자 연결 하나를 잡고 <b>같은 문서</b>를 고침</td></tr>
+          <tr><th>2번째</th><td>60</td><td>지속 시간(초). 건수가 아니라 시간으로 끊음</td></tr>
+        </tbody>
+      </table>
+      <ul class="pts">
+        <li><b>경합 대상</b>: <code>loadtest.hot</code> 의 <code>_id:1</code> 문서 하나. 프로세스 전부가 그 하나를 <code>$inc</code></li>
+        <li><b>문서 하나인 이유</b>: 낙관적 동시성 제어는 같은 문서를 동시에 고칠 때만 충돌을 냄. 서로 다른 문서를 넣는 부하는 아무리 보내도 충돌이 0</li>
+        <li><b>출력</b>: 갱신 횟수와 초당 횟수, 부하 전후의 충돌 누계, <b>갱신 100회당 충돌</b></li>
+      </ul>
+    </div>
+  </main>
+  <div class="ft"><div>시간으로 끊는 이유는 둘입니다. 건수로 끊으면 노드마다 끝나는 시각이 달라지고, Prometheus 가 15초마다 긁으므로 60초는 되어야 그래프에 점이 네댓 찍힙니다.</div><div class="no">39</div></div>
+</section></div>
+
+<!-- 40 · 실습 · 같은 문서 경합 만들기 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 04</span> &nbsp;동시성 제어<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
-    <h2 class="head">동시성 지표 확인</h2>
+    <h2 class="head">같은 문서 경합 만들기</h2>
     <div class="headrule"></div>
     <div class="body">
       <ol class="steps">
-        <li><code>mongosh "mongodb://10.0.1.5:27017/lab"</code> 로 접속</li>
-        <li><code>db.serverStatus().queues.execution</code> 로 읽기·쓰기 슬롯 확인. <b><code>out</code> 과 <code>available</code>, 그리고 둘의 합인 전체 슬롯 수를 적어 둠</b></li>
-        <li><code>db.serverStatus().metrics.operation.writeConflicts</code> 로 충돌 누계 확인. <b>두 값을 평상시 기준값으로 기록</b></li>
+        <li><code>mongosh "mongodb://10.0.1.5:27017/lab"</code> 로 접속해 부하 전 값을 기록. <code>db.serverStatus().queues.execution</code> 과 <code>db.serverStatus().metrics.operation.writeConflicts</code></li>
+        <li><code>MONGO_HOST=10.0.1.5 ~/loadgen/contend-mongo.sh</code> 로 60초 부하</li>
+        <li>도는 동안 Grafana 에서 <b>쓰기 충돌 증가율</b>·<b>쓰기 슬롯 사용 중</b>·<b>슬롯 잔량</b>·<b>전체 슬롯 수</b> 확인</li>
+        <li>끝난 뒤 1번의 두 값을 다시 읽어 대비. 스크립트가 찍은 충돌 증가분과 대조</li>
+        <li><code>mongosh "mongodb://10.0.1.5:27017/loadtest" --eval 'db.dropDatabase()'</code> 로 정리</li>
       </ol>
-      <div class="callout">
-        <b>지금 값은 둘 다 한가한 상태의 값입니다.</b><br>
-        <code>out</code> 은 0 이나 1, 충돌 누계는 0 입니다. <b>이 값이 기준선이고, 운영에서 지연을 만났을 때 지금과 무엇이 달라졌는지로 판단합니다.</b> 값이 움직이는 것을 보려면 같은 문서에 동시에 쓰는 부하가 필요합니다. 이 실습에는 그 부하가 없습니다.
+      <div class="warn">
+        <b><code>dropDatabase</code> 는 되돌릴 수 없습니다.</b><br>
+        <code>loadtest</code> 는 이 실습에서만 쓰는 데이터베이스이고 <code>lab</code> 은 건드리지 않습니다. 데이터베이스 이름을 확인하고 실행하세요.
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정 · 두 지표를 읽고 값을 적어 두었으면 완료입니다. <code>queues.execution</code> 은 8.0 에서 <code>wiredTiger.concurrentTransactions</code> 가 바뀐 이름입니다.</div><div class="no">39</div></div>
+  <div class="ft"><div>완료 판정 · 충돌 누계가 0 에서 늘었고, 부하 전후의 두 값을 적어 두었으면 완료입니다.</div><div class="no">40</div></div>
 </section></div>
 
-<!-- 40 · 챕터 · WiredTiger 캐시와 지속성 -->
+<!-- 41 · 챕터 · WiredTiger 캐시와 지속성 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">05</div></div>
   <h2>WiredTiger 캐시와 지속성</h2>
@@ -1424,7 +1473,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   </div>
 </section></div>
 
-<!-- 41 · 개념 · WiredTiger 캐시 -->
+<!-- 42 · 개념 · WiredTiger 캐시 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1451,8 +1500,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
           <ul class="pts">
             <li><b>캐시에 담기는 대상</b>: 최근에 접근한 데이터 페이지와 인덱스 페이지</li>
             <li><b>기본 계산식</b>: <code>(물리 메모리 − 1 GiB) × 0.5</code></li>
-            <li><b>캐시 안의 상태</b>: 컬렉션 데이터는 압축이 풀려 있고 인덱스는 접두어 압축을 유지합니다</li>
-            <li><b>인덱스의 자리</b>: 같은 캐시를 쓰므로 인덱스를 늘리면 데이터가 쓸 캐시가 좁아집니다</li>
+            <li><b>캐시 안의 상태</b>: 컬렉션 데이터는 압축이 풀려 있고 인덱스는 접두어 압축을 유지</li>
+            <li><b>인덱스의 자리</b>: 같은 캐시를 쓰므로 인덱스를 늘리면 데이터가 쓸 캐시가 좁아짐</li>
           </ul>
         </div>
       </div>
@@ -1462,10 +1511,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">41</div></div>
+  <div class="ft"><div></div><div class="no">42</div></div>
 </section></div>
 
-<!-- 42 · 개념 · dirty와 clean -->
+<!-- 43 · 개념 · dirty와 clean -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1473,11 +1522,11 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>페이지의 두 상태</b>: 캐시에 올라온 페이지는 <b>반드시 clean 이거나 dirty</b> 입니다. 캐시 사용량은 이 둘의 합입니다</li>
-        <li><b>clean 페이지</b>: 디스크의 내용과 같은 페이지입니다. 버려도 잃을 것이 없습니다</li>
-        <li><b>dirty 페이지</b>: 갱신되어 디스크와 달라진 페이지입니다. 버리려면 먼저 디스크에 써야 합니다</li>
-        <li><b>쓰기가 끝나는 지점</b>: 쓰기 요청은 dirty 페이지를 만든 시점에 응답을 받습니다. 디스크 기록은 그 뒤입니다</li>
-        <li><b>dirty 누적 시의 영향</b>: 버릴 수 있는 페이지가 줄어 캐시를 비우기 어려워집니다</li>
+        <li><b>페이지의 두 상태</b>: 캐시에 올라온 페이지는 <b>반드시 clean 이거나 dirty</b>. 캐시 사용량은 이 둘의 합</li>
+        <li><b>clean 페이지</b>: 디스크의 내용과 같은 페이지. 버려도 잃을 것이 없음</li>
+        <li><b>dirty 페이지</b>: 갱신되어 디스크와 달라진 페이지. 버리려면 먼저 디스크에 써야 함</li>
+        <li><b>쓰기가 끝나는 지점</b>: 쓰기 요청은 dirty 페이지를 만든 시점에 응답을 받음. 디스크 기록은 그 뒤</li>
+        <li><b>dirty 누적 시의 영향</b>: 버릴 수 있는 페이지가 줄어 캐시를 비우기 어려워짐</li>
         <li><b>확인 방법</b>: <code>db.serverStatus().wiredTiger.cache</code>. 캐시 사용량은 <code>bytes currently in the cache</code>, 그중 dirty 는 <code>tracked dirty bytes in the cache</code></li>
       </ul>
       <div class="callout">
@@ -1486,10 +1535,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">42</div></div>
+  <div class="ft"><div></div><div class="no">43</div></div>
 </section></div>
 
-<!-- 43 · 개념 · eviction -->
+<!-- 44 · 개념 · eviction -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1498,8 +1547,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="body">
       <ul class="pts">
         <li><b>정의</b>: 캐시에서 페이지를 골라 내보내 자리를 만드는 동작. 평소에는 전용 스레드가 백그라운드에서 수행</li>
-        <li><b>비용 차이</b>: clean 은 메모리에서 지우면 끝이고, <b>dirty 는 디스크에 쓴 뒤 버립니다</b></li>
-        <li><b>임계값이 걸리는 대상</b>: <b>아래 넷은 전부 두 비율에 걸립니다.</b> 두 비율은 캐시 사용률(<code>bytes currently in the cache</code> ÷ <code>maximum bytes configured</code>)과 dirty 비율(<code>tracked dirty bytes in the cache</code> ÷ 같은 값)이며, 지금 값은 <code>db.serverStatus().wiredTiger.cache</code> 로 읽습니다</li>
+        <li><b>비용 차이</b>: clean 은 메모리에서 지우면 끝이고, <b>dirty 는 디스크에 쓴 뒤 버림</b></li>
+        <li><b>임계값이 걸리는 대상</b>: <b>아래 넷은 전부 두 비율에 걸림.</b> 두 비율은 캐시 사용률(<code>bytes currently in the cache</code> ÷ <code>maximum bytes configured</code>)과 dirty 비율(<code>tracked dirty bytes in the cache</code> ÷ 같은 값)이며, 지금 값은 <code>db.serverStatus().wiredTiger.cache</code> 로 읽음</li>
       </ul>
       <table class="cmp" style="table-layout:fixed">
         <colgroup><col style="width:250px"><col><col style="width:96px"><col class="hi" style="width:330px"></colgroup>
@@ -1513,10 +1562,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div>표의 값은 WiredTiger 기본값이며 이 실습에서 바꾸지 않습니다.</div><div class="no">43</div></div>
+  <div class="ft"><div>표의 값은 WiredTiger 기본값이며 이 실습에서 바꾸지 않습니다.</div><div class="no">44</div></div>
 </section></div>
 
-<!-- 44 · 개념 · eviction이 지연으로 드러나는 조건 -->
+<!-- 45 · 개념 · eviction이 지연으로 드러나는 조건 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1524,11 +1573,11 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>평소</b>: eviction 스레드가 백그라운드로 처리하므로 요청 응답에 드러나지 않습니다</li>
-        <li><b>임계값 초과 시</b>: 요청을 처리하던 스레드가 그 자리에서 eviction 을 직접 수행합니다</li>
-        <li><b>그 결과</b>: 그 요청의 응답 시간에 페이지를 디스크에 쓰는 비용이 그대로 더해집니다</li>
-        <li><b>관측되는 양상</b>: 평균은 정상인데 상위 백분위만 크게 늘고, 캐시 사용률이 임계값 부근에 붙어 있습니다</li>
-        <li><b>확인 방법</b>: <code>db.serverStatus().wiredTiger.cache</code> 의 <code>page evict attempts by application threads</code>. 지연 누적은 <code>application thread time evicting (usecs)</code> 가 더 직접적인 지표입니다</li>
+        <li><b>평소</b>: eviction 스레드가 백그라운드로 처리하므로 요청 응답에 드러나지 않음</li>
+        <li><b>임계값 초과 시</b>: 요청을 처리하던 스레드가 그 자리에서 eviction 을 직접 수행</li>
+        <li><b>응답 시간에 미치는 영향</b>: 그 요청의 응답 시간에 페이지를 디스크에 쓰는 비용이 그대로 더해짐</li>
+        <li><b>관측되는 양상</b>: 평균은 정상인데 상위 백분위만 크게 늘고, 캐시 사용률이 임계값 부근에 붙어 있음</li>
+        <li><b>확인 방법</b>: <code>db.serverStatus().wiredTiger.cache</code> 의 <code>page evict attempts by application threads</code>. 지연 누적은 <code>application thread time evicting (usecs)</code> 가 더 직접적인 지표</li>
       </ul>
       <div class="callout">
         <b><code>page evict attempts by application threads</code> 가 올라가면 캐시가 부족한 것입니다.</b><br>
@@ -1536,10 +1585,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">44</div></div>
+  <div class="ft"><div></div><div class="no">45</div></div>
 </section></div>
 
-<!-- 45 · 개념 · 저널 -->
+<!-- 46 · 개념 · 저널 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1575,9 +1624,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <div class="col">
           <ul class="pts">
             <li><b>정의</b>: 체크포인트로 확정되지 않은 변경을 순서대로 적어 두는 선행 기록</li>
-            <li><b>필요한 이유</b>: 캐시의 dirty 페이지는 프로세스가 정지하면 사라집니다. <b>같은 변경을 저널에도 남겨 두었다가 재기동할 때 재생해 그 페이지를 다시 만듭니다</b></li>
-            <li><b>디스크로 내려가는 시점</b>: 100 밀리초마다. <b><code>j:true</code> 인 쓰기는 저널이 디스크에 닿은 것을 확인한 뒤 응답합니다</b></li>
-            <li><b>그룹 커밋</b>: 같은 시점의 여러 쓰기를 한 번의 디스크 쓰기로 묶습니다</li>
+            <li><b>필요한 이유</b>: 캐시의 dirty 페이지는 프로세스가 정지하면 사라짐. <b>같은 변경을 저널에도 남겨 두었다가 재기동할 때 재생해 그 페이지를 다시 만듦</b></li>
+            <li><b>디스크로 내려가는 시점</b>: 100 밀리초마다. <b><code>j:true</code> 인 쓰기는 저널이 디스크에 닿은 것을 확인한 뒤 응답</b></li>
+            <li><b>그룹 커밋</b>: 같은 시점의 여러 쓰기를 한 번의 디스크 쓰기로 묶음</li>
           </ul>
         </div>
       </div>
@@ -1587,10 +1636,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>저널은 페이지가 아니라 「무슨 변경이 있었는지」만 적으므로 비용이 작아 자주 기록할 수 있습니다. 재기동은 마지막 체크포인트가 남긴 상태를 읽고 그 이후의 저널을 재생하는 순서입니다. 6.1 부터 항상 켜져 있습니다.</div><div class="no">45</div></div>
+  <div class="ft"><div>저널은 페이지가 아니라 「무슨 변경이 있었는지」만 적으므로 비용이 작아 자주 기록할 수 있습니다. 재기동은 마지막 체크포인트가 남긴 상태를 읽고 그 이후의 저널을 재생하는 순서입니다. 6.1 부터 항상 켜져 있습니다.</div><div class="no">46</div></div>
 </section></div>
 
-<!-- 46 · 개념 · 체크포인트 -->
+<!-- 47 · 개념 · 체크포인트 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1598,10 +1647,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>정의</b>: 그 시점의 일관된 상태를 디스크에 확정해 두는 동작입니다</li>
-        <li><b>실행 시점</b>: 60초마다입니다. 그 밖에는 <code>fsync</code> 나 정상 종료처럼 명시적으로 요구할 때입니다</li>
-        <li><b>실행 방식</b>: 스냅샷을 만들고 dirty 페이지를 전부 디스크에 씁니다. 갱신이 루트까지 전파돼 있으므로 마지막에 루트가 새 위치를 가리키도록 바꾸면 확정됩니다</li>
-        <li><b>끝난 뒤</b>: 그 이전의 저널은 필요하지 않으므로 정리됩니다</li>
+        <li><b>정의</b>: 그 시점의 일관된 상태를 디스크에 확정해 두는 동작</li>
+        <li><b>실행 시점</b>: 60초마다. 그 밖에는 <code>fsync</code> 나 정상 종료처럼 명시적으로 요구할 때</li>
+        <li><b>실행 방식</b>: 스냅샷을 만들고 dirty 페이지를 전부 디스크에 씀. 갱신이 루트까지 전파돼 있으므로 마지막에 루트가 새 위치를 가리키도록 바꾸면 확정</li>
+        <li><b>끝난 뒤</b>: 그 이전의 저널은 필요하지 않으므로 정리됨</li>
       </ul>
       <div class="callout">
         <b>저널이 체크포인트 사이의 공백을 메웁니다.</b><br>
@@ -1609,10 +1658,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>체크포인트가 실행되는 동안 디스크 쓰기가 몰립니다. 주기적으로 IO 가 치솟는 것이 정상입니다.</div><div class="no">46</div></div>
+  <div class="ft"><div>체크포인트가 실행되는 동안 디스크 쓰기가 몰립니다. 주기적으로 IO 가 치솟는 것이 정상입니다.</div><div class="no">47</div></div>
 </section></div>
 
-<!-- 47 · 개념 · 쓰기 경로 -->
+<!-- 48 · 개념 · 쓰기 경로 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1648,9 +1697,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b>응답 시점의 상태</b>: 디스크가 아니라 <b>위 그림에서 강조한 두 곳</b>, 곧 캐시의 dirty 페이지와 저널 버퍼까지 기록된 상태입니다</li>
-            <li><b>Write Concern 의 <code>w</code></b>: <b>몇 대의 멤버</b>가 받았는지를 셉니다. <code>1</code> · <code>majority</code> · 숫자를 넣습니다</li>
-            <li><b>Write Concern 의 <code>j</code></b>: <b><code>w</code> 가 요구하는 멤버 전부에서</b> 저널이 디스크에 닿았는지를 봅니다. <code>true</code> 면 100 밀리초 주기를 기다리지 않고 그 자리에서 내보냅니다</li>
+            <li><b>응답 시점의 상태</b>: 디스크가 아니라 <b>위 그림에서 강조한 두 곳</b>, 곧 캐시의 dirty 페이지와 저널 버퍼까지 기록된 상태</li>
+            <li><b>Write Concern 의 <code>w</code></b>: <b>몇 대의 멤버</b>가 받았는지를 셈. <code>1</code> · <code>majority</code> · 숫자를 넣음</li>
+            <li><b>Write Concern 의 <code>j</code></b>: <b><code>w</code> 가 요구하는 멤버 전부에서</b> 저널이 디스크에 닿았는지를 봄. <code>true</code> 면 100 밀리초 주기를 기다리지 않고 그 자리에서 내보냄</li>
           </ul>
         </div>
       </div>
@@ -1660,10 +1709,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>Write Concern 의 항목은 셋입니다. 남은 <code>wtimeout</code> 은 <code>w</code> 조건을 기다리는 시간 상한이고, 넘겨서 오류가 나도 이미 쓰인 것이 되돌아가지는 않습니다. 읽기 쪽의 Read Concern 과 Read Preference 는 별개 축입니다.</div><div class="no">47</div></div>
+  <div class="ft"><div>Write Concern 의 항목은 셋입니다. 남은 <code>wtimeout</code> 은 <code>w</code> 조건을 기다리는 시간 상한이고, 넘겨서 오류가 나도 이미 쓰인 것이 되돌아가지는 않습니다. 읽기 쪽의 Read Concern 과 Read Preference 는 별개 축입니다.</div><div class="no">48</div></div>
 </section></div>
 
-<!-- 48 · 개념 · 읽기 경로 -->
+<!-- 49 · 개념 · 읽기 경로 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1701,9 +1750,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </svg>
       </div>
       <ul class="pts">
-        <li><b>캐시 적중</b>: 메모리에서 바로 돌려줍니다</li>
-        <li><b>캐시 미스</b>: 페이지를 디스크에서 읽고 압축을 풀어 캐시에 올린 뒤 돌려줍니다</li>
-        <li><b>적재 자리 부족 시</b>: eviction 이 먼저 일어나야 합니다.</li>
+        <li><b>캐시 적중</b>: 메모리에서 바로 돌려줌</li>
+        <li><b>캐시 미스</b>: 페이지를 디스크에서 읽고 압축을 풀어 캐시에 올린 뒤 돌려줌</li>
+        <li><b>적재 자리 부족 시</b>: eviction 이 먼저 일어나야 함</li>
       </ul>
       <div class="callout">
         <b><code>pages read into cache</code> 가 꾸준히 오르면 working set 이 캐시를 넘어선 것입니다.</b><br>
@@ -1711,10 +1760,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">48</div></div>
+  <div class="ft"><div></div><div class="no">49</div></div>
 </section></div>
 
-<!-- 49 · 개념 · 엔진 지표 -->
+<!-- 50 · 개념 · 엔진 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1736,10 +1785,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">49</div></div>
+  <div class="ft"><div></div><div class="no">50</div></div>
 </section></div>
 
-<!-- 50 · 실습 · 캐시 지표 확인 -->
+<!-- 51 · 실습 · 캐시 지표 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1752,7 +1801,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <li><code>ansible mongo-1 -m systemd -a "name=mongod state=restarted" --become</code> 로 <b>재기동해 캐시를 비움</b></li>
         <li>재접속 후 <code>db.serverStatus().wiredTiger.cache</code> 에서 <code>bytes currently in the cache</code> 와 <code>tracked dirty bytes in the cache</code> 를 <b>기준값으로 기록</b></li>
         <li><code>db.orders.find().itcount()</code> 로 20만 건을 전부 조회</li>
-        <li>4번을 다시 실행해 <b>두 값의 변화 확인.</b> 캐시 사용률과 dirty 비율은 <b>둘 다 상한으로 나눕니다.</b> 계산해서 p.43 의 임계값 80%·5% 와 대조</li>
+        <li>4번을 다시 실행해 <b>두 값의 변화 확인.</b> 캐시 사용률과 dirty 비율은 <b>둘 다 상한으로 나눕니다.</b> 계산해서 임계값 80%·5% 와 대조</li>
       </ol>
       <div class="callout">
         <b>지금 값이 이 환경의 기준선입니다.</b><br>
@@ -1760,12 +1809,12 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정 · 상한이 계산값에 근접하고, 5번 뒤 <code>bytes currently in the cache</code> 가 늘고, 두 비율이 임계값 아래이면 완료입니다.</div><div class="no">50</div></div>
+  <div class="ft"><div>완료 판정 · 상한이 계산값에 근접하고, 5번 뒤 <code>bytes currently in the cache</code> 가 늘고, 두 비율이 임계값 아래이면 완료입니다.</div><div class="no">51</div></div>
 </section></div>
 
-<!-- 51 · 실습 · 예상 출력 · 캐시 지표 -->
+<!-- 52 · 실습 · 예상 출력 · 캐시 지표 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 05</span> &nbsp;WiredTiger 캐시와 지속성</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">캐시 지표</h2>
     <div class="headrule"></div>
@@ -1777,9 +1826,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
 <span class="s">'tracked dirty bytes in the cache'</span>: <span class="p">     49276</span>  &rarr;  <span class="p">     49276</span></pre>
       </div>
       <ul class="pts">
-        <li><b>캐시 사용률</b>: 사용량 ÷ 상한. 조회 뒤가 <code>43768359 ÷ 7845445632 = 0.56%</code> 로 임계값 80% 에서 멉니다</li>
-        <li><b>dirty 비율</b>: <b>dirty ÷ 상한</b>입니다. 사용량이 아닙니다. 조회 뒤가 <code>0.0006%</code> 로 임계값 5% 에서 멉니다</li>
-        <li><b>dirty 가 한 바이트도 안 늘었습니다</b>: 읽기만 했기 때문입니다. dirty 를 만드는 것은 쓰기뿐입니다</li>
+        <li><b>캐시 사용률</b>: 사용량 ÷ 상한. 조회 뒤가 <code>43768359 ÷ 7845445632 = 0.56%</code> 로 임계값 80% 에서 멂</li>
+        <li><b>dirty 비율</b>: <b>dirty ÷ 상한</b>. 사용량이 아님. 조회 뒤가 <code>0.0006%</code> 로 임계값 5% 에서 멂</li>
+        <li><b>dirty 증가 없음</b>: 읽기만 했기 때문. dirty 를 만드는 것은 쓰기뿐</li>
       </ul>
       <div class="callout">
         <b>지금 값이 이 환경의 기준선입니다.</b><br>
@@ -1787,10 +1836,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>16 GiB 노드가 보고하는 물리 메모리는 15.61 GiB 라 상한이 <code>(15.61 − 1) × 0.5 = 7.31 GiB</code> 입니다. 재기동 직후 값은 기동하면서 읽어 올린 카탈로그와 인덱스 메타데이터이고 회차마다 다르므로, 절대값이 아니라 증가분을 봅니다.</div><div class="no">51</div></div>
+  <div class="ft"><div>16 GiB 노드가 보고하는 물리 메모리는 15.61 GiB 라 상한이 <code>(15.61 − 1) × 0.5 = 7.31 GiB</code> 입니다. 재기동 직후 값은 기동하면서 읽어 올린 카탈로그와 인덱스 메타데이터이고 회차마다 다르므로, 절대값이 아니라 증가분을 봅니다.</div><div class="no">52</div></div>
 </section></div>
 
-<!-- 52 · 챕터 · Replica Set과 선출 -->
+<!-- 53 · 챕터 · Replica Set과 선출 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">06</div></div>
   <h2>Replica Set과 선출</h2>
@@ -1799,7 +1848,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   </div>
 </section></div>
 
-<!-- 53 · 개념 · Replica Set의 정의 -->
+<!-- 54 · 개념 · Replica Set의 정의 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1807,10 +1856,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>구성</b>: 같은 데이터를 복제해 두는 <code>mongod</code> 여러 대가 하나로 동작합니다</li>
-        <li><b>쓰기</b>: PRIMARY 한 대만 받고, 나머지는 그 기록을 따라 적용합니다</li>
-        <li><b>한 대 정지 시</b>: 남은 멤버가 같은 데이터를 갖고 있어 서비스가 이어집니다</li>
-        <li><b>담을 수 있는 양</b>: 데이터를 나눠 담지 않으므로 노드 한 대분 그대로입니다</li>
+        <li><b>구성</b>: 같은 데이터를 복제해 두는 <code>mongod</code> 여러 대가 하나로 동작</li>
+        <li><b>쓰기</b>: PRIMARY 한 대만 받고, 나머지는 그 기록을 따라 적용</li>
+        <li><b>한 대 정지 시</b>: 남은 멤버가 같은 데이터를 갖고 있어 서비스가 이어짐</li>
+        <li><b>담을 수 있는 양</b>: 데이터를 나눠 담지 않으므로 노드 한 대분 그대로</li>
       </ul>
       <div class="callout">
         <b>복제는 가용성을 위한 것이지 용량을 위한 것이 아닙니다.</b><br>
@@ -1818,10 +1867,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">53</div></div>
+  <div class="ft"><div></div><div class="no">54</div></div>
 </section></div>
 
-<!-- 54 · 개념 · 멤버 역할 -->
+<!-- 55 · 개념 · 멤버 역할 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1831,9 +1880,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>역할</th><th class="hi">수행 작업</th><th>데이터 보유</th></tr></thead>
         <tbody>
-          <tr><th>PRIMARY</th><td>쓰기를 받는 유일한 멤버입니다. 읽기도 받습니다</td><td>예</td></tr>
-          <tr><th>SECONDARY</th><td>oplog 를 재생해 PRIMARY 를 따라갑니다</td><td>예</td></tr>
-          <tr><th>Arbiter</th><td>투표만 합니다</td><td><b>아니오</b></td></tr>
+          <tr><th>PRIMARY</th><td>쓰기를 받는 유일한 멤버. 읽기도 받음</td><td>예</td></tr>
+          <tr><th>SECONDARY</th><td>oplog 를 재생해 PRIMARY 를 따라감</td><td>예</td></tr>
+          <tr><th>Arbiter</th><td>투표만 함</td><td><b>아니오</b></td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -1842,10 +1891,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">54</div></div>
+  <div class="ft"><div></div><div class="no">55</div></div>
 </section></div>
 
-<!-- 55 · 개념 · 3멤버 구성 -->
+<!-- 56 · 개념 · 3멤버 구성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1885,16 +1934,16 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </svg>
       </div>
       <ul class="pts">
-        <li>쓰기는 PRIMARY 하나가 받습니다</li>
-        <li>SECONDARY 는 oplog 를 읽어 같은 변경을 자기 데이터에 적용합니다</li>
-        <li>세 멤버가 서로의 상태를 주기적으로 확인합니다</li>
+        <li>쓰기는 PRIMARY 하나가 받음</li>
+        <li>SECONDARY 는 oplog 를 읽어 같은 변경을 자기 데이터에 적용</li>
+        <li>세 멤버가 서로의 상태를 주기적으로 확인</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div>영역을 나누어 배치하는 이유는 한 영역이 통째로 정지해도 과반이 남기 때문입니다.</div><div class="no">55</div></div>
+  <div class="ft"><div>영역을 나누어 배치하는 이유는 한 영역이 통째로 정지해도 과반이 남기 때문입니다.</div><div class="no">56</div></div>
 </section></div>
 
-<!-- 56 · 개념 · oplog -->
+<!-- 57 · 개념 · oplog -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1902,9 +1951,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>정의</b>: 크기가 고정된 컬렉션입니다. 모든 쓰기를 여러 번 적용해도 결과가 같은 형태로 기록합니다</li>
-        <li><b>고정 크기인 이유</b>: 오래된 것부터 덮어씁니다. 무한히 쌓이지 않습니다</li>
-        <li><b>oplog 윈도우</b>: 가장 오래된 기록부터 최신까지의 시간 폭입니다</li>
+        <li><b>정의</b>: 크기가 고정된 컬렉션. 모든 쓰기를 여러 번 적용해도 결과가 같은 형태로 기록</li>
+        <li><b>고정 크기인 이유</b>: 오래된 것부터 덮어씀. 무한히 쌓이지 않음</li>
+        <li><b>oplog 윈도우</b>: 가장 오래된 기록부터 최신까지의 시간 폭</li>
       </ul>
       <div class="callout">
         <b>oplog 윈도우가 복구 여유입니다.</b><br>
@@ -1912,10 +1961,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">56</div></div>
+  <div class="ft"><div></div><div class="no">57</div></div>
 </section></div>
 
-<!-- 57 · 개념 · SECONDARY 정지 시간과 복구 방식 -->
+<!-- 58 · 개념 · SECONDARY 정지 시간과 복구 방식 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1923,8 +1972,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>정지 시간</b>: SECONDARY 가 멈춰 있던 동안 PRIMARY 에 쌓인 쓰기를 시간으로 본 것입니다</li>
-        <li><b>판단 기준</b>: 그 시간이 oplog 윈도우 안에 들어오는지가 복구 방식을 가릅니다</li>
+        <li><b>정지 시간</b>: SECONDARY 가 멈춰 있던 동안 PRIMARY 에 쌓인 쓰기를 시간으로 본 것</li>
+        <li><b>판단 기준</b>: 그 시간이 oplog 윈도우 안에 들어오는지가 복구 방식을 가름</li>
       </ul>
       <table class="cmp">
         <thead><tr><th>정지 시간</th><th class="hi">결과</th><th>걸리는 시간</th></tr></thead>
@@ -1934,15 +1983,15 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </tbody>
       </table>
       <ul class="pts">
-        <li>윈도우가 24시간이면 하루 안에 복구한 노드는 재생으로 따라잡습니다</li>
-        <li>사흘 뒤에 되살린 노드는 전체를 다시 받습니다</li>
+        <li>윈도우가 24시간이면 하루 안에 복구한 노드는 재생으로 따라잡음</li>
+        <li>사흘 뒤에 되살린 노드는 전체를 다시 받음</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div>챕터 11 복귀 실습에서 이 판단을 실제로 합니다.</div><div class="no">57</div></div>
+  <div class="ft"><div>챕터 11 복귀 실습에서 이 판단을 실제로 합니다.</div><div class="no">58</div></div>
 </section></div>
 
-<!-- 58 · 개념 · 복제 지연 -->
+<!-- 59 · 개념 · 복제 지연 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1952,14 +2001,14 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <ul class="pts">
         <li><b>정의</b>: SECONDARY 가 oplog 를 재생하는 데 걸리는 시간차</li>
         <li><b>커지는 시점</b>: 쓰기가 몰릴 때, SECONDARY 의 디스크가 느릴 때</li>
-        <li><b>운영상의 의미</b>: 읽기를 SECONDARY 로 보내면 그만큼 오래된 데이터를 봅니다</li>
+        <li><b>운영상의 의미</b>: 읽기를 SECONDARY 로 보내면 그만큼 오래된 데이터를 봄</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">58</div></div>
+  <div class="ft"><div></div><div class="no">59</div></div>
 </section></div>
 
-<!-- 59 · 개념 · 선출의 정의 -->
+<!-- 60 · 개념 · 선출의 정의 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -1967,9 +2016,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>절차</b>: PRIMARY 가 없어지면 남은 멤버끼리 투표해 새 PRIMARY 를 정합니다</li>
-        <li><b>감시 주체</b>: 별도 감시자 없이 멤버끼리 서로의 상태를 확인합니다</li>
-        <li><b>선출이 끝날 때까지</b>: 쓰기는 거부됩니다</li>
+        <li><b>절차</b>: PRIMARY 가 없어지면 남은 멤버끼리 투표해 새 PRIMARY 를 정함</li>
+        <li><b>감시 주체</b>: 별도 감시자 없이 멤버끼리 서로의 상태를 확인</li>
+        <li><b>선출이 끝날 때까지</b>: 쓰기는 거부됨</li>
       </ul>
       <div class="callout">
         <b>자동 전환이지 무중단은 아닙니다.</b><br>
@@ -1977,10 +2026,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">59</div></div>
+  <div class="ft"><div></div><div class="no">60</div></div>
 </section></div>
 
-<!-- 60 · 개념 · 과반 -->
+<!-- 61 · 개념 · 과반 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2002,10 +2051,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">60</div></div>
+  <div class="ft"><div></div><div class="no">61</div></div>
 </section></div>
 
-<!-- 61 · 개념 · 선출이 시작되는 조건 -->
+<!-- 62 · 개념 · 선출이 시작되는 조건 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2026,10 +2075,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">61</div></div>
+  <div class="ft"><div></div><div class="no">62</div></div>
 </section></div>
 
-<!-- 62 · 개념 · 선출 중의 동작 -->
+<!-- 63 · 개념 · 선출 중의 동작 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2048,8 +2097,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <div class="st new">새 PRIMARY 확정</div>
       </div>
       <ul class="pts">
-        <li><b>선출되는 동안 쓰기는 거부됩니다.</b> <code>not primary</code> 계열 오류가 납니다</li>
-        <li>읽기는 대상 노드를 어떻게 지정했는지에 따라 계속될 수 있습니다</li>
+        <li><b>선출 중의 쓰기</b>: 거부됨. <code>not primary</code> 계열 오류가 남</li>
+        <li>읽기는 대상 노드를 어떻게 지정했는지에 따라 계속될 수 있음</li>
       </ul>
       <div class="callout">
         <b>애플리케이션의 재시도 설정이 체감을 좌우합니다.</b><br>
@@ -2057,10 +2106,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">62</div></div>
+  <div class="ft"><div></div><div class="no">63</div></div>
 </section></div>
 
-<!-- 63 · 개념 · Rollback -->
+<!-- 64 · 개념 · Rollback -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2069,8 +2118,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="body">
       <ul class="pts">
         <li><b>정의</b>: 정지했던 옛 PRIMARY 가 복귀할 때 그 노드에만 있던 쓰기가 되돌려지는 것</li>
-        <li><b>생기는 이유</b>: 그 쓰기를 다른 멤버가 받지 못한 채 PRIMARY 가 정지했기 때문입니다</li>
-        <li><b>남는 곳</b>: 데이터 디렉터리에 rollback 파일로 남습니다</li>
+        <li><b>생기는 이유</b>: 그 쓰기를 다른 멤버가 받지 못한 채 PRIMARY 가 정지했기 때문</li>
+        <li><b>남는 곳</b>: 데이터 디렉터리에 rollback 파일로 남음</li>
       </ul>
       <div class="callout">
         <b><code>w:majority</code> 가 이것을 막습니다.</b><br>
@@ -2078,10 +2127,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">63</div></div>
+  <div class="ft"><div></div><div class="no">64</div></div>
 </section></div>
 
-<!-- 64 · 개념 · rs.status() 의 주요 필드 -->
+<!-- 65 · 개념 · rs.status() 의 주요 필드 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2095,8 +2144,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
             <tbody>
               <tr><th><code>stateStr</code></th><td>PRIMARY 1, SECONDARY 2</td></tr>
               <tr><th><code>health</code></th><td>전부 <code>1</code></td></tr>
-              <tr><th><code>optimeDate</code></th><td>멤버 간 차이가 작아야 합니다</td></tr>
-              <tr><th><code>lastHeartbeatRecv</code></th><td>지금과 가까워야 합니다</td></tr>
+              <tr><th><code>optimeDate</code></th><td>멤버 간 차이가 작아야 함</td></tr>
+              <tr><th><code>lastHeartbeatRecv</code></th><td>지금과 가까워야 함</td></tr>
             </tbody>
           </table>
         </div>
@@ -2119,10 +2168,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>멤버 상태는 모두 열 가지이고 실습에서 보는 것은 위 다섯입니다.</div><div class="no">64</div></div>
+  <div class="ft"><div>멤버 상태는 모두 열 가지이고 실습에서 보는 것은 위 다섯입니다.</div><div class="no">65</div></div>
 </section></div>
 
-<!-- 65 · 실습 · 단독 노드를 Replica Set으로 전환 -->
+<!-- 66 · 실습 · 단독 노드를 Replica Set으로 전환 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2146,21 +2195,21 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>인자 없이 <code>rs.initiate()</code> 를 부르면 자기 노드가 호스트 이름으로 등록됩니다. 구성 문서를 통째로 넘기는 이유가 여기 있습니다.</div><div class="no">65</div></div>
+  <div class="ft"><div>인자 없이 <code>rs.initiate()</code> 를 부르면 자기 노드가 호스트 이름으로 등록됩니다. 구성 문서를 통째로 넘기는 이유가 여기 있습니다.</div><div class="no">66</div></div>
 </section></div>
 
-<!-- 66 · 실습 · 구성 순서의 근거 -->
+<!-- 67 · 실습 · 구성 순서의 근거 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">구성 순서의 근거</h2>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>운영에서의 순서</b>: 설치 시점에 <code>/etc/mongod.conf</code> 의 <code>replication.replSetName</code> 을 넣고 기동합니다</li>
-        <li><b>이 세션에서 나눈 이유</b>: 챕터 03·05의 확인 실습이 초기화 전에 옵니다. <code>replication.replSetName</code> 이 들어간 <code>mongod</code> 는 <code>rs.initiate()</code> 전까지 쓰기도 조회도 받지 않습니다</li>
-        <li><b>부수 효과</b>: 데이터가 있는 상태에서 초기화하므로 초기 동기화가 실제로 도는 것을 봅니다</li>
-        <li><b>이 실습에서 넣는 방법</b>: 템플릿 <code>mongod.conf.j2</code> 가 <code>mongodb_replset_enabled</code> 로 <code>replication</code> 절을 감싸고 있어, 플레이북에 그 변수를 켜면 <code>/etc/mongod.conf</code> 에 두 줄이 더해지고 <code>mongod</code> 가 재시작됩니다</li>
+        <li><b>운영에서의 순서</b>: 설치 시점에 <code>/etc/mongod.conf</code> 의 <code>replication.replSetName</code> 을 넣고 기동</li>
+        <li><b>이 세션에서 나눈 이유</b>: 챕터 03·05의 확인 실습이 초기화 전에 옴. <code>replication.replSetName</code> 이 들어간 <code>mongod</code> 는 <code>rs.initiate()</code> 전까지 쓰기도 조회도 받지 않음</li>
+        <li><b>부수 효과</b>: 데이터가 있는 상태에서 초기화하므로 초기 동기화가 실제로 도는 것을 봄</li>
+        <li><b>이 실습에서 넣는 방법</b>: 템플릿 <code>mongod.conf.j2</code> 가 <code>mongodb_replset_enabled</code> 로 <code>replication</code> 절을 감싸고 있어, 플레이북에 그 변수를 켜면 <code>/etc/mongod.conf</code> 에 두 줄이 더해지고 <code>mongod</code> 가 재시작됨</li>
       </ul>
       <div class="callout">
         <b><code>replication</code> 절이 들어가면 그 노드는 세트 구성이 들어올 때까지 대기 상태가 됩니다.</b><br>
@@ -2168,12 +2217,12 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">66</div></div>
+  <div class="ft"><div></div><div class="no">67</div></div>
 </section></div>
 
-<!-- 67 · 실습 · 예상 출력 · rs.status() -->
+<!-- 68 · 실습 · 예상 출력 · rs.status() -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head"><code>rs.status()</code> 발췌</h2>
     <div class="headrule"></div>
@@ -2192,10 +2241,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정 · PRIMARY 1개 SECONDARY 2개이고 모든 멤버의 <code>health</code> 가 <code>1</code> 이면 완료입니다.</div><div class="no">67</div></div>
+  <div class="ft"><div>완료 판정 · PRIMARY 1개 SECONDARY 2개이고 모든 멤버의 <code>health</code> 가 <code>1</code> 이면 완료입니다.</div><div class="no">68</div></div>
 </section></div>
 
-<!-- 68 · 실습 · 초기 동기화 확인 -->
+<!-- 69 · 실습 · 초기 동기화 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Replica Set과 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2209,8 +2258,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <li><code>rs.printSecondaryReplicationInfo()</code> 와 <code>db.getReplicationInfo()</code> 로 지연과 oplog 윈도우 확인</li>
       </ol>
       <ul class="pts">
-        <li><b><code>rs.add()</code> 로 나중에 넣은 멤버는 초기 동기화가 끝날 때까지 투표하지 않습니다</b></li>
-        <li>데이터가 클수록 오래 걸립니다. 운영에서 멤버를 늘릴 때는 PRIMARY 부하를 고려해 시점을 고릅니다</li>
+        <li><b><code>rs.add()</code> 로 나중에 넣은 멤버는 초기 동기화가 끝날 때까지 투표하지 않음</b></li>
+        <li>데이터가 클수록 오래 걸림. 운영에서 멤버를 늘릴 때는 PRIMARY 부하를 고려해 시점을 고름</li>
       </ul>
       <div class="callout">
         <b>oplog 윈도우 값을 적어 두세요.</b><br>
@@ -2218,10 +2267,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>SECONDARY 는 기본값으로 읽기를 거부하므로 <code>readPreference</code> 를 붙입니다. oplog 는 데이터 디스크 <b>여유 공간</b>의 5%가 기본값이라 <code>logSizeMB: 6412.67</code> 이 잡혔습니다. 포맷 뒤 여유 공간이 128 GiB 에 못 미쳐, 용량의 5%인 6,554 MB 보다 작게 잡혔습니다. 쓰기가 없으면 <code>replLag</code> 은 뒤처짐이 아니라 최근 기록이 없다는 뜻입니다.</div><div class="no">68</div></div>
+  <div class="ft"><div>SECONDARY 는 기본값으로 읽기를 거부하므로 <code>readPreference</code> 를 붙입니다. oplog 는 데이터 디스크 <b>여유 공간</b>의 5%가 기본값이라 <code>logSizeMB: 6412.67</code> 이 잡혔습니다. 포맷 뒤 여유 공간이 128 GiB 에 못 미쳐, 용량의 5%인 6,554 MB 보다 작게 잡혔습니다. 쓰기가 없으면 <code>replLag</code> 은 뒤처짐이 아니라 최근 기록이 없다는 뜻입니다.</div><div class="no">69</div></div>
 </section></div>
 
-<!-- 69 · 챕터 · 일관성 제어 -->
+<!-- 70 · 챕터 · 일관성 제어 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">07</div></div>
   <h2>일관성 제어</h2>
@@ -2230,7 +2279,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   </div>
 </section></div>
 
-<!-- 70 · 개념 · 일관성 제어의 세 축 -->
+<!-- 71 · 개념 · 일관성 제어의 세 축 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2248,10 +2297,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">70</div></div>
+  <div class="ft"><div></div><div class="no">71</div></div>
 </section></div>
 
-<!-- 71 · 개념 · Write Concern -->
+<!-- 72 · 개념 · Write Concern -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2262,10 +2311,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>설정</th><th class="hi">보장 범위</th><th>대가</th></tr></thead>
         <tbody>
-          <tr><th><code>w:1</code></th><td>PRIMARY 가 받았음</td><td>가장 빠르고 되돌려질 수 있습니다</td></tr>
-          <tr><th><code>w:majority</code></th><td>과반이 받았음</td><td>되돌려지지 않습니다. 왕복이 늘어납니다</td></tr>
-          <tr><th><code>j:true</code></th><td>저널까지 내려갔음</td><td>디스크 쓰기를 기다립니다</td></tr>
-          <tr><th><code>wtimeout</code></th><td>이 시간 안에 채우지 못하면 오류</td><td>없으면 계속 기다릴 수 있습니다</td></tr>
+          <tr><th><code>w:1</code></th><td>PRIMARY 가 받았음</td><td>가장 빠르고 되돌려질 수 있음</td></tr>
+          <tr><th><code>w:majority</code></th><td>과반이 받았음</td><td>되돌려지지 않음. 왕복이 늘어남</td></tr>
+          <tr><th><code>j:true</code></th><td>저널까지 내려갔음</td><td>디스크 쓰기를 기다림</td></tr>
+          <tr><th><code>wtimeout</code></th><td>이 시간 안에 채우지 못하면 오류</td><td>없으면 계속 기다릴 수 있음</td></tr>
         </tbody>
       </table>
       <div class="warn">
@@ -2274,10 +2323,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>wtimeout</code> 은 밀리초 단위입니다. 주지 않으면 조건이 채워질 때까지 계속 기다립니다.</div><div class="no">71</div></div>
+  <div class="ft"><div><code>wtimeout</code> 은 밀리초 단위입니다. 주지 않으면 조건이 채워질 때까지 계속 기다립니다.</div><div class="no">72</div></div>
 </section></div>
 
-<!-- 72 · 개념 · Write Concern 선택 기준 -->
+<!-- 73 · 개념 · Write Concern 선택 기준 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2287,7 +2336,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>설정</th><th class="hi">사용 상황</th></tr></thead>
         <tbody>
-          <tr><th><code>w:majority</code></th><td>결제·주문처럼 한 건도 잃으면 안 되는 쓰기. 대부분의 운영 쓰기. <b>기본 설정에서 과반의 저널까지 포함합니다</b></td></tr>
+          <tr><th><code>w:majority</code></th><td>결제·주문처럼 한 건도 잃으면 안 되는 쓰기. 대부분의 운영 쓰기. <b>기본 설정에서 과반의 저널까지 포함</b></td></tr>
           <tr><th><code>w:1, j:true</code></th><td>복제보다 로컬 지속성이 먼저인 쓰기. PRIMARY 의 저널에만 내려가면 성공</td></tr>
           <tr><th><code>w:1</code></th><td>로그·통계처럼 몇 건 사라져도 되는 쓰기. 메모리에 반영되면 성공</td></tr>
         </tbody>
@@ -2298,10 +2347,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>j</code> 를 지정하지 않으면 <code>w</code> 가 숫자일 때는 <code>j:false</code>, <code>w:majority</code> 일 때는 <code>writeConcernMajorityJournalDefault</code>(기본값 <code>true</code>)를 따릅니다. 그래서 <code>w:majority</code> 와 <code>w:majority, j:true</code> 는 기본 설정에서 같습니다.</div><div class="no">72</div></div>
+  <div class="ft"><div><code>j</code> 를 지정하지 않으면 <code>w</code> 가 숫자일 때는 <code>j:false</code>, <code>w:majority</code> 일 때는 <code>writeConcernMajorityJournalDefault</code>(기본값 <code>true</code>)를 따릅니다. 그래서 <code>w:majority</code> 와 <code>w:majority, j:true</code> 는 기본 설정에서 같습니다.</div><div class="no">73</div></div>
 </section></div>
 
-<!-- 73 · 개념 · Read Preference -->
+<!-- 74 · 개념 · Read Preference -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2325,10 +2374,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">73</div></div>
+  <div class="ft"><div></div><div class="no">74</div></div>
 </section></div>
 
-<!-- 74 · 개념 · Read Concern -->
+<!-- 75 · 개념 · Read Concern -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2339,10 +2388,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>설정</th><th class="hi">보는 범위</th></tr></thead>
         <tbody>
-          <tr><th><code>local</code></th><td>그 멤버에 적용된 것. 되돌려질 수 있습니다</td></tr>
-          <tr><th><code>available</code></th><td><code>local</code> 과 같되 Sharding 환경에서 이동 중인 문서까지 봅니다</td></tr>
-          <tr><th><code>majority</code></th><td>과반이 받은 것만. 되돌려지지 않습니다</td></tr>
-          <tr><th><code>linearizable</code></th><td>가장 최근의 확정된 쓰기. <b>PRIMARY 에서만 동작하고</b> 가장 느립니다</td></tr>
+          <tr><th><code>local</code></th><td>그 멤버에 적용된 것. 되돌려질 수 있음</td></tr>
+          <tr><th><code>available</code></th><td><code>local</code> 과 같되 Sharding 환경에서 이동 중인 문서까지 봄</td></tr>
+          <tr><th><code>majority</code></th><td>과반이 받은 것만. 되돌려지지 않음</td></tr>
+          <tr><th><code>linearizable</code></th><td>가장 최근의 확정된 쓰기. <b>PRIMARY 에서만 동작하고</b> 가장 느림</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -2351,10 +2400,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>available</code> 의 차이는 Sharding 에서 드러납니다. Chunk 를 옮기는 동안 아직 정리되지 않은 문서까지 보입니다.</div><div class="no">74</div></div>
+  <div class="ft"><div><code>available</code> 의 차이는 Sharding 에서 드러납니다. Chunk 를 옮기는 동안 아직 정리되지 않은 문서까지 보입니다.</div><div class="no">75</div></div>
 </section></div>
 
-<!-- 75 · 개념 · 조합 구성의 원칙 -->
+<!-- 76 · 개념 · 조합 구성의 원칙 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2362,14 +2411,14 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>실제로 갈리는 축 셋</b>: 되돌려질 수 있는가는 <code>w</code>, 최신을 보는가는 Read Preference, 확정된 것만 보는가는 Read Concern 이 정합니다</li>
+        <li><b>실제로 갈리는 축 셋</b>: 되돌려질 수 있는가는 <code>w</code>, 최신을 보는가는 Read Preference, 확정된 것만 보는가는 Read Concern 이 정함</li>
       </ul>
       <table class="cmp" style="table-layout:fixed">
         <colgroup><col style="width:34%"><col style="width:66%"></colgroup>
         <thead><tr><th>어긋난 조합</th><th class="hi">문제</th></tr></thead>
         <tbody>
-          <tr><th><code>w:1</code> + <code>readConcern:majority</code></th><td>방금 쓴 것이 아직 과반에 없어 자기 쓰기를 읽지 못합니다</td></tr>
-          <tr><th><code>secondary</code> + <code>linearizable</code></th><td>PRIMARY 에서만 동작하므로 성립하지 않습니다</td></tr>
+          <tr><th><code>w:1</code> + <code>readConcern:majority</code></th><td>방금 쓴 것이 아직 과반에 없어 자기 쓰기를 읽지 못함</td></tr>
+          <tr><th><code>secondary</code> + <code>linearizable</code></th><td>PRIMARY 에서만 동작하므로 성립하지 않음</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -2378,10 +2427,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">75</div></div>
+  <div class="ft"><div></div><div class="no">76</div></div>
 </section></div>
 
-<!-- 76 · 개념 · 업무 성격별 권장 조합 -->
+<!-- 77 · 개념 · 업무 성격별 권장 조합 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2391,10 +2440,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>업무 성격</th><th>Write Concern</th><th>Read Preference</th><th>Read Concern</th><th class="hi">고른 이유</th></tr></thead>
         <tbody>
-          <tr><th>결제·주문</th><td><code>w:majority</code></td><td><code>primary</code></td><td><code>majority</code></td><td>한 건도 잃을 수 없고 방금 쓴 것을 바로 읽어야 합니다</td></tr>
-          <tr><th>일반 조회·수정</th><td><code>w:majority</code></td><td><code>primary</code></td><td><code>local</code></td><td>기본값입니다. PRIMARY 에서 읽으므로 자기 쓰기는 보이지만, 아직 과반에 없는 것도 함께 보입니다</td></tr>
-          <tr><th>분석·리포트</th><td><code>w:1</code></td><td><code>secondary</code></td><td><code>local</code></td><td>PRIMARY 부하를 피합니다. 조금 오래된 데이터를 감수합니다</td></tr>
-          <tr><th>로그·통계</th><td><code>w:1</code></td><td><code>primary</code></td><td><code>local</code></td><td>몇 건 사라져도 되는 쓰기입니다</td></tr>
+          <tr><th>결제·주문</th><td><code>w:majority</code></td><td><code>primary</code></td><td><code>majority</code></td><td>한 건도 잃을 수 없고 방금 쓴 것을 바로 읽어야 함</td></tr>
+          <tr><th>일반 조회·수정</th><td><code>w:majority</code></td><td><code>primary</code></td><td><code>local</code></td><td>기본값. PRIMARY 에서 읽으므로 자기 쓰기는 보이지만, 아직 과반에 없는 것도 함께 보임</td></tr>
+          <tr><th>분석·리포트</th><td><code>w:1</code></td><td><code>secondary</code></td><td><code>local</code></td><td>PRIMARY 부하를 피함. 조금 오래된 데이터를 감수함</td></tr>
+          <tr><th>로그·통계</th><td><code>w:1</code></td><td><code>primary</code></td><td><code>local</code></td><td>몇 건 사라져도 되는 쓰기</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -2403,10 +2452,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>linearizable</code> 은 표에 넣지 않았습니다. PRIMARY 에서만 동작하고 가장 느려서 제한된 경우에만 씁니다.</div><div class="no">76</div></div>
+  <div class="ft"><div><code>linearizable</code> 은 표에 넣지 않았습니다. PRIMARY 에서만 동작하고 가장 느려서 제한된 경우에만 씁니다.</div><div class="no">77</div></div>
 </section></div>
 
-<!-- 77 · 개념 · Rollback과 w:majority -->
+<!-- 78 · 개념 · Rollback과 w:majority -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2448,16 +2497,16 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </svg>
       </div>
       <ul class="pts">
-        <li><code>w:1</code> 은 PRIMARY 가 받은 시점에 성공을 돌려줍니다</li>
-        <li>그 문서가 SECONDARY 로 가기 전에 PRIMARY 가 정지하면 사라집니다</li>
-        <li><code>w:majority</code> 는 과반이 받을 때까지 성공을 돌려주지 않습니다</li>
+        <li><code>w:1</code> 은 PRIMARY 가 받은 시점에 성공을 돌려줌</li>
+        <li>그 문서가 SECONDARY 로 가기 전에 PRIMARY 가 정지하면 사라짐</li>
+        <li><code>w:majority</code> 는 과반이 받을 때까지 성공을 돌려주지 않음</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div><code>w:majority</code> 는 되돌려질 쓰기를 애초에 만들지 않습니다. 과반이 받은 것만 성공으로 돌려주므로 옛 PRIMARY 에만 남은 쓰기가 생기지 않습니다.</div><div class="no">77</div></div>
+  <div class="ft"><div><code>w:majority</code> 는 되돌려질 쓰기를 애초에 만들지 않습니다. 과반이 받은 것만 성공으로 돌려주므로 옛 PRIMARY 에만 남은 쓰기가 생기지 않습니다.</div><div class="no">78</div></div>
 </section></div>
 
-<!-- 78 · 개념 · 저널과 j 옵션 -->
+<!-- 79 · 개념 · 저널과 j 옵션 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2465,17 +2514,45 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>정의</b>: 체크포인트 사이의 쓰기를 순차로 기록하는 로그입니다</li>
-        <li><b>필요한 이유</b>: 프로세스가 정지해도 마지막 체크포인트 이후를 재생할 수 있습니다</li>
-        <li><b><code>j:true</code> 의 뜻</b>: <b><code>w</code> 가 요구하는 멤버 전부가</b> 저널에 내려쓴 것을 확인하고 응답합니다. 예전에는 PRIMARY 한 대만 봤습니다</li>
-        <li><b><code>j</code> 의 기본값은 <code>w</code> 가 정합니다</b>: <code>w</code> 가 숫자이면 <code>j:false</code>, <code>w:majority</code> 이면 <code>writeConcernMajorityJournalDefault</code>(기본값 <code>true</code>)를 따라 <b><code>j:true</code></b> 입니다</li>
+        <li><b>정의</b>: 체크포인트 사이의 쓰기를 순차로 기록하는 로그</li>
+        <li><b>필요한 이유</b>: 프로세스가 정지해도 마지막 체크포인트 이후를 재생할 수 있음</li>
+        <li><b><code>j:true</code> 의 뜻</b>: <b><code>w</code> 가 요구하는 멤버 전부가</b> 저널에 내려쓴 것을 확인하고 응답. 예전에는 PRIMARY 한 대만 봤음</li>
+        <li><b><code>j</code> 의 기본값은 <code>w</code> 가 정함</b>: <code>w</code> 가 숫자이면 <code>j:false</code>, <code>w:majority</code> 이면 <code>writeConcernMajorityJournalDefault</code>(기본값 <code>true</code>)를 따라 <b><code>j:true</code></b></li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div><b><code>j</code> 의 기본값은 <code>w</code> 가 정합니다.</b> <code>w</code> 가 숫자이면 <code>j:false</code>, <code>w:majority</code> 이면 <code>writeConcernMajorityJournalDefault</code> 를 따라 <code>j:true</code> 입니다. 그래서 <code>w:majority, j:true</code> 는 같은 요구를 두 번 적은 것이고, <code>w:1, j:true</code> 는 없던 요구를 더한 것입니다.</div><div class="no">78</div></div>
+  <div class="ft"><div><b><code>j</code> 의 기본값은 <code>w</code> 가 정합니다.</b> <code>w</code> 가 숫자이면 <code>j:false</code>, <code>w:majority</code> 이면 <code>writeConcernMajorityJournalDefault</code> 를 따라 <code>j:true</code> 입니다. 그래서 <code>w:majority, j:true</code> 는 같은 요구를 두 번 적은 것이고, <code>w:1, j:true</code> 는 없던 요구를 더한 것입니다.</div><div class="no">79</div></div>
 </section></div>
 
-<!-- 79 · 실습 · 세 조합 측정 -->
+<!-- 80 · 개념 · wc-measure.sh 측정 스크립트 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head"><code>wc-measure.sh</code> 측정 스크립트</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># ops 노드에서. MONGO_HOST 는 현재 PRIMARY 여야 합니다</span>
+MONGO_HOST=&lt;PRIMARY&gt; ~/loadgen/wc-measure.sh    <span class="c"># 건수는 WC_COUNT 로</span></pre>
+      </div>
+      <table class="cmp">
+        <thead><tr><th>재는 조합</th><th class="hi">추가로 기다리는 것</th></tr></thead>
+        <tbody>
+          <tr><th><code>w:1</code></th><td>없음</td></tr>
+          <tr><th><code>w:1, j:true</code></th><td>PRIMARY 의 저널 기록</td></tr>
+          <tr><th><code>w:majority</code></th><td>과반의 저널 기록과 복제 왕복</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <b>조합마다 기본 1,000건을 한 건씩 넣는 것이 핵심입니다.</b><br>
+        <code>insertMany</code> 로 넣으면 Write Concern 이 배치 하나에 한 번만 적용되어 세 값이 같아집니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div></div><div class="no">80</div></div>
+</section></div>
+
+<!-- 81 · 실습 · 세 조합 측정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2498,12 +2575,12 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>wc-measure.sh</code> 는 세 조합으로 건별 삽입을 반복해 조합마다 소요를 재는 스크립트입니다. <code>MONGO_HOST</code> 는 현재 PRIMARY 여야 합니다. 차이가 뚜렷하지 않으면 <code>WC_COUNT=5000</code> 처럼 건수를 늘립니다.</div><div class="no">79</div></div>
+  <div class="ft"><div><code>wc-measure.sh</code> 는 세 조합으로 건별 삽입을 반복해 조합마다 소요를 재는 스크립트입니다. <code>MONGO_HOST</code> 는 현재 PRIMARY 여야 합니다. 차이가 뚜렷하지 않으면 <code>WC_COUNT=5000</code> 처럼 건수를 늘립니다.</div><div class="no">81</div></div>
 </section></div>
 
-<!-- 80 · 실습 · 세 조합의 소요 시간 -->
+<!-- 82 · 실습 · 세 조합의 소요 시간 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">세 조합의 소요 시간</h2>
     <div class="headrule"></div>
@@ -2522,10 +2599,36 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>값은 디스크 성능에 따라 달라지므로 비율로 봅니다.</div><div class="no">80</div></div>
+  <div class="ft"><div>값은 디스크 성능에 따라 달라지므로 비율로 봅니다.</div><div class="no">82</div></div>
 </section></div>
 
-<!-- 81 · 실습 · 과반을 잃었을 때 -->
+<!-- 83 · 개념 · wc-majority-loss.sh 재현 스크립트 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head"><code>wc-majority-loss.sh</code> 재현 스크립트</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># ~/ansible 에서 실행합니다. ansible.cfg 의 inventory 가 상대 경로입니다</span>
+cd ~/ansible
+MONGO_HOST=&lt;PRIMARY&gt; ~/loadgen/wc-majority-loss.sh</pre>
+      </div>
+      <ul class="pts">
+        <li><b>하는 일</b>: <code>w:majority</code> 쓰기 루프를 띄우고 SECONDARY 를 <b>한 대씩</b> 정지시킨 뒤 되살림</li>
+        <li><b>노드를 내리는 방법</b>: <code>ansible</code> 로 <code>mongod</code> 를 정지. 그래서 인벤토리가 필요함</li>
+        <li><b>시점을 손으로 맞추지 않는 이유</b>: 과반이 깨지고 5초에서 8초 만에 강등되므로 놓치기 쉬움</li>
+      </ul>
+      <div class="warn">
+        <b>어떻게 끝나든 두 노드를 다시 기동합니다.</b><br>
+        두 노드를 내린 채로 끝나면 이후 챕터가 전부 막히므로 스크립트가 복구를 보장합니다. 그래도 끝난 뒤 <code>rs.status()</code> 로 PRIMARY 1 SECONDARY 2 를 확인하세요.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div>PRIMARY 가 바뀔 수 있습니다. 스크립트가 끝나면서 현재 PRIMARY 를 알려 주므로 그 값을 이후 챕터의 <code>--host</code> 로 씁니다.</div><div class="no">83</div></div>
+</section></div>
+
+<!-- 84 · 실습 · 과반을 잃었을 때 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2540,19 +2643,19 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <li>스크립트가 알려 준 현재 PRIMARY 를 기록. 이후 챕터의 <code>--host</code> 는 이 노드입니다</li>
       </ol>
       <ul class="pts">
-        <li><b>스크립트가 하는 일</b>: 쓰기 루프를 띄우고 SECONDARY 를 한 대씩 정지시킨 뒤 되살립니다</li>
-        <li><b>스크립트의 안내</b>: 단계마다 무엇이 왜 일어나는지 먼저 알리고 결과를 시각과 함께 출력합니다</li>
-        <li><b>시점을 손으로 맞추지 않는 이유</b>: 과반이 깨지고 5초에서 8초 만에 강등되므로 시점을 손으로 맞추면 놓치기 쉽습니다</li>
-        <li><b>되살리기</b>: 스크립트가 어떻게 끝나든 두 노드를 다시 기동합니다</li>
+        <li><b>스크립트가 하는 일</b>: 쓰기 루프를 띄우고 SECONDARY 를 한 대씩 정지시킨 뒤 되살림</li>
+        <li><b>스크립트의 안내</b>: 단계마다 무엇이 왜 일어나는지 먼저 알리고 결과를 시각과 함께 출력</li>
+        <li><b>시점을 손으로 맞추지 않는 이유</b>: 과반이 깨지고 5초에서 8초 만에 강등되므로 시점을 손으로 맞추면 놓치기 쉬움</li>
+        <li><b>되살리기</b>: 스크립트가 어떻게 끝나든 두 노드를 다시 기동</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div><code>~/loadgen/wc-majority-loss.sh</code> 는 실습 저장소의 과반 상실 재현 스크립트입니다. <code>MONGO_HOST</code> 로 대상을 정하고, 노드를 내리는 데 <code>ansible</code> 을 씁니다. <code>ansible.cfg</code> 의 <code>inventory</code> 가 상대 경로라 <code>~/ansible</code> 에서 실행해야 합니다. 완료 판정 · 두 오류가 차례로 나왔고 세 멤버가 다시 PRIMARY 1 SECONDARY 2 로 돌아왔으면 완료입니다.</div><div class="no">81</div></div>
+  <div class="ft"><div><code>~/loadgen/wc-majority-loss.sh</code> 는 실습 저장소의 과반 상실 재현 스크립트입니다. <code>MONGO_HOST</code> 로 대상을 정하고, 노드를 내리는 데 <code>ansible</code> 을 씁니다. <code>ansible.cfg</code> 의 <code>inventory</code> 가 상대 경로라 <code>~/ansible</code> 에서 실행해야 합니다. 완료 판정 · 두 오류가 차례로 나왔고 세 멤버가 다시 PRIMARY 1 SECONDARY 2 로 돌아왔으면 완료입니다.</div><div class="no">84</div></div>
 </section></div>
 
-<!-- 82 · 실습 · 예상 출력 · 과반 상실 -->
+<!-- 85 · 실습 · 예상 출력 · 과반 상실 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;일관성 제어</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">스크립트 출력 발췌</h2>
     <div class="headrule"></div>
@@ -2578,8 +2681,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>오류</th><th>PRIMARY 의 상태</th><th class="hi">뜻</th></tr></thead>
         <tbody>
-          <tr><th><code>WriteConcernTimeout</code></th><td>아직 PRIMARY</td><td>쓰기는 받았지만 과반이 받았는지 확인하지 못했습니다</td></tr>
-          <tr><th><code>NotWritablePrimary</code></th><td>SECONDARY 로 강등됨</td><td>쓰기를 받을 자격 자체가 없어졌습니다</td></tr>
+          <tr><th><code>WriteConcernTimeout</code></th><td>아직 PRIMARY</td><td>쓰기는 받았지만 과반이 받았는지 확인하지 못함</td></tr>
+          <tr><th><code>NotWritablePrimary</code></th><td>SECONDARY 로 강등됨</td><td>쓰기를 받을 자격 자체가 없어짐</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -2588,10 +2691,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>두 번째 노드를 정지시킨 뒤 강등까지 5초에서 8초 걸립니다. <code>wtimeout</code> 이 3초이므로 그 사이에 출력되는 <code>WriteConcernTimeout</code> 줄의 수는 실행할 때마다 다릅니다.</div><div class="no">82</div></div>
+  <div class="ft"><div>두 번째 노드를 정지시킨 뒤 강등까지 5초에서 8초 걸립니다. <code>wtimeout</code> 이 3초이므로 그 사이에 출력되는 <code>WriteConcernTimeout</code> 줄의 수는 실행할 때마다 다릅니다.</div><div class="no">85</div></div>
 </section></div>
 
-<!-- 83 · 챕터 · Index와 실행 계획 -->
+<!-- 86 · 챕터 · Index와 실행 계획 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">08</div></div>
   <h2>Index와 실행 계획</h2>
@@ -2600,7 +2703,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
   </div>
 </section></div>
 
-<!-- 84 · 개념 · 인덱스의 정의 -->
+<!-- 87 · 개념 · 인덱스의 정의 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2608,9 +2711,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>구조</b>: 특정 필드의 값을 정렬해 따로 유지하는 자료구조입니다</li>
-        <li><b>없을 때의 조회</b>: 컬렉션 전체를 읽어 조건에 맞는 것을 고릅니다</li>
-        <li><b>쓰기에 미치는 영향</b>: 쓰기마다 모든 인덱스를 함께 갱신하므로 쓰기가 무거워집니다</li>
+        <li><b>구조</b>: 특정 필드의 값을 정렬해 따로 유지하는 자료구조</li>
+        <li><b>없을 때의 조회</b>: 컬렉션 전체를 읽어 조건에 맞는 것을 고름</li>
+        <li><b>쓰기에 미치는 영향</b>: 쓰기마다 모든 인덱스를 함께 갱신하므로 쓰기가 무거워짐</li>
       </ul>
       <div class="callout">
         <b>인덱스는 쓰기 비용을 치르고 읽기 속도를 얻는 교환입니다.</b><br>
@@ -2618,10 +2721,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">84</div></div>
+  <div class="ft"><div></div><div class="no">87</div></div>
 </section></div>
 
-<!-- 85 · 개념 · 인덱스 B-tree -->
+<!-- 88 · 개념 · 인덱스 B-tree -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2638,7 +2741,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         </tbody>
       </table>
       <ul class="pts">
-        <li>값이 정렬되어 있어 범위 조회와 정렬 요청을 그대로 처리합니다</li>
+        <li>값이 정렬되어 있어 범위 조회와 정렬 요청을 그대로 처리</li>
       </ul>
       <div class="callout">
         <b>조회는 두 트리를 탑니다.</b><br>
@@ -2646,10 +2749,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">85</div></div>
+  <div class="ft"><div></div><div class="no">88</div></div>
 </section></div>
 
-<!-- 86 · 개념 · 인덱스 종류 -->
+<!-- 89 · 개념 · 인덱스 종류 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2670,10 +2773,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div>부분은 조건으로 고르고 희소는 필드의 존재로 고릅니다. 실습에서 만드는 것은 단일과 복합 둘입니다.</div><div class="no">86</div></div>
+  <div class="ft"><div>부분은 조건으로 고르고 희소는 필드의 존재로 고릅니다. 실습에서 만드는 것은 단일과 복합 둘입니다.</div><div class="no">89</div></div>
 </section></div>
 
-<!-- 87 · 개념 · ESR 규칙 -->
+<!-- 90 · 개념 · ESR 규칙 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2689,9 +2792,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <div class="st new">Range</div>
       </div>
       <ul class="pts">
-        <li><b>Equality</b>: <code>=</code> 로 값을 고정하는 필드를 앞에 둡니다</li>
-        <li><b>Sort</b>: 정렬에 쓰는 필드를 그다음에 둡니다</li>
-        <li><b>Range</b>: <code>$gt</code>·<code>$lt</code> 같은 범위 조건을 마지막에 둡니다</li>
+        <li><b>Equality</b>: <code>=</code> 로 값을 고정하는 필드를 앞에 둠</li>
+        <li><b>Sort</b>: 정렬에 쓰는 필드를 그다음에 둠</li>
+        <li><b>Range</b>: <code>$gt</code>·<code>$lt</code> 같은 범위 조건을 마지막에 둠</li>
       </ul>
       <div class="callout">
         <b>앞 필드가 고정돼야 뒤 필드의 정렬이 남습니다.</b><br>
@@ -2699,10 +2802,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">87</div></div>
+  <div class="ft"><div></div><div class="no">90</div></div>
 </section></div>
 
-<!-- 88 · 개념 · ESR 예시 -->
+<!-- 91 · 개념 · ESR 예시 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2713,8 +2816,8 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       <table class="cmp">
         <thead><tr><th>인덱스 순서</th><th>탐색 과정</th><th class="hi">결과</th></tr></thead>
         <tbody>
-          <tr><th><code>{ status:1, createdAt:-1, amount:1 }</code></th><td><code>status</code> 가 하나로 고정되고, 그 안에서 <code>createdAt</code> 이 이미 내림차순으로 놓여 있습니다</td><td>인덱스를 순서대로 읽은 것이 곧 정렬 결과입니다. <code>SORT</code> 가 없습니다</td></tr>
-          <tr><th><code>{ status:1, amount:1, createdAt:-1 }</code></th><td><code>amount &gt;= 90000</code> 이 범위라 값이 하나로 묶이지 않습니다. <code>createdAt</code> 은 <code>amount</code> 값마다 따로 정렬돼 전체로는 뒤섞입니다</td><td>메모리에서 다시 정렬합니다. <code>SORT</code> 가 붙습니다</td></tr>
+          <tr><th><code>{ status:1, createdAt:-1, amount:1 }</code></th><td><code>status</code> 가 하나로 고정되고, 그 안에서 <code>createdAt</code> 이 이미 내림차순으로 놓여 있음</td><td>인덱스를 순서대로 읽은 것이 곧 정렬 결과. <code>SORT</code> 가 없음</td></tr>
+          <tr><th><code>{ status:1, amount:1, createdAt:-1 }</code></th><td><code>amount &gt;= 90000</code> 이 범위라 값이 하나로 묶이지 않음. <code>createdAt</code> 은 <code>amount</code> 값마다 따로 정렬돼 전체로는 뒤섞임</td><td>메모리에서 다시 정렬함. <code>SORT</code> 가 붙음</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -2723,10 +2826,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>이 조건은 20만 건 중 약 3,300건을 돌려줍니다.</div><div class="no">88</div></div>
+  <div class="ft"><div>이 조건은 20만 건 중 약 3,300건을 돌려줍니다.</div><div class="no">91</div></div>
 </section></div>
 
-<!-- 89 · 개념 · 실행 계획 -->
+<!-- 92 · 개념 · 실행 계획 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2745,11 +2848,11 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
           <table class="cmp">
             <thead><tr><th>단계</th><th class="hi">뜻</th></tr></thead>
             <tbody>
-              <tr><th><code>COLLSCAN</code></th><td>인덱스가 쓰이지 않았습니다</td></tr>
-              <tr><th><code>IXSCAN</code></th><td>인덱스가 쓰였습니다</td></tr>
-              <tr><th><code>FETCH</code></th><td>RecordId 로 문서를 읽었습니다</td></tr>
-              <tr><th><code>SORT</code></th><td><b>인덱스가 정렬 순서를 제공하지 못했습니다</b></td></tr>
-              <tr><th><code>PROJECTION_COVERED</code></th><td>인덱스만으로 결과를 만들었습니다</td></tr>
+              <tr><th><code>COLLSCAN</code></th><td>인덱스가 쓰이지 않음</td></tr>
+              <tr><th><code>IXSCAN</code></th><td>인덱스가 쓰임</td></tr>
+              <tr><th><code>FETCH</code></th><td>RecordId 로 문서를 읽음</td></tr>
+              <tr><th><code>SORT</code></th><td><b>인덱스가 정렬 순서를 제공하지 못함</b></td></tr>
+              <tr><th><code>PROJECTION_COVERED</code></th><td>인덱스만으로 결과를 만듦</td></tr>
             </tbody>
           </table>
         </div>
@@ -2760,10 +2863,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>executionStats</code> 모드로 실행해야 실제 수치가 나옵니다. 기본 모드는 계획만 보여 줍니다.</div><div class="no">89</div></div>
+  <div class="ft"><div><code>executionStats</code> 모드로 실행해야 실제 수치가 나옵니다. 기본 모드는 계획만 보여 줍니다.</div><div class="no">92</div></div>
 </section></div>
 
-<!-- 90 · 개념 · 인덱스 품질 측정 -->
+<!-- 93 · 개념 · 인덱스 품질 측정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2774,9 +2877,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
         <thead><tr><th>지표</th><th>뜻</th><th class="hi">판단</th></tr></thead>
         <tbody>
           <tr><th><code>nReturned</code></th><td>실제로 돌려준 문서 수</td><td>비교 기준</td></tr>
-          <tr><th><code>totalKeysExamined</code></th><td>검사한 인덱스 키 수</td><td><code>nReturned</code> 와 가까울수록 좋습니다</td></tr>
-          <tr><th><code>totalDocsExamined</code></th><td>읽은 문서 수</td><td>0이면 covered query 입니다</td></tr>
-          <tr><th><code>executionTimeMillis</code></th><td>걸린 시간</td><td>캐시 상태에 따라 흔들립니다</td></tr>
+          <tr><th><code>totalKeysExamined</code></th><td>검사한 인덱스 키 수</td><td><code>nReturned</code> 와 가까울수록 좋음</td></tr>
+          <tr><th><code>totalDocsExamined</code></th><td>읽은 문서 수</td><td>0이면 covered query</td></tr>
+          <tr><th><code>executionTimeMillis</code></th><td>걸린 시간</td><td>캐시 상태에 따라 흔들림</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -2785,10 +2888,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">90</div></div>
+  <div class="ft"><div></div><div class="no">93</div></div>
 </section></div>
 
-<!-- 91 · 개념 · covered query -->
+<!-- 94 · 개념 · covered query -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2797,7 +2900,7 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="body">
       <ul class="pts">
         <li><b>정의</b>: 필요한 값이 전부 인덱스에 있어 문서를 읽지 않는 조회</li>
-        <li><b>조건</b>: 조회 조건과 반환 필드가 모두 인덱스 안에 있어야 합니다</li>
+        <li><b>조건</b>: 조회 조건과 반환 필드가 모두 인덱스 안에 있어야 함</li>
         <li><b>확인 방법</b>: <code>totalDocsExamined</code> 가 0</li>
       </ul>
       <div class="callout">
@@ -2806,10 +2909,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>_id</code> 를 반환에서 빼야 성립하는 경우가 많습니다.</div><div class="no">91</div></div>
+  <div class="ft"><div><code>_id</code> 를 반환에서 빼야 성립하는 경우가 많습니다.</div><div class="no">94</div></div>
 </section></div>
 
-<!-- 92 · 개념 · SORT 단계의 한도 -->
+<!-- 95 · 개념 · SORT 단계의 한도 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2818,9 +2921,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="body">
       <ul class="pts">
         <li><b>다시 정렬이 생기는 조건</b>: 인덱스가 정렬 순서를 제공하지 못할 때</li>
-        <li><b>메모리 정렬 상한</b>: 100 MB. 넘으면 디스크에 임시 파일을 써서 정렬을 이어 갑니다</li>
-        <li><b>상한 초과 시의 동작</b>: 응답이 느려지고 디스크 IO 가 늘어납니다. <code>allowDiskUse(false)</code> 로 막아 둔 경우에만 조회가 실패합니다</li>
-        <li><b>이 단계를 없애는 방법</b>: 인덱스가 정렬 순서를 그대로 제공하게 만듭니다</li>
+        <li><b>메모리 정렬 상한</b>: 100 MB. 넘으면 디스크에 임시 파일을 써서 정렬을 이어 감</li>
+        <li><b>상한 초과 시의 동작</b>: 응답이 느려지고 디스크 IO 가 늘어남. <code>allowDiskUse(false)</code> 로 막아 둔 경우에만 조회가 실패</li>
+        <li><b>이 단계를 없애는 방법</b>: 인덱스가 정렬 순서를 그대로 제공하게 만듦</li>
       </ul>
       <div class="callout">
         <b><code>SORT</code> 가 보이면 인덱스 설계를 다시 봅니다.</b><br>
@@ -2828,10 +2931,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">92</div></div>
+  <div class="ft"><div></div><div class="no">95</div></div>
 </section></div>
 
-<!-- 93 · 개념 · 인덱스 생성 부하 -->
+<!-- 96 · 개념 · 인덱스 생성 부하 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2839,9 +2942,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li>인덱스를 만드는 동안 그 컬렉션의 성능이 떨어집니다</li>
-        <li>운영에서는 SECONDARY 부터 한 대씩 만드는 롤링 생성을 씁니다</li>
-        <li>백업에서 복구할 때도 인덱스를 다시 만듭니다</li>
+        <li>인덱스를 만드는 동안 그 컬렉션의 성능이 떨어짐</li>
+        <li>운영에서는 SECONDARY 부터 한 대씩 만드는 롤링 생성을 씀</li>
+        <li>백업에서 복구할 때도 인덱스를 다시 만듦</li>
       </ul>
       <div class="callout">
         <b>이 부하가 챕터 09 복구 시간으로 나타납니다.</b><br>
@@ -2849,10 +2952,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">93</div></div>
+  <div class="ft"><div></div><div class="no">96</div></div>
 </section></div>
 
-<!-- 94 · 개념 · 인덱스 남용 -->
+<!-- 97 · 개념 · 인덱스 남용 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2860,9 +2963,9 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li>쓰기마다 모든 인덱스를 갱신합니다. 인덱스 수만큼 쓰기가 무거워집니다</li>
-        <li>인덱스도 캐시를 차지합니다. 그만큼 데이터가 쓸 캐시가 줄어듭니다</li>
-        <li><b>쓰이지 않는 인덱스에는 비용만 남습니다</b></li>
+        <li>쓰기마다 모든 인덱스를 갱신함. 인덱스 수만큼 쓰기가 무거워짐</li>
+        <li>인덱스도 캐시를 차지함. 그만큼 데이터가 쓸 캐시가 줄어듦</li>
+        <li><b>쓰이지 않는 인덱스에는 비용만 남음</b></li>
       </ul>
       <div class="callout">
         <b><code>$indexStats</code> 로 실제로 쓰이는지 확인합니다.</b><br>
@@ -2870,10 +2973,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">94</div></div>
+  <div class="ft"><div></div><div class="no">97</div></div>
 </section></div>
 
-<!-- 95 · 개념 · 인덱스 설계 순서 -->
+<!-- 98 · 개념 · 인덱스 설계 순서 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2897,10 +3000,10 @@ ops-1    : ok=18  changed=14  <span class="k">failed=0</span></pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">95</div></div>
+  <div class="ft"><div></div><div class="no">98</div></div>
 </section></div>
 
-<!-- 96 · 실습 · 인덱스 없이 조회 -->
+<!-- 99 · 실습 · 인덱스 없이 조회 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2924,10 +3027,10 @@ totalKeysExamined: <span class="p">0</span>,  <span class="k">totalDocsExamined:
       </div>
     </div>
   </main>
-  <div class="ft"><div>챕터 03 에서 적재한 <code>lab.orders</code> 를 그대로 씁니다.</div><div class="no">96</div></div>
+  <div class="ft"><div>챕터 03 에서 적재한 <code>lab.orders</code> 를 그대로 씁니다.</div><div class="no">99</div></div>
 </section></div>
 
-<!-- 97 · 실습 · 단일 필드 인덱스 적용 -->
+<!-- 100 · 실습 · 단일 필드 인덱스 적용 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2951,10 +3054,10 @@ totalKeysExamined: <span class="p">33333</span>,  <span class="k">totalDocsExami
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">97</div></div>
+  <div class="ft"><div></div><div class="no">100</div></div>
 </section></div>
 
-<!-- 98 · 실습 · ESR 위반 복합 인덱스 -->
+<!-- 101 · 실습 · ESR 위반 복합 인덱스 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -2978,10 +3081,10 @@ nReturned: <span class="p">20</span>,  <span class="k">totalKeysExamined: 3335</
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">98</div></div>
+  <div class="ft"><div></div><div class="no">101</div></div>
 </section></div>
 
-<!-- 99 · 실습 · ESR 준수 복합 인덱스 -->
+<!-- 102 · 실습 · ESR 준수 복합 인덱스 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3005,10 +3108,10 @@ nReturned: <span class="p">20</span>,  <span class="k">totalKeysExamined: 83</sp
       </div>
     </div>
   </main>
-  <div class="ft"><div><b><code>limit</code> 이 없으면 유불리가 뒤집힙니다.</b> ESR 위반이 키 3,335개, ESR 준수가 16,597개입니다.</div><div class="no">99</div></div>
+  <div class="ft"><div><b><code>limit</code> 이 없으면 유불리가 뒤집힙니다.</b> ESR 위반이 키 3,335개, ESR 준수가 16,597개입니다.</div><div class="no">102</div></div>
 </section></div>
 
-<!-- 100 · 실습 · $indexStats 로 사용 여부 확인 -->
+<!-- 103 · 실습 · $indexStats 로 사용 여부 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;Index와 실행 계획<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3033,10 +3136,10 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">100</div></div>
+  <div class="ft"><div></div><div class="no">103</div></div>
 </section></div>
 
-<!-- 101 · 챕터 · Backup과 Restore -->
+<!-- 104 · 챕터 · Backup과 Restore -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">09</div></div>
   <h2>Backup과 Restore</h2>
@@ -3045,7 +3148,7 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
   </div>
 </section></div>
 
-<!-- 102 · 개념 · 백업 방식 두 갈래 -->
+<!-- 105 · 개념 · 백업 방식 두 갈래 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3056,8 +3159,8 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
         <colgroup><col style="width:26%"><col style="width:30%"><col style="width:44%"></colgroup>
         <thead><tr><th>방식</th><th>담는 것</th><th class="hi">대가</th></tr></thead>
         <tbody>
-          <tr><th><b>논리 백업</b> (<code>mongodump</code>)</th><td>문서를 읽어 BSON 으로</td><td>이식성이 좋고, 데이터가 크면 느립니다</td></tr>
-          <tr><th>물리 백업 (볼륨 스냅샷)</th><td>데이터 파일을 통째로</td><td>빠르고, 같은 구성에서만 복구됩니다</td></tr>
+          <tr><th><b>논리 백업</b> (<code>mongodump</code>)</th><td>문서를 읽어 BSON 으로</td><td>이식성이 좋고, 데이터가 크면 느림</td></tr>
+          <tr><th>물리 백업 (볼륨 스냅샷)</th><td>데이터 파일을 통째로</td><td>빠르고, 같은 구성에서만 복구됨</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -3066,10 +3169,10 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">102</div></div>
+  <div class="ft"><div></div><div class="no">105</div></div>
 </section></div>
 
-<!-- 103 · 개념 · --oplog 의 필요성 -->
+<!-- 106 · 개념 · --oplog 의 필요성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3110,10 +3213,10 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">103</div></div>
+  <div class="ft"><div></div><div class="no">106</div></div>
 </section></div>
 
-<!-- 104 · 개념 · PITR -->
+<!-- 107 · 개념 · PITR -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3132,9 +3235,9 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
         <div class="st new">원하는 시점까지 oplog 재생</div>
       </div>
       <ul class="pts">
-        <li><b>정의</b>: Point-In-Time Recovery. 백업 시점이 아니라 <b>임의의 시점</b>으로 되돌리는 복구입니다</li>
-        <li><b>필요한 것</b>: 앞 장에서 본 <code>--oplog</code> 덤프 하나와, 그 뒤로 끊기지 않고 남아 있는 oplog 입니다</li>
-        <li><b>방지 대상</b>: 잘못된 삭제나 배포 사고처럼 「어제 오후 3시로 돌리고 싶다」는 상황입니다</li>
+        <li><b>정의</b>: Point-In-Time Recovery. 백업 시점이 아니라 <b>임의의 시점</b>으로 되돌리는 복구</li>
+        <li><b>필요한 것</b>: 앞 장에서 본 <code>--oplog</code> 덤프 하나와, 그 뒤로 끊기지 않고 남아 있는 oplog</li>
+        <li><b>방지 대상</b>: 잘못된 삭제나 배포 사고처럼 「어제 오후 3시로 돌리고 싶다」는 상황</li>
       </ul>
       <div class="callout">
         <b>자체 운영에서는 직접 구성해야 합니다.</b><br>
@@ -3142,10 +3245,10 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>oplog 보관 기간이 백업 주기보다 짧으면 그 사이에 구멍이 생겨 PITR 이 성립하지 않습니다.</div><div class="no">104</div></div>
+  <div class="ft"><div>oplog 보관 기간이 백업 주기보다 짧으면 그 사이에 구멍이 생겨 PITR 이 성립하지 않습니다.</div><div class="no">107</div></div>
 </section></div>
 
-<!-- 105 · 개념 · 백업 대상 멤버 -->
+<!-- 108 · 개념 · 백업 대상 멤버 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3155,21 +3258,21 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       <table class="cmp">
         <thead><tr><th>대상</th><th>이점</th><th class="hi">대가</th></tr></thead>
         <tbody>
-          <tr><th>PRIMARY</th><td>가장 최신 시점</td><td>덤프 부하가 서비스 요청과 같은 노드에 몰립니다</td></tr>
-          <tr><th>SECONDARY</th><td><b>서비스 부하와 분리</b></td><td>복제 지연만큼 오래된 시점을 담습니다</td></tr>
+          <tr><th>PRIMARY</th><td>가장 최신 시점</td><td>덤프 부하가 서비스 요청과 같은 노드에 몰림</td></tr>
+          <tr><th>SECONDARY</th><td><b>서비스 부하와 분리</b></td><td>복제 지연만큼 오래된 시점을 담음</td></tr>
         </tbody>
       </table>
       <ul class="pts">
-        <li><b>운영의 기본 대상</b>: SECONDARY 입니다. 덤프는 컬렉션 전체를 읽으므로 캐시를 밀어냅니다</li>
-        <li><b>SECONDARY 백업 시 확인 항목</b>: 복제 지연이 작아야 담기는 시점이 최신에 가깝습니다</li>
-        <li><b>이 실습의 대상</b>: PRIMARY 입니다. 3대뿐이고 부하가 없어 차이가 드러나지 않습니다</li>
+        <li><b>운영의 기본 대상</b>: SECONDARY. 덤프는 컬렉션 전체를 읽으므로 캐시를 밀어냄</li>
+        <li><b>SECONDARY 백업 시 확인 항목</b>: 복제 지연이 작아야 담기는 시점이 최신에 가까움</li>
+        <li><b>이 실습의 대상</b>: PRIMARY. 3대뿐이고 부하가 없어 차이가 드러나지 않음</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div>SECONDARY 에 직접 접속해 읽으려면 연결 문자열에 <code>readPreference</code> 를 줍니다.</div><div class="no">105</div></div>
+  <div class="ft"><div>SECONDARY 에 직접 접속해 읽으려면 연결 문자열에 <code>readPreference</code> 를 줍니다.</div><div class="no">108</div></div>
 </section></div>
 
-<!-- 106 · 개념 · RTO와 RPO -->
+<!-- 109 · 개념 · RTO와 RPO -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3184,8 +3287,8 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
         </tbody>
       </table>
       <ul class="pts">
-        <li><b>RTO 30분</b>: 논리 백업 복구가 2시간 걸린다면 물리 스냅샷을 써야 합니다</li>
-        <li><b>RPO 5분</b>: 하루 한 번 덤프로는 맞출 수 없습니다. oplog 재생이 필요합니다</li>
+        <li><b>RTO 30분</b>: 논리 백업 복구가 2시간 걸린다면 물리 스냅샷을 써야 함</li>
+        <li><b>RPO 5분</b>: 하루 한 번 덤프로는 맞출 수 없음. oplog 재생이 필요</li>
       </ul>
       <div class="callout">
         <b>방식을 고르고 나서 RTO·RPO 를 계산하지 않습니다.</b><br>
@@ -3193,10 +3296,10 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">106</div></div>
+  <div class="ft"><div></div><div class="no">109</div></div>
 </section></div>
 
-<!-- 107 · 개념 · 복구 리허설 -->
+<!-- 110 · 개념 · 복구 리허설 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3204,9 +3307,9 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>복구해 본 적 없는 백업은 백업이 아닙니다</b></li>
-        <li>덤프가 만들어졌다는 것과 복구된다는 것은 다른 사실입니다</li>
-        <li>복구 소요 시간을 재 두어야 RTO 를 말할 수 있습니다</li>
+        <li><b>복구해 본 적 없는 백업은 백업이 아님</b></li>
+        <li>덤프가 만들어졌다는 것과 복구된다는 것은 다른 사실</li>
+        <li>복구 소요 시간을 재 두어야 RTO 를 말할 수 있음</li>
       </ul>
       <div class="callout">
         <b>이 실습이 복구 리허설 그 자체입니다.</b><br>
@@ -3214,10 +3317,10 @@ db.orders.aggregate([{ $indexStats: {} }])</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">107</div></div>
+  <div class="ft"><div></div><div class="no">110</div></div>
 </section></div>
 
-<!-- 108 · 실습 · 백업 준비와 기준값 기록 -->
+<!-- 111 · 실습 · 백업 준비와 기준값 기록 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3241,10 +3344,10 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">108</div></div>
+  <div class="ft"><div></div><div class="no">111</div></div>
 </section></div>
 
-<!-- 109 · 실습 · 덤프 실행 -->
+<!-- 112 · 실습 · 덤프 실행 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3266,10 +3369,10 @@ writing captured oplog to ``
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">109</div></div>
+  <div class="ft"><div></div><div class="no">112</div></div>
 </section></div>
 
-<!-- 110 · 실습 · 덤프 결과 확인 -->
+<!-- 113 · 실습 · 덤프 결과 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3291,10 +3394,10 @@ ls ~/dump ~/dump/lab</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">110</div></div>
+  <div class="ft"><div></div><div class="no">113</div></div>
 </section></div>
 
-<!-- 111 · 실습 · 데이터베이스 삭제 -->
+<!-- 114 · 실습 · 데이터베이스 삭제 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3318,10 +3421,10 @@ db.orders.countDocuments()</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>운영에서 이 자리는 복구 리허설의 시작입니다. 실제 장애가 아니라 계획된 시점에 지우고 되살려 보는 것이 복구 절차를 검증하는 유일한 방법입니다.</div><div class="no">111</div></div>
+  <div class="ft"><div>운영에서 이 자리는 복구 리허설의 시작입니다. 실제 장애가 아니라 계획된 시점에 지우고 되살려 보는 것이 복구 절차를 검증하는 유일한 방법입니다.</div><div class="no">114</div></div>
 </section></div>
 
-<!-- 112 · 실습 · 복구 실행 -->
+<!-- 115 · 실습 · 복구 실행 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3345,10 +3448,10 @@ restoring indexes for collection `lab.orders` from metadata
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">112</div></div>
+  <div class="ft"><div></div><div class="no">115</div></div>
 </section></div>
 
-<!-- 113 · 실습 · 일치 검증 -->
+<!-- 116 · 실습 · 일치 검증 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;Backup과 Restore<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3372,19 +3475,19 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">113</div></div>
+  <div class="ft"><div></div><div class="no">116</div></div>
 </section></div>
 
-<!-- 114 · 챕터 · 권한 -->
+<!-- 117 · 챕터 · 권한 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">10</div></div>
   <h2>권한</h2>
   <div class="items">
-    <span>인증과 인가</span><span>내장 Role</span><span>사용자 정의 Role</span><span>활성화 순서</span><span>롤링 재시작</span>
+    <span>인증과 인가</span><span>내부 인증</span><span>내장 Role</span><span>사용자 정의 Role</span><span>활성화 순서</span><span>롤링 재시작</span>
   </div>
 </section></div>
 
-<!-- 115 · 개념 · 인증과 인가 -->
+<!-- 118 · 개념 · 인증과 인가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3404,10 +3507,10 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">115</div></div>
+  <div class="ft"><div></div><div class="no">118</div></div>
 </section></div>
 
-<!-- 116 · 개념 · 내장 Role -->
+<!-- 119 · 개념 · 내장 Role -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3428,10 +3531,10 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
       </table>
     </div>
   </main>
-  <div class="ft"><div>Role 은 데이터베이스 단위로 부여됩니다. 이름 끝에 <code>AnyDatabase</code> 가 붙은 것(<code>userAdminAnyDatabase</code>·<code>readWriteAnyDatabase</code>)은 모든 데이터베이스에 걸리며 <code>admin</code> 에서만 부여합니다. <code>clusterAdmin</code>·<code>clusterMonitor</code> 도 같습니다.</div><div class="no">116</div></div>
+  <div class="ft"><div>Role 은 데이터베이스 단위로 부여됩니다. 이름 끝에 <code>AnyDatabase</code> 가 붙은 것(<code>userAdminAnyDatabase</code>·<code>readWriteAnyDatabase</code>)은 모든 데이터베이스에 걸리며 <code>admin</code> 에서만 부여합니다. <code>clusterAdmin</code>·<code>clusterMonitor</code> 도 같습니다.</div><div class="no">119</div></div>
 </section></div>
 
-<!-- 117 · 개념 · 사용자 정의 Role -->
+<!-- 120 · 개념 · 사용자 정의 Role -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3449,10 +3552,37 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
       </div>
     </div>
   </main>
-  <div class="ft"><div>MongoDB 문서의 이름은 User-Defined Roles 입니다.</div><div class="no">117</div></div>
+  <div class="ft"><div>MongoDB 문서의 이름은 User-Defined Roles 입니다.</div><div class="no">120</div></div>
 </section></div>
 
-<!-- 118 · 개념 · 인증 활성화 순서 -->
+<!-- 121 · 개념 · keyFile 내부 인증 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head">keyFile 내부 인증</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <table class="cmp">
+        <colgroup><col style="width:24%"><col class="hi" style="width:76%"></colgroup>
+        <thead><tr><th>항목</th><th class="hi">내용</th></tr></thead>
+        <tbody>
+          <tr><th>대상</th><td>사용자가 아니라 <b>노드 간 인증</b>. 세 멤버가 서로를 확인하는 공유 비밀</td></tr>
+          <tr><th>배치 상태</th><td>세 노드와 ops 노드의 <code>/etc/mongod.key</code> 에 이미 같은 파일이 있음</td></tr>
+          <tr><th>켜지는 시점</th><td><code>mongod.conf</code> 에 <code>security.keyFile</code> 을 넣는 순간. <b>인가도 함께 켜짐</b></td></tr>
+          <tr><th>권한</th><td><code>600</code>. 아니면 <code>mongod</code> 가 기동을 거부</td></tr>
+          <tr><th>세 노드의 동일성</th><td>파일이 다르면 멤버가 서로를 거부</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <b>계정과 암호로는 노드 간 통신이 서지 않습니다.</b><br>
+        <code>security.keyFile</code> 한 줄이 클라이언트 인증과 노드 간 인증을 함께 켭니다. 계정을 먼저 만들어 두어야 하는 이유가 여기 있습니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div>파일은 Ansible 이 구성 단계에서 한 노드에서 만들어 세 노드와 ops 노드에 같은 내용으로 배치했습니다. <code>mongos</code> 도 인증이 켜진 뒤에는 이 파일이 있어야 Shard 에 붙습니다.</div><div class="no">121</div></div>
+</section></div>
+
+<!-- 122 · 개념 · 인증 활성화 순서 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3471,9 +3601,8 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
         <div class="st new">검증</div>
       </div>
       <ul class="pts">
-        <li><b><code>security.keyFile</code> 을 넣는 시점</b>: 파일 자체는 챕터 02에서 배치했습니다. 이 설정을 넣는 순간 인가도 함께 켜집니다</li>
-        <li><b>롤링이 두 번인 이유</b>: 인증이 꺼진 노드와 켜진 노드가 섞이면 하트비트가 깨집니다. <code>transitionToAuth</code> 는 인증 없는 연결도 함께 받아 그 구간을 건너게 합니다</li>
-        <li><b>동시 재시작 금지</b>: 세 멤버를 한꺼번에 내리면 과반을 잃어 Replica Set 이 멈춥니다</li>
+        <li><b>롤링이 두 번인 이유</b>: 인증이 꺼진 노드와 켜진 노드가 섞이면 하트비트가 깨짐. <code>transitionToAuth</code> 는 인증 없는 연결도 함께 받아 그 구간을 건너게 함</li>
+        <li><b>동시 재시작 금지</b>: 세 멤버를 한꺼번에 내리면 과반을 잃어 Replica Set 이 멈춤</li>
       </ul>
       <div class="warn">
         <b>순서를 지키지 않으면 아무도 접속할 수 없습니다.</b><br>
@@ -3481,10 +3610,10 @@ db.orders.findOne({}, { customerId: <span class="p">1</span>, status: <span clas
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>transitionToAuth</code> 를 쓰지 않으면 전환 중에 짧은 중단이 생깁니다.</div><div class="no">118</div></div>
+  <div class="ft"><div><code>transitionToAuth</code> 를 쓰지 않으면 전환 중에 짧은 중단이 생깁니다.</div><div class="no">122</div></div>
 </section></div>
 
-<!-- 119 · 실습 · 계정 생성 -->
+<!-- 123 · 실습 · 계정 생성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3509,10 +3638,10 @@ db.createUser({ user: <span class="s">"exporter"</span>, pwd: passwordPrompt(), 
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">119</div></div>
+  <div class="ft"><div></div><div class="no">123</div></div>
 </section></div>
 
-<!-- 120 · 실습 · 사용자 정의 Role 정의 -->
+<!-- 124 · 실습 · 사용자 정의 Role 정의 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3533,10 +3662,10 @@ db.getRole(<span class="s">"orderReader"</span>, { showPrivileges: <span class="
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">120</div></div>
+  <div class="ft"><div></div><div class="no">124</div></div>
 </section></div>
 
-<!-- 121 · 실습 · 인증 활성화 롤링 -->
+<!-- 125 · 실습 · 인증 활성화 롤링 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3558,10 +3687,10 @@ ansible-playbook play-mongodb.yml -e mongodb_replset_enabled=true \
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>mongodb_replset_enabled=true</code> 를 빼면 복제 설정이 함께 내려갑니다. 두 플래그를 항상 같이 줍니다.</div><div class="no">121</div></div>
+  <div class="ft"><div><code>mongodb_replset_enabled=true</code> 를 빼면 복제 설정이 함께 내려갑니다. 두 플래그를 항상 같이 줍니다.</div><div class="no">125</div></div>
 </section></div>
 
-<!-- 122 · 실습 · exporter 재구성 -->
+<!-- 126 · 실습 · exporter 재구성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3585,10 +3714,10 @@ ansible-playbook play-mongodb.yml -e mongodb_replset_enabled=true \
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">122</div></div>
+  <div class="ft"><div></div><div class="no">126</div></div>
 </section></div>
 
-<!-- 123 · 실습 · 권한 밖 작업의 반응 -->
+<!-- 127 · 실습 · 권한 밖 작업의 반응 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;권한<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3612,10 +3741,10 @@ MongoServerError: not authorized on admin to execute command
       </div>
     </div>
   </main>
-  <div class="ft"><div>첫 오류가 <code>aggregate</code> 인 것은 <code>countDocuments()</code> 가 aggregation 을 쓰기 때문입니다.</div><div class="no">123</div></div>
+  <div class="ft"><div>첫 오류가 <code>aggregate</code> 인 것은 <code>countDocuments()</code> 가 aggregation 을 쓰기 때문입니다.</div><div class="no">127</div></div>
 </section></div>
 
-<!-- 124 · 챕터 · PRIMARY 정지와 선출 -->
+<!-- 128 · 챕터 · PRIMARY 정지와 선출 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">11</div></div>
   <h2>PRIMARY 정지와 선출</h2>
@@ -3624,7 +3753,7 @@ MongoServerError: not authorized on admin to execute command
   </div>
 </section></div>
 
-<!-- 125 · 실습 · 정지 전 준비 -->
+<!-- 129 · 실습 · 정지 전 준비 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;PRIMARY 정지와 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3644,10 +3773,10 @@ db.probe.insertOne({ tag: <span class="s">"before-stop"</span> }, { writeConcern
       </ul>
     </div>
   </main>
-  <div class="ft"><div>인증을 켠 뒤이므로 <code>mongosh</code> 에 <code>-u &lt;계정&gt; -p --authenticationDatabase admin</code> 을 붙입니다.</div><div class="no">125</div></div>
+  <div class="ft"><div>인증을 켠 뒤이므로 <code>mongosh</code> 에 <code>-u &lt;계정&gt; -p --authenticationDatabase admin</code> 을 붙입니다.</div><div class="no">129</div></div>
 </section></div>
 
-<!-- 126 · 실습 · PRIMARY 정지 -->
+<!-- 130 · 실습 · PRIMARY 정지 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;PRIMARY 정지와 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3670,10 +3799,10 @@ ansible &lt;PRIMARY 노드 이름&gt; -m systemd -a <span class="s">"name=mongod
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">126</div></div>
+  <div class="ft"><div></div><div class="no">130</div></div>
 </section></div>
 
-<!-- 127 · 실습 · 선출 확인 -->
+<!-- 131 · 실습 · 선출 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;PRIMARY 정지와 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3697,10 +3826,10 @@ db.probe.insertOne({ tag: <span class="s">"after-election"</span> })</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">127</div></div>
+  <div class="ft"><div></div><div class="no">131</div></div>
 </section></div>
 
-<!-- 128 · 실습 · 정지 노드 복귀 -->
+<!-- 132 · 실습 · 정지 노드 복귀 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;PRIMARY 정지와 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3722,10 +3851,10 @@ rs.printSecondaryReplicationInfo()</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">128</div></div>
+  <div class="ft"><div></div><div class="no">132</div></div>
 </section></div>
 
-<!-- 129 · 실습 · Rollback 과 정지 시간 판정 -->
+<!-- 133 · 실습 · Rollback 과 정지 시간 판정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;PRIMARY 정지와 선출<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3750,10 +3879,10 @@ db.getReplicationInfo().timeDiff</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div>oplog 윈도우는 챕터 06에서 기록한 값과 대조합니다. 이 실습의 정지 시간은 몇 분이라 윈도우 안입니다.</div><div class="no">129</div></div>
+  <div class="ft"><div>oplog 윈도우는 챕터 06에서 기록한 값과 대조합니다. 이 실습의 정지 시간은 몇 분이라 윈도우 안입니다.</div><div class="no">133</div></div>
 </section></div>
 
-<!-- 130 · 챕터 · Sharding으로 확장 -->
+<!-- 134 · 챕터 · Sharding으로 확장 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">12</div></div>
   <h2>Sharding으로 확장</h2>
@@ -3762,7 +3891,7 @@ db.getReplicationInfo().timeDiff</pre>
   </div>
 </section></div>
 
-<!-- 131 · 개념 · Sharding의 정의 -->
+<!-- 135 · 개념 · Sharding의 정의 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3770,9 +3899,9 @@ db.getReplicationInfo().timeDiff</pre>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
-        <li><b>구성</b>: 컬렉션의 데이터를 Shard Key 기준으로 여러 Replica Set 에 나눠 담습니다</li>
-        <li><b>확장 효과</b>: 담을 수 있는 양과 쓰기 처리량이 Shard 수만큼 늘어납니다</li>
-        <li><b>복제와의 관계</b>: 각 Shard 가 그 자체로 Replica Set 입니다</li>
+        <li><b>구성</b>: 컬렉션의 데이터를 Shard Key 기준으로 여러 Replica Set 에 나눠 담음</li>
+        <li><b>확장 효과</b>: 담을 수 있는 양과 쓰기 처리량이 Shard 수만큼 늘어남</li>
+        <li><b>복제와의 관계</b>: 각 Shard 가 그 자체로 Replica Set</li>
       </ul>
       <div class="callout">
         <b>복제 위에 분할이 더해지는 구조입니다.</b><br>
@@ -3780,10 +3909,10 @@ db.getReplicationInfo().timeDiff</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">131</div></div>
+  <div class="ft"><div></div><div class="no">135</div></div>
 </section></div>
 
-<!-- 132 · 개념 · Sharded Cluster의 구성 요소 -->
+<!-- 136 · 개념 · Sharded Cluster의 구성 요소 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3820,10 +3949,10 @@ db.getReplicationInfo().timeDiff</pre>
         </div>
         <div class="col">
           <ul class="pts">
-            <li><b><code>mongos</code></b>: 요청을 어느 Shard 로 보낼지 정합니다. 상태를 갖지 않습니다</li>
-            <li><b>config server</b>: 어느 Chunk 가 어느 Shard 에 있는지를 담습니다</li>
-            <li><b><code>clusterRole</code></b>: Shard 는 <code>shardsvr</code>, config server 는 <code>configsvr</code> 로 기동합니다. 기존 Replica Set 을 편입할 때도 다시 세웁니다</li>
-            <li><b>추가 여섯 대</b>: <code>Standard_D2ds_v5</code>. 기본 캐시 3.5 GiB 로 충분한 규모입니다</li>
+            <li><b><code>mongos</code></b>: 요청을 어느 Shard 로 보낼지 정함. 상태를 갖지 않음</li>
+            <li><b>config server</b>: 어느 Chunk 가 어느 Shard 에 있는지를 담음</li>
+            <li><b><code>clusterRole</code></b>: Shard 는 <code>shardsvr</code>, config server 는 <code>configsvr</code> 로 기동. 기존 Replica Set 을 편입할 때도 다시 세움</li>
+            <li><b>추가 여섯 대</b>: <code>Standard_D2ds_v5</code>. 기본 캐시 3.5 GiB 로 충분한 규모</li>
           </ul>
         </div>
       </div>
@@ -3833,10 +3962,10 @@ db.getReplicationInfo().timeDiff</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>운영에서는 Shard 를 같은 크기로 맞춥니다. 캐시가 다르면 같은 양의 Chunk 를 받아도 응답이 갈립니다.</div><div class="no">132</div></div>
+  <div class="ft"><div>운영에서는 Shard 를 같은 크기로 맞춥니다. 캐시가 다르면 같은 양의 Chunk 를 받아도 응답이 갈립니다.</div><div class="no">136</div></div>
 </section></div>
 
-<!-- 133 · 개념 · 분할 방식 -->
+<!-- 137 · 개념 · 분할 방식 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3847,13 +3976,13 @@ db.getReplicationInfo().timeDiff</pre>
         <colgroup><col style="width:14%"><col style="width:30%"><col style="width:56%"></colgroup>
         <thead><tr><th>방식</th><th>나누는 기준</th><th class="hi">성질</th></tr></thead>
         <tbody>
-          <tr><th>Ranged</th><td>Shard Key 값의 범위</td><td>범위 조회가 한 Shard 로 몰립니다. 값이 단조 증가하면 마지막 Shard 에 쓰기가 쏠립니다</td></tr>
-          <tr><th>Hashed</th><td>Shard Key 의 해시값</td><td>쓰기가 고르게 흩어집니다. 범위 조회가 전 Shard 로 뿌려집니다</td></tr>
+          <tr><th>Ranged</th><td>Shard Key 값의 범위</td><td>범위 조회가 한 Shard 로 몰림. 값이 단조 증가하면 마지막 Shard 에 쓰기가 쏠림</td></tr>
+          <tr><th>Hashed</th><td>Shard Key 의 해시값</td><td>쓰기가 고르게 흩어짐. 범위 조회가 전 Shard 로 뿌려짐</td></tr>
         </tbody>
       </table>
       <ul class="pts">
-        <li><b>Zone</b>: 두 방식 위에 얹어 특정 Shard Key 범위를 특정 Shard 에 고정하는 배치 정책입니다. 단독으로 고르는 방식이 아닙니다</li>
-        <li><b>이동 중의 조회</b>: <code>readConcern: available</code> 로 읽으면 아직 정리되지 않은 문서까지 보입니다</li>
+        <li><b>Zone</b>: 두 방식 위에 얹어 특정 Shard Key 범위를 특정 Shard 에 고정하는 배치 정책. 단독으로 고르는 방식이 아님</li>
+        <li><b>이동 중의 조회</b>: <code>readConcern: available</code> 로 읽으면 아직 정리되지 않은 문서까지 보임</li>
       </ul>
       <div class="callout">
         <b>쓰기 분산과 범위 조회는 맞바꾸는 관계입니다.</b><br>
@@ -3861,10 +3990,10 @@ db.getReplicationInfo().timeDiff</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">133</div></div>
+  <div class="ft"><div></div><div class="no">137</div></div>
 </section></div>
 
-<!-- 134 · 개념 · Shard Key 선택 기준 -->
+<!-- 138 · 개념 · Shard Key 선택 기준 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3874,10 +4003,10 @@ db.getReplicationInfo().timeDiff</pre>
       <table class="cmp">
         <thead><tr><th>항목</th><th class="hi">내용</th></tr></thead>
         <tbody>
-          <tr><th>되돌리기</th><td>한 번 정한 뒤 바꾸려면 큰 작업이 필요합니다</td></tr>
-          <tr><th>값의 가짓수</th><td>값의 가짓수가 적으면 Chunk 를 더 쪼갤 수 없습니다</td></tr>
-          <tr><th>분포</th><td>값이 치우치면 한 Shard 에 쓰기가 몰립니다</td></tr>
-          <tr><th>질의 패턴</th><td><b>Shard Key 를 포함하지 않는 조회는 모든 Shard 로 뿌려집니다</b></td></tr>
+          <tr><th>되돌리기</th><td>한 번 정한 뒤 바꾸려면 큰 작업이 필요</td></tr>
+          <tr><th>값의 가짓수</th><td>값의 가짓수가 적으면 Chunk 를 더 쪼갤 수 없음</td></tr>
+          <tr><th>분포</th><td>값이 치우치면 한 Shard 에 쓰기가 몰림</td></tr>
+          <tr><th>질의 패턴</th><td><b>Shard Key 를 포함하지 않는 조회는 모든 Shard 로 뿌려짐</b></td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -3886,10 +4015,10 @@ db.getReplicationInfo().timeDiff</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">134</div></div>
+  <div class="ft"><div></div><div class="no">138</div></div>
 </section></div>
 
-<!-- 135 · 개념 · Shard Key 선택 실패의 증상 -->
+<!-- 139 · 개념 · Shard Key 선택 실패의 증상 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3900,9 +4029,9 @@ db.getReplicationInfo().timeDiff</pre>
         <colgroup><col style="width:32%"><col style="width:68%"></colgroup>
         <thead><tr><th>잘못된 선택</th><th class="hi">나타나는 증상</th></tr></thead>
         <tbody>
-          <tr><th>단조 증가 값 (예: 시각)</th><td>마지막 Chunk 에 쓰기가 쏠려 Shard 한 대에만 부하가 걸립니다</td></tr>
-          <tr><th>가짓수가 적은 값 (예: 상태 코드)</th><td>Chunk 를 더 쪼갤 수 없어 데이터가 고르게 퍼지지 않습니다</td></tr>
-          <tr><th>조회에 쓰지 않는 필드</th><td>모든 조회가 전 Shard 로 뿌려집니다</td></tr>
+          <tr><th>단조 증가 값 (예: 시각)</th><td>마지막 Chunk 에 쓰기가 쏠려 Shard 한 대에만 부하가 걸림</td></tr>
+          <tr><th>가짓수가 적은 값 (예: 상태 코드)</th><td>Chunk 를 더 쪼갤 수 없어 데이터가 고르게 퍼지지 않음</td></tr>
+          <tr><th>조회에 쓰지 않는 필드</th><td>모든 조회가 전 Shard 로 뿌려짐</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -3911,10 +4040,10 @@ db.getReplicationInfo().timeDiff</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">135</div></div>
+  <div class="ft"><div></div><div class="no">139</div></div>
 </section></div>
 
-<!-- 136 · 실습 · Sharding 노드 추가 -->
+<!-- 140 · 실습 · Sharding 노드 추가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3934,10 +4063,10 @@ terraform apply -var-file=session.tfvars</pre>
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">136</div></div>
+  <div class="ft"><div></div><div class="no">140</div></div>
 </section></div>
 
-<!-- 137 · 실습 · 인벤토리에 두 그룹 추가 -->
+<!-- 141 · 실습 · 인벤토리에 두 그룹 추가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3961,10 +4090,10 @@ shard2-3 ansible_host=10.0.1.13</pre>
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">137</div></div>
+  <div class="ft"><div></div><div class="no">141</div></div>
 </section></div>
 
-<!-- 138 · 실습 · 새 노드 구성 -->
+<!-- 142 · 실습 · 새 노드 구성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3986,10 +4115,10 @@ ansible-playbook play-mongodb-shard.yml</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>새로 만든 여섯 대의 <code>mongodb</code> 대상은 Prometheus 에서 <code>DOWN</code> 으로 남습니다. exporter 는 깔렸지만 챕터 10에서 만든 <code>exporter</code> 계정이 <code>rs0</code> 안에만 있어 <code>cfg</code> 와 <code>shard2</code> 에는 없기 때문입니다. 정상입니다.</div><div class="no">138</div></div>
+  <div class="ft"><div>새로 만든 여섯 대의 <code>mongodb</code> 대상은 Prometheus 에서 <code>DOWN</code> 으로 남습니다. exporter 는 깔렸지만 챕터 10에서 만든 <code>exporter</code> 계정이 <code>rs0</code> 안에만 있어 <code>cfg</code> 와 <code>shard2</code> 에는 없기 때문입니다. 정상입니다.</div><div class="no">142</div></div>
 </section></div>
 
-<!-- 139 · 실습 · config server 초기화 -->
+<!-- 143 · 실습 · config server 초기화 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4014,10 +4143,10 @@ rs.initiate({ _id: <span class="s">"cfg"</span>, configsvr: <span class="k">true
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">139</div></div>
+  <div class="ft"><div></div><div class="no">143</div></div>
 </section></div>
 
-<!-- 140 · 실습 · shard2 초기화 -->
+<!-- 144 · 실습 · shard2 초기화 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4041,10 +4170,10 @@ rs.initiate({ _id: <span class="s">"shard2"</span>, members: [
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">140</div></div>
+  <div class="ft"><div></div><div class="no">144</div></div>
 </section></div>
 
-<!-- 141 · 실습 · mongos 기동과 관리자 계정 -->
+<!-- 145 · 실습 · mongos 기동과 관리자 계정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4068,10 +4197,10 @@ db.getSiblingDB(<span class="s">"admin"</span>).createUser({ user: <span class="
       </div>
     </div>
   </main>
-  <div class="ft"><div>계정을 만든 뒤에는 <code>mongosh --port 27020 -u csadmin -p --authenticationDatabase admin</code> 으로 다시 접속합니다.</div><div class="no">141</div></div>
+  <div class="ft"><div>계정을 만든 뒤에는 <code>mongosh --port 27020 -u csadmin -p --authenticationDatabase admin</code> 으로 다시 접속합니다.</div><div class="no">145</div></div>
 </section></div>
 
-<!-- 142 · 실습 · Shard 등록 -->
+<!-- 146 · 실습 · Shard 등록 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4091,10 +4220,10 @@ sh.status()</pre>
       </ul>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">142</div></div>
+  <div class="ft"><div></div><div class="no">146</div></div>
 </section></div>
 
-<!-- 143 · 실습 · Chunk 크기와 Shard Key 인덱스 -->
+<!-- 147 · 실습 · Chunk 크기와 Shard Key 인덱스 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4119,10 +4248,10 @@ db.orders.createIndex({ customerId: <span class="p">1</span> })</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">143</div></div>
+  <div class="ft"><div></div><div class="no">147</div></div>
 </section></div>
 
-<!-- 144 · 실습 · Sharding 활성화와 분포 확인 -->
+<!-- 148 · 실습 · Sharding 활성화와 분포 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4146,10 +4275,10 @@ databases:
       </div>
     </div>
   </main>
-  <div class="ft"><div><b>분포가 고르지 않은 것이 정상입니다.</b> balancer 가 재배치하는 중이라 19개가 2개와 17개로 갈렸습니다. 두 Shard 에 나뉘었다는 것만 확인합니다. Chunk 가 하나로 남아 있으면 <code>chunksize</code> 를 낮추는 단계를 건너뛴 것입니다.</div><div class="no">144</div></div>
+  <div class="ft"><div><b>분포가 고르지 않은 것이 정상입니다.</b> balancer 가 재배치하는 중이라 19개가 2개와 17개로 갈렸습니다. 두 Shard 에 나뉘었다는 것만 확인합니다. Chunk 가 하나로 남아 있으면 <code>chunksize</code> 를 낮추는 단계를 건너뛴 것입니다.</div><div class="no">148</div></div>
 </section></div>
 
-<!-- 145 · 실습 · Shard Key 유무에 따른 조회 -->
+<!-- 149 · 실습 · Shard Key 유무에 따른 조회 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4175,10 +4304,10 @@ db.orders.find({ status: <span class="s">"refunded"</span>, amount: { : <span cl
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">145</div></div>
+  <div class="ft"><div></div><div class="no">149</div></div>
 </section></div>
 
-<!-- 146 · 실습 · 리소스 정리 -->
+<!-- 150 · 실습 · 리소스 정리 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;Sharding으로 확장<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -4199,7 +4328,7 @@ terraform destroy -var-file=session.tfvars</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">146</div></div>
+  <div class="ft"><div></div><div class="no">150</div></div>
 </section></div>
 </div>
 <script>
@@ -4258,4 +4387,4 @@ terraform destroy -var-file=session.tfvars</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 0df191b7dbff8172 -->
+<!-- deck-src 4b920fdbd993c491 -->

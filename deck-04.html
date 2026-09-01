@@ -298,7 +298,7 @@ a:hover{color:var(--accent);}
   /* 슬라이드가 transform 을 갖고 있어 이 고정 위치는 뷰포트가 아니라
      슬라이드를 기준으로 잡힌다. 원래 페이지 번호가 있던 자리에 그대로 놓인다. */
   body.cs .stage.on::after{
-    content:counter(stg) " / 165";
+    content:counter(stg) " / 169";
     position:fixed; right:72px; bottom:34px; z-index:20;
     font-family:'Pretendard','Apple SD Gothic Neo',system-ui,sans-serif;
     font-size:14px; font-variant-numeric:tabular-nums; color:#8A8779;
@@ -326,10 +326,11 @@ a:hover{color:var(--accent);}
 <div class="stage"><section class="slide title-slide">
   <div class="bar"></div>
   <h1>세션 4 · 장애대응 · 모니터링</h1>
-  <p class="sub">지금 무엇이 잘못됐고, 어떻게 되돌리는가</p>
+  <p class="sub">운영 절차서 · 런북 · 장애대응 · 모니터링</p>
   <div class="meta">
-    <div><b>Day 2</b><span>세션 4</span></div>
     <div><b>대상 버전</b><span>Redis 8.10.x · MongoDB 8.3.x · Kafka 4.3.x</span></div>
+    <div><b>OS</b><span>Ubuntu 24.04 LTS</span></div>
+    <div><b>실습 환경</b><span>Azure</span></div>
     <div><b>관측 도구</b><span>Prometheus · Grafana</span></div>
   </div>
 </section></div>
@@ -454,11 +455,11 @@ a:hover{color:var(--accent);}
   <div class="ft"><div>서비스 노드가 3대인 것은 세 서비스 모두 정족수 기반이기 때문입니다.</div><div class="no">6</div></div>
 </section></div>
 
-<!-- 7 · 개념 · ops 노드를 서비스 노드와 나누는 이유 -->
+<!-- 7 · 개념 · ops 노드 분리 근거 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축과 관측 스택</div><div>Prometheus · Grafana</div></div>
   <main>
-    <h2 class="head">ops 노드를 서비스 노드와 나누는 이유</h2>
+    <h2 class="head">ops 노드 분리 근거</h2>
     <div class="headrule"></div>
     <div class="body">
       <div class="split l">
@@ -504,11 +505,11 @@ a:hover{color:var(--accent);}
   <div class="ft"><div></div><div class="no">7</div></div>
 </section></div>
 
-<!-- 8 · 개념 · 서비스마다 사양이 다른 이유 -->
+<!-- 8 · 개념 · 서비스별 사양 차이 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축과 관측 스택</div><div>Prometheus · Grafana</div></div>
   <main>
-    <h2 class="head">서비스마다 사양이 다른 이유</h2>
+    <h2 class="head">서비스별 사양 차이</h2>
     <div class="headrule"></div>
     <div class="body">
       <table class="cmp">
@@ -676,9 +677,8 @@ a:hover{color:var(--accent);}
     - role: monitoring
       monitoring_target: server
       monitoring_scrape_ops: true
-      # 둘 다 기본값은 꺼짐. 앞 세션 화면 유지
-      monitoring_node_dashboard: true
-      monitoring_full_panels: true</pre>
+      # 기본값은 꺼짐. 앞 세션 화면 유지
+      monitoring_node_dashboard: true</pre>
           </div>
         </div>
       </div>
@@ -1122,7 +1122,7 @@ PONG</pre>
       </div>
       <div class="callout">
         <b>카운터에 <code>rate()</code> 를 씌우지 않으면 장애가 보이지 않습니다.</b><br>
-        <code>evicted_keys</code> 가 계속 오르는 것은 당연합니다. 봐야 하는 것은 <b>언제부터 빨리 오르기 시작했는가</b>이고, 그것은 증가율에서만 보입니다. p.69 에서 직접 비교합니다.
+        <code>evicted_keys</code> 가 계속 오르는 것은 당연합니다. 봐야 하는 것은 <b>언제부터 빨리 오르기 시작했는가</b>이고, 그것은 증가율에서만 보입니다.
       </div>
     </div>
   </main>
@@ -1138,11 +1138,11 @@ PONG</pre>
   </div>
 </section></div>
 
-<!-- 29 · 개념 · 노드 지표를 먼저 보는 이유 -->
+<!-- 29 · 개념 · 노드 지표를 먼저 보는 순서 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 03</span> &nbsp;노드 지표와 로그</div><div>Prometheus · Grafana</div></div>
   <main>
-    <h2 class="head">노드 지표를 먼저 보는 이유</h2>
+    <h2 class="head">노드 지표를 먼저 보는 순서</h2>
     <div class="headrule"></div>
     <div class="body">
       <ul class="pts">
@@ -1235,7 +1235,7 @@ PONG</pre>
       </ul>
       <div class="callout">
         <b>디스크가 차는 것은 예측할 수 있는 몇 안 되는 장애입니다.</b><br>
-        갑자기 차지 않고 서서히 줄어듭니다. 남은 용량이 아니라 <b>줄어드는 속도</b>로 걸면 대응할 시간이 생깁니다. 그 규칙은 p.47 에 있고 p.72 에서 열어 봅니다.
+        갑자기 차지 않고 서서히 줄어듭니다. 남은 용량이 아니라 <b>줄어드는 속도</b>로 걸면 대응할 시간이 생깁니다.
       </div>
     </div>
   </main>
@@ -1521,7 +1521,7 @@ Filesystem      Size  Used Avail Use% Mounted on
       </ul>
       <div class="callout">
         <b>전부 페이지로 거는 것이 안전한 것이 아닙니다.</b><br>
-        깨우는 알람이 많아지면 진짜 깨워야 할 때 반응이 늦어집니다. p.73 에서 <b>몇 개를 페이지로 걸 것인지 직접 고르고 그 수를 세어 봅니다.</b>
+        깨우는 알람이 많아지면 진짜 깨워야 할 때 반응이 늦어집니다. <b>페이지로 걸 것을 고를 때는 그 수를 세어 봅니다.</b>
       </div>
     </div>
   </main>
@@ -1669,7 +1669,7 @@ predict_linear(node_filesystem_avail_bytes{
       </ul>
       <div class="callout">
         <b>디스크 고갈은 미리 알 수 있는 몇 안 되는 장애입니다.</b><br>
-        갑자기 차지 않으므로 추세를 보면 며칠 전에도 알 수 있습니다. 이 규칙은 플레이북이 이미 배포해 두었고 p.72 에서 읽어 봅니다.
+        갑자기 차지 않으므로 추세를 보면 며칠 전에도 알 수 있습니다. 이 규칙은 플레이북이 이미 배포해 두었습니다.
       </div>
     </div>
   </main>
@@ -1725,7 +1725,7 @@ predict_linear(node_filesystem_avail_bytes{
         <tbody>
           <tr><th>Routing</th><td><code>severity</code> 로 보낼 곳을 나눔</td><td>페이지는 전화, 티켓은 이슈</td></tr>
           <tr><th>Grouping</th><td>같은 원인의 알람을 묶어 한 번에 보냄</td><td>노드 하나에 알람 열 개가 따로 오지 않게</td></tr>
-          <tr><th>억제</th><td>상위 알람이 있으면 하위를 보내지 않음</td><td>p.45 의 그 장치</td></tr>
+          <tr><th>억제</th><td>상위 알람이 있으면 하위를 보내지 않음</td><td>앞의 그 장치</td></tr>
           <tr><th>침묵</th><td>정해진 기간 동안 특정 알람을 멈춤</td><td>계획된 작업 중에</td></tr>
         </tbody>
       </table>
@@ -1928,7 +1928,7 @@ predict_linear(node_filesystem_avail_bytes{
       <ol class="steps">
         <li>ops 노드에 <code>~/runbook</code> 을 만들고 그 안에 런북 파일을 만듦</li>
         <li>표에 다섯 열을 만듦: 지표 / 확인 위치 / 정상 범위 / 확인 주기 / 넘어갈 런북</li>
-        <li><b>노드 공통 지표부터 채움.</b> p.38 에서 적어 둔 평상시 값이 정상 범위가 됨</li>
+        <li><b>노드 공통 지표부터 채움.</b> 챕터 03 에서 적어 둔 평상시 값이 정상 범위가 됨</li>
         <li>확인 위치에 대시보드 이름과 패널 이름, 또는 명령을 그대로 적음</li>
         <li>「넘어갈 런북」 칸은 <b>비워 둠.</b> 챕터 07 · 09 · 11 에서 서비스마다 채움</li>
       </ol>
@@ -1961,7 +1961,7 @@ predict_linear(node_filesystem_avail_bytes{
       </table>
       <div class="callout">
         <b>「정상 범위」에 숫자가 없으면 점검이 되지 않습니다.</b><br>
-        「낮게 유지」는 판단을 요구합니다. p.38 에서 본 값을 근거로 숫자를 넣습니다.
+        「낮게 유지」는 판단을 요구합니다. 챕터 03 에서 본 값을 근거로 숫자를 넣습니다.
       </div>
     </div>
   </main>
@@ -2143,7 +2143,7 @@ predict_linear(node_filesystem_avail_bytes{
   <div class="ft"><div>fork 와 Copy-on-Write 는 세션 1 에서 다뤘습니다.</div><div class="no">64</div></div>
 </section></div>
 
-<!-- 65 · 개념 · 복제 지표 -->
+<!-- 65 · 개념 · Redis 복제 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 06</span> &nbsp;Redis 지표와 알람 규칙</div><div>Redis 8.10.x</div></div>
   <main>
@@ -2280,7 +2280,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 네 질의가 각각 결과를 냅니다. 지표 이름은 exporter 문서를 따르므로 실제 이름은 p.70 에서 확인합니다.</div><div class="no">68</div></div>
+  <div class="ft"><div>완료 판정: 네 질의가 각각 결과를 냅니다.</div><div class="no">68</div></div>
 </section></div>
 
 <!-- 69 · 실습 · rate() 유무 비교 -->
@@ -2387,7 +2387,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
         <div class="col">
           <ol class="steps">
             <li><b>디스크</b>: 이미 들어 있는 규칙에서 <code>mountpoint</code> 와 <code>for</code> 의 이유를 확인</li>
-            <li><b>Redis 메모리</b>: 사용률이 임계값을 넘을 때. <b>직접 작성.</b> 임계값은 p.19 의 값 위에서 잡음</li>
+            <li><b>Redis 메모리</b>: 사용률이 임계값을 넘을 때. <b>직접 작성.</b> <code>maxmemory</code> 값 위에서 잡음</li>
             <li><b>Redis 복제</b>: <code>connected_slaves</code> 가 구성값보다 적을 때. <b>직접 작성</b></li>
             <li>각 규칙에 <code>for</code> 절과 <code>severity</code> label, <code>runbook</code> 주석 부여</li>
             <li>규칙 파일을 반영하고 <code>Alerts</code> 화면에서 확인</li>
@@ -2400,7 +2400,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
       </div>
       <div class="callout">
         <b>지금 없는 지표로는 규칙을 검증할 수 없습니다.</b><br>
-        MongoDB 규칙 둘은 p.108 에서, Consumer Lag 규칙은 p.135 에서 그 서비스 지표를 배운 직후에 씁니다. 세션이 끝나면 규칙이 여섯 건이 됩니다.
+        나머지 서비스의 규칙은 그 지표를 배운 직후에 씁니다.
       </div>
     </div>
   </main>
@@ -2690,7 +2690,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
             <li>ops 노드에서 <code>cd ~/lab/scenarios</code></li>
             <li><code>./rb-r01.sh</code> 실행</li>
             <li>Grafana 의 <b>「replica 수」 패널</b>에서 값이 2에서 1로 떨어지는 것 확인</li>
-            <li><code>Alerts</code> 화면에서 <b>p.72 의 복제 규칙</b>이 <code>Pending</code> 을 거쳐 <code>Firing</code> 이 되는 것 확인</li>
+            <li><code>Alerts</code> 화면에서 <b>복제 규칙</b>이 <code>Pending</code> 을 거쳐 <code>Firing</code> 이 되는 것 확인</li>
             <li>이 시각과 두 화면을 적어 둠. <b>런북 1절의 재료</b></li>
           </ol>
         </div>
@@ -2700,7 +2700,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
       </div>
       <div class="callout">
         <b>알람이 울리는 것까지가 증상입니다.</b><br>
-        p.72 에서 건 규칙이 여기서 실제로 발동합니다.
+        앞서 건 규칙이 여기서 실제로 발동합니다.
       </div>
     </div>
   </main>
@@ -2709,7 +2709,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
 
 <!-- 84 · 장애 대응 · RB-R01 원인 후보 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head">원인 후보 다섯</h2>
     <div class="headrule"></div>
@@ -2760,7 +2760,7 @@ redis_memory_used_bytes / redis_memory_max_bytes</pre>
 
 <!-- 86 · 장애 대응 · RB-R01 예상 출력 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head">감별에서 보는 출력</h2>
     <div class="headrule"></div>
@@ -2799,7 +2799,7 @@ master_sync_in_progress:0</pre>
 
 <!-- 87 · 장애 대응 · RB-R01 완화와 복구 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head">완화와 복구</h2>
     <div class="headrule"></div>
@@ -2849,7 +2849,34 @@ master_sync_in_progress:0</pre>
   <div class="ft"><div></div><div class="no">88</div></div>
 </section></div>
 
-<!-- 89 · 실습 · RB-R01 과 RB-OBS 채우기 -->
+<!-- 89 · 장애 대응 · rb-r01.sh 가 한 일 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
+  <main>
+    <h2 class="head"><code>rb-r01.sh</code> 가 한 일</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># 주입: replica 하나의 redis-server 유닛을 정지</span>
+ansible &lt;replica&gt; -m systemd -a <span class="s">"name=redis-server state=stopped"</span> --become
+<span class="c"># 복구: 같은 유닛을 기동. --restore 가 이것을 함</span>
+ansible &lt;replica&gt; -m systemd -a <span class="s">"name=redis-server state=started"</span> --become</pre>
+      </div>
+      <ul class="pts">
+        <li><b>고른 대상</b>: Sentinel 에 물어 master 가 아닌 노드 하나. master 를 내리면 자동 전환이 일어나 다른 실습이 됨</li>
+        <li><b>남기는 것</b>: <code>~/.rb-r01</code> 에 어느 노드를 내렸는지 기록. <code>--restore</code> 가 그 파일을 보고 되돌림</li>
+        <li><b>건드리지 않은 것</b>: 설정 파일, 데이터, 네트워크. 프로세스 하나만 정지</li>
+      </ul>
+      <div class="callout">
+        <b>진단이 맞았는지 여기서 대조합니다.</b><br>
+        <code>connected_slaves</code> 가 줄고 노드 지표는 정상이었던 것이 이 조작의 결과입니다. 프로세스만 내렸으므로 VM 은 멀쩡합니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div></div><div class="no">89</div></div>
+</section></div>
+
+<!-- 90 · 실습 · RB-R01 과 RB-OBS 채우기 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -2858,10 +2885,10 @@ master_sync_in_progress:0</pre>
     <div class="body">
       <ol class="steps">
         <li><code>RB-R01</code> 을 8절 구조로 작성</li>
-        <li>3절 「즉시 확인」에는 <b>p.85 의 1단계부터 3단계까지만</b> 넣음</li>
+        <li>3절 「즉시 확인」에는 <b>「RB-R01 감별 절차」의 1단계부터 3단계까지만</b> 넣음</li>
         <li>4절에 다섯 후보와 갈림 기준을 표로 넣음</li>
         <li>5절에 완화와 복구를 명령 그대로 넣음. <b>판단 여지를 없앰</b></li>
-        <li>6절에 p.88 의 체크 항목을 넣음</li>
+        <li>6절에 「RB-R01 복구 검증」의 체크 항목을 넣음</li>
         <li><code>RB-OBS</code> 에 Redis 지표 칸을 추가하고 <b>「넘어갈 런북」에 <code>RB-R01</code> 을 적음</b></li>
       </ol>
       <div class="callout">
@@ -2870,12 +2897,12 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>런북과 적어 둔 값은 ops 노드에 둡니다. ops 노드는 세션 내내 유지되므로 단계가 바뀌어도 남습니다.</div><div class="no">89</div></div>
+  <div class="ft"><div>런북과 적어 둔 값은 ops 노드에 둡니다. ops 노드는 세션 내내 유지되므로 단계가 바뀌어도 남습니다.</div><div class="no">90</div></div>
 </section></div>
 
-<!-- 90 · 실습 · RB-R01 작성 예시 -->
+<!-- 91 · 실습 · RB-R01 작성 예시 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head"><code>RB-R01</code> 작성 예시</h2>
     <div class="headrule"></div>
@@ -2913,10 +2940,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">90</div></div>
+  <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">91</div></div>
 </section></div>
 
-<!-- 91 · 실습 · RB-R02 히트율 하락과 쓰기 실패 -->
+<!-- 92 · 실습 · RB-R02 히트율 하락과 쓰기 실패 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -2929,7 +2956,7 @@ master_sync_in_progress:0</pre>
             <li>ops 노드에서 <code>cd ~/lab/scenarios</code></li>
             <li><code>./rb-r02.sh 1</code> 실행. 상한을 낮추고 적재한 뒤 같은 키 공간을 읽음</li>
             <li>Grafana 의 <b>「축출」·「히트율」 패널</b>에서 값이 바뀌는 것 확인</li>
-            <li><code>Alerts</code> 화면에서 <b>p.72 의 Redis 메모리 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
+            <li><code>Alerts</code> 화면에서 <b>Redis 메모리 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
             <li><b>VM 메모리 그래프에 변화가 없는 것</b>도 확인</li>
             <li><code>./rb-r02.sh 2</code> 실행. 정책을 <code>noeviction</code> 으로 바꾸고 <b>상한을 지금 사용량 아래로 내려 쓰기 거부를 유발</b></li>
           </ol>
@@ -2944,10 +2971,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 1단계에서 eviction 이 늘고, 2단계에서 <code>OOM command not allowed</code> 가 나옵니다. 두 정책의 차이를 여기서 봅니다.</div><div class="no">91</div></div>
+  <div class="ft"><div>완료 판정: 1단계에서 eviction 이 늘고, 2단계에서 <code>OOM command not allowed</code> 가 나옵니다. 두 정책의 차이를 여기서 봅니다.</div><div class="no">92</div></div>
 </section></div>
 
-<!-- 92 · 장애 대응 · RB-R02 감별 절차 -->
+<!-- 93 · 장애 대응 · RB-R02 감별 절차 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -2965,12 +2992,12 @@ master_sync_in_progress:0</pre>
       </ol>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 원인이 서비스 계층으로 확정되고 정책에 따른 증상이 설명됩니다.</div><div class="no">92</div></div>
+  <div class="ft"><div>완료 판정: 원인이 서비스 계층으로 확정되고 정책에 따른 증상이 설명됩니다.</div><div class="no">93</div></div>
 </section></div>
 
-<!-- 93 · 장애 대응 · eviction 정책에 따른 증상 차이 -->
+<!-- 94 · 장애 대응 · eviction 정책에 따른 증상 차이 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head">eviction 정책에 따른 증상 차이</h2>
     <div class="headrule"></div>
@@ -2997,12 +3024,12 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">93</div></div>
+  <div class="ft"><div></div><div class="no">94</div></div>
 </section></div>
 
-<!-- 94 · 장애 대응 · RB-R02 완화와 복구 -->
+<!-- 95 · 장애 대응 · RB-R02 완화와 복구 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head">완화와 복구</h2>
     <div class="headrule"></div>
@@ -3023,10 +3050,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">94</div></div>
+  <div class="ft"><div></div><div class="no">95</div></div>
 </section></div>
 
-<!-- 95 · 장애 대응 · RB-R02 복구 검증 -->
+<!-- 96 · 장애 대응 · RB-R02 복구 검증 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -3049,10 +3076,39 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">95</div></div>
+  <div class="ft"><div></div><div class="no">96</div></div>
 </section></div>
 
-<!-- 96 · 실습 · RB-R02 와 RB-OBS 채우기 -->
+<!-- 97 · 장애 대응 · rb-r02.sh 가 한 일 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
+  <main>
+    <h2 class="head"><code>rb-r02.sh</code> 가 한 일</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># 1단계: 상한을 8gb 에서 256mb 로 낮추고 400 MB 를 적재</span>
+redis-cli CONFIG SET maxmemory 256mb
+<span class="c"># 2단계: 정책을 바꾸고 상한을 지금 사용량 아래로 내림</span>
+redis-cli CONFIG SET maxmemory-policy noeviction</pre>
+      </div>
+      <table class="cmp">
+        <thead><tr><th>단계</th><th>바꾼 값</th><th class="hi">나온 증상</th></tr></thead>
+        <tbody>
+          <tr><th>1</th><td><code>maxmemory</code> 를 낮춤</td><td>eviction 이 늘고 히트율이 떨어짐. 쓰기는 계속 성공</td></tr>
+          <tr><th>2</th><td>정책을 <code>noeviction</code> 으로</td><td><code>OOM command not allowed</code> 로 쓰기 거부</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <b>VM 메모리는 처음부터 끝까지 정상이었습니다.</b><br>
+        Redis 자신의 상한을 낮춘 것이지 OS 메모리를 채운 것이 아닙니다. 노드 지표만 보면 아무 일도 없었던 것으로 보입니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div><code>CONFIG SET</code> 은 실행 중 값만 바꾸므로 <code>redis.conf</code> 는 그대로입니다. <code>--restore</code> 가 <code>~/.rb-r02</code> 에 적어 둔 원래 값으로 되돌립니다.</div><div class="no">97</div></div>
+</section></div>
+
+<!-- 98 · 실습 · RB-R02 와 RB-OBS 채우기 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -3073,12 +3129,12 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>RB-R02</code> 8절이 채워지고 <code>RB-OBS</code> 의 Redis 줄이 런북 둘을 가리킵니다.</div><div class="no">96</div></div>
+  <div class="ft"><div>완료 판정: <code>RB-R02</code> 8절이 채워지고 <code>RB-OBS</code> 의 Redis 줄이 런북 둘을 가리킵니다.</div><div class="no">98</div></div>
 </section></div>
 
-<!-- 97 · 실습 · RB-R02 작성 예시 -->
+<!-- 99 · 실습 · RB-R02 작성 예시 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현</div><div>Redis 8.10.x</div></div>
   <main>
     <h2 class="head"><code>RB-R02</code> 작성 예시</h2>
     <div class="headrule"></div>
@@ -3115,10 +3171,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>6단계에서 적어 둔 값이 챕터 12 대비표의 재료가 됩니다.</div><div class="no">97</div></div>
+  <div class="ft"><div>6단계에서 적어 둔 값이 챕터 12 대비표의 재료가 됩니다.</div><div class="no">99</div></div>
 </section></div>
 
-<!-- 98 · 구성 · Redis 리소스 정리 -->
+<!-- 100 · 구성 · Redis 리소스 정리 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 07</span> &nbsp;Redis 대표 장애와 재현<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
@@ -3154,10 +3210,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>apply</code> 가 끝나고 ops 노드의 인벤토리에서 <code>[redis]</code> 그룹이 사라집니다. <b>삭제는 2분에서 30분까지 걸립니다.</b> 한 대만 남아 오래 도는 경우가 있고, Azure 쪽 처리라 기다리는 것 말고 할 일이 없습니다.</div><div class="no">98</div></div>
+  <div class="ft"><div>완료 판정: <code>apply</code> 가 끝나고 ops 노드의 인벤토리에서 <code>[redis]</code> 그룹이 사라집니다. <b>삭제는 2분에서 30분까지 걸립니다.</b> 한 대만 남아 오래 도는 경우가 있고, Azure 쪽 처리라 기다리는 것 말고 할 일이 없습니다.</div><div class="no">100</div></div>
 </section></div>
 
-<!-- 99 · 챕터 · MongoDB 지표와 알람 규칙 -->
+<!-- 101 · 챕터 · MongoDB 지표와 알람 규칙 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">08</div></div>
   <h2>MongoDB 지표와 알람 규칙</h2>
@@ -3166,7 +3222,7 @@ master_sync_in_progress:0</pre>
   </div>
 </section></div>
 
-<!-- 100 · 구성 · MongoDB 구성 -->
+<!-- 102 · 구성 · MongoDB 구성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3186,10 +3242,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>failed=0</code> 이고 4대가 모두 나옵니다. 명령은 ops 노드의 <code>~/ansible</code> 에서 실행합니다.</div><div class="no">100</div></div>
+  <div class="ft"><div>완료 판정: <code>failed=0</code> 이고 4대가 모두 나옵니다. 명령은 ops 노드의 <code>~/ansible</code> 에서 실행합니다.</div><div class="no">102</div></div>
 </section></div>
 
-<!-- 101 · 실습 · MongoDB 전환 확인 -->
+<!-- 103 · 실습 · MongoDB 전환 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3216,14 +3272,14 @@ master_sync_in_progress:0</pre>
       </div>
       <div class="callout">
         <b>앞 서비스 job 이 남아 있으면 인벤토리를 갱신하지 않은 것입니다.</b><br>
-        없는 노드까지 수집 대상으로 삼아 <code>DOWN</code> 으로 남습니다. p.98 의 6번과 7번으로 돌아가 인벤토리를 다시 덮어씁니다.
+        없는 노드까지 수집 대상으로 삼아 <code>DOWN</code> 으로 남습니다. 인벤토리를 받아 옮기는 6번과 7번으로 돌아가 인벤토리를 다시 덮어씁니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 위 다섯 줄을 모두 확인합니다.</div><div class="no">101</div></div>
+  <div class="ft"><div>완료 판정: 위 다섯 줄을 모두 확인합니다.</div><div class="no">103</div></div>
 </section></div>
 
-<!-- 102 · 개념 · MongoDB 지표의 출처 -->
+<!-- 104 · 개념 · MongoDB 지표의 출처 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3243,10 +3299,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>이 두 명령에서 필요한 지표가 거의 다 나옵니다. 명령은 ops 노드에서 <code>mongosh --host &lt;노드 사설 IP&gt;</code> 로 실행합니다.</div><div class="no">102</div></div>
+  <div class="ft"><div>이 두 명령에서 필요한 지표가 거의 다 나옵니다. 명령은 ops 노드에서 <code>mongosh --host &lt;노드 사설 IP&gt;</code> 로 실행합니다.</div><div class="no">104</div></div>
 </section></div>
 
-<!-- 103 · 개념 · 복제 지표 -->
+<!-- 105 · 개념 · MongoDB 복제 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3270,10 +3326,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">103</div></div>
+  <div class="ft"><div></div><div class="no">105</div></div>
 </section></div>
 
-<!-- 104 · 개념 · oplog 윈도우와 복구 수단의 관계 -->
+<!-- 106 · 개념 · oplog 윈도우와 복구 수단의 관계 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3316,10 +3372,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">104</div></div>
+  <div class="ft"><div></div><div class="no">106</div></div>
 </section></div>
 
-<!-- 105 · 개념 · WiredTiger 캐시 지표 -->
+<!-- 107 · 개념 · WiredTiger 캐시 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3342,10 +3398,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>mongodb_</code> 접두사가 붙은 쪽이 Prometheus 지표 이름입니다.</div><div class="no">105</div></div>
+  <div class="ft"><div><code>mongodb_</code> 접두사가 붙은 쪽이 Prometheus 지표 이름입니다.</div><div class="no">107</div></div>
 </section></div>
 
-<!-- 106 · 개념 · 포화 지표 -->
+<!-- 108 · 개념 · 포화 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3369,10 +3425,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><b>슬롯 고갈은 원인이 아니라 결과인 경우가 많습니다.</b> 인덱스 없는 질의가 슬롯을 오래 쥐고 있으면 슬롯이 돌아오지 않습니다. 상한은 같은 곳의 <code>totalTickets</code> 이고 2 vCPU 노드에서 읽기·쓰기 각각 4 입니다. <code>usesThroughputProbing</code> 이 켜져 있어 고정값이 아닙니다.</div><div class="no">106</div></div>
+  <div class="ft"><div><b>슬롯 고갈은 원인이 아니라 결과인 경우가 많습니다.</b> 인덱스 없는 질의가 슬롯을 오래 쥐고 있으면 슬롯이 돌아오지 않습니다. 상한은 같은 곳의 <code>totalTickets</code> 이고 2 vCPU 노드에서 읽기·쓰기 각각 4 입니다. <code>usesThroughputProbing</code> 이 켜져 있어 고정값이 아닙니다.</div><div class="no">108</div></div>
 </section></div>
 
-<!-- 107 · 개념 · 질의 효율 지표 -->
+<!-- 109 · 개념 · 질의 효율 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3396,10 +3452,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">107</div></div>
+  <div class="ft"><div></div><div class="no">109</div></div>
 </section></div>
 
-<!-- 108 · 실습 · MongoDB 알람 규칙 작성 -->
+<!-- 110 · 실습 · MongoDB 알람 규칙 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 08</span> &nbsp;MongoDB 지표와 알람 규칙<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3411,7 +3467,7 @@ master_sync_in_progress:0</pre>
           <ol class="steps">
             <li><b>복제 지연 규칙</b>: <code>mongodb_members_optimeDate</code> 의 PRIMARY 대비 차가 임계값을 넘을 때</li>
             <li>대시보드 「복제 지연」 패널의 식을 그대로 사용함. <b>화면에서 본 그래프와 같은 식</b></li>
-            <li>임계값은 <b>oplog 윈도우 대비 비율</b>로 잡음. p.104 에서 본 기준을 씀</li>
+            <li>임계값은 <b>oplog 윈도우 대비 비율</b>로 잡음. 앞서 본 기준을 씀</li>
             <li><code>for</code> 절을 붙여 순간 급등에 울리지 않게 함</li>
             <li><b>멤버 상태 규칙</b>: <code>mongodb_members_health</code> 가 0 일 때. 지연 규칙과 짝으로 씀</li>
             <li>두 규칙에 <code>severity</code> 와 <code>runbook</code> 주석 <code>RB-M01</code> 을 붙임</li>
@@ -3425,15 +3481,15 @@ master_sync_in_progress:0</pre>
           </div>
           <div class="callout">
             <b>Redis 에서 한 것과 같은 순서입니다.</b><br>
-            지표를 배우고 그 지표로 규칙을 씁니다. Kafka 도 p.135 에서 같은 순서로 합니다.
+            지표를 배우고 그 지표로 규칙을 씁니다.
           </div>
         </div>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 알람 규칙이 다섯 건이 되고 새 규칙 둘이 <code>Inactive</code> 로 보입니다. 발동은 챕터 09 의 재현에서 관찰합니다.</div><div class="no">108</div></div>
+  <div class="ft"><div>완료 판정: 알람 규칙이 다섯 건이 되고 새 규칙 둘이 <code>Inactive</code> 로 보입니다. 발동은 챕터 09 의 재현에서 관찰합니다.</div><div class="no">110</div></div>
 </section></div>
-<!-- 109 · 챕터 · MongoDB 대표 장애와 재현 -->
+<!-- 111 · 챕터 · MongoDB 대표 장애와 재현 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">09</div></div>
   <h2>MongoDB 대표 장애와 재현</h2>
@@ -3442,7 +3498,7 @@ master_sync_in_progress:0</pre>
   </div>
 </section></div>
 
-<!-- 110 · 개념 · MongoDB 대표 장애 (1) -->
+<!-- 112 · 개념 · MongoDB 대표 장애 (1) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3462,10 +3518,10 @@ master_sync_in_progress:0</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div><b>강조한 행을 직접 재현합니다.</b> 복제 지연이 <code>RB-M01</code> 입니다. 인덱스 문제는 재현하지 않지만 MongoDB 운영 사고의 대부분을 차지합니다.</div><div class="no">110</div></div>
+  <div class="ft"><div><b>강조한 행을 직접 재현합니다.</b> 복제 지연이 <code>RB-M01</code> 입니다. 인덱스 문제는 재현하지 않지만 MongoDB 운영 사고의 대부분을 차지합니다.</div><div class="no">112</div></div>
 </section></div>
 
-<!-- 111 · 개념 · MongoDB 대표 장애 (2) -->
+<!-- 113 · 개념 · MongoDB 대표 장애 (2) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3488,10 +3544,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">111</div></div>
+  <div class="ft"><div></div><div class="no">113</div></div>
 </section></div>
 
-<!-- 112 · 개념 · 인덱스 없는 질의 -->
+<!-- 114 · 개념 · 인덱스 없는 질의 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3516,10 +3572,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">112</div></div>
+  <div class="ft"><div></div><div class="no">114</div></div>
 </section></div>
 
-<!-- 113 · 개념 · 정족수 상실 -->
+<!-- 115 · 개념 · 정족수 상실 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3545,10 +3601,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>챕터 07의 Redis replica 이탈과 같은 구분입니다.</div><div class="no">113</div></div>
+  <div class="ft"><div>챕터 07의 Redis replica 이탈과 같은 구분입니다.</div><div class="no">115</div></div>
 </section></div>
 
-<!-- 114 · 개념 · 슬롯 고갈과 오래 도는 작업 -->
+<!-- 116 · 개념 · 슬롯 고갈과 오래 도는 작업 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3585,10 +3641,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">114</div></div>
+  <div class="ft"><div></div><div class="no">116</div></div>
 </section></div>
 
-<!-- 115 · 개념 · 선출 반복과 디스크 고갈 -->
+<!-- 117 · 개념 · 선출 반복과 디스크 고갈 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3614,10 +3670,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>디스크 고갈의 근본 대응은 용량 재산정입니다.</div><div class="no">115</div></div>
+  <div class="ft"><div>디스크 고갈의 근본 대응은 용량 재산정입니다.</div><div class="no">117</div></div>
 </section></div>
 
-<!-- 116 · 실습 · RB-M01 복제 지연 증가 -->
+<!-- 118 · 실습 · RB-M01 복제 지연 증가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3630,7 +3686,7 @@ master_sync_in_progress:0</pre>
             <li>ops 노드에서 <code>cd ~/lab/scenarios</code></li>
             <li><code>./rb-m01.sh</code> 실행</li>
             <li>Grafana 의 <b>「복제 지연」 패널</b>에서 한 멤버의 지연이 우상향하는 것 확인</li>
-            <li><code>Alerts</code> 화면에서 <b>p.108 의 복제 지연 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
+            <li><code>Alerts</code> 화면에서 <b>복제 지연 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
             <li>이 시각과 두 화면을 적어 둠. <b>런북 1절의 재료</b></li>
           </ol>
         </div>
@@ -3644,12 +3700,12 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 한 멤버의 지연이 계속 오르고 복제 지연 규칙이 <code>Firing</code> 입니다.</div><div class="no">116</div></div>
+  <div class="ft"><div>완료 판정: 한 멤버의 지연이 계속 오르고 복제 지연 규칙이 <code>Firing</code> 입니다.</div><div class="no">118</div></div>
 </section></div>
 
-<!-- 117 · 장애 대응 · RB-M01 원인 후보 -->
+<!-- 119 · 장애 대응 · RB-M01 원인 후보 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">원인 후보 다섯</h2>
     <div class="headrule"></div>
@@ -3670,10 +3726,10 @@ master_sync_in_progress:0</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">117</div></div>
+  <div class="ft"><div></div><div class="no">119</div></div>
 </section></div>
 
-<!-- 118 · 장애 대응 · RB-M01 감별 절차 -->
+<!-- 120 · 장애 대응 · RB-M01 감별 절차 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3692,12 +3748,12 @@ master_sync_in_progress:0</pre>
       </ol>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 다섯 후보 중 하나로 좁혀지고 윈도우 대비 지연의 비율이 나옵니다. 5단계가 완화 수단을 정하는 갈림길입니다.</div><div class="no">118</div></div>
+  <div class="ft"><div>완료 판정: 다섯 후보 중 하나로 좁혀지고 윈도우 대비 지연의 비율이 나옵니다. 5단계가 완화 수단을 정하는 갈림길입니다.</div><div class="no">120</div></div>
 </section></div>
 
-<!-- 119 · 장애 대응 · RB-M01 예상 출력 -->
+<!-- 121 · 장애 대응 · RB-M01 예상 출력 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">감별에서 보는 출력</h2>
     <div class="headrule"></div>
@@ -3728,18 +3784,18 @@ source: 10.0.1.6:27017
           </ul>
           <div class="callout">
             <b>지연은 이탈의 앞 단계입니다.</b><br>
-            따라잡지 못하는 멤버는 결국 떨어져 나가고, 그때부터는 지연 값 자체가 나오지 않습니다. p.108 에서 <code>health</code> 규칙을 함께 건 이유가 이것입니다.
+            따라잡지 못하는 멤버는 결국 떨어져 나가고, 그때부터는 지연 값 자체가 나오지 않습니다. <code>health</code> 규칙을 함께 건 이유가 이것입니다.
           </div>
         </div>
       </div>
     </div>
   </main>
-  <div class="ft"><div>8.3.x 의 <code>rs.printSecondaryReplicationInfo()</code> 는 JSON 객체를 내고 지연을 <code>replLag</code> 에 담습니다. 값 자리는 실행할 때마다 달라집니다.</div><div class="no">119</div></div>
+  <div class="ft"><div>8.3.x 의 <code>rs.printSecondaryReplicationInfo()</code> 는 JSON 객체를 내고 지연을 <code>replLag</code> 에 담습니다. 값 자리는 실행할 때마다 달라집니다.</div><div class="no">121</div></div>
 </section></div>
 
-<!-- 120 · 장애 대응 · RB-M01 완화와 복구 -->
+<!-- 122 · 장애 대응 · RB-M01 완화와 복구 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head">완화와 복구</h2>
     <div class="headrule"></div>
@@ -3761,10 +3817,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">120</div></div>
+  <div class="ft"><div></div><div class="no">122</div></div>
 </section></div>
 
-<!-- 121 · 장애 대응 · RB-M01 복구 검증 -->
+<!-- 123 · 장애 대응 · RB-M01 복구 검증 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3780,7 +3836,7 @@ source: 10.0.1.6:27017
         <div>대기 큐가 0</div>
         <div>Grafana 지연 그래프가 평상시 값으로 복귀</div>
         <div><code>./rb-m01.sh --status</code> 로 지연이 내려온 것 확인</div>
-        <div>p.108 에서 만든 복제 지연 규칙이 <code>Inactive</code> 로 돌아옴</div>
+        <div>복제 지연 규칙이 <code>Inactive</code> 로 돌아옴</div>
       </div>
       <div class="callout">
         <b>지연이 0으로 수렴하는 것까지 확인합니다.</b><br>
@@ -3788,10 +3844,36 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div>알람이 <code>Firing</code> 에서 <code>Inactive</code> 로 돌아오는 것까지 봐야 복구가 끝난 것입니다.</div><div class="no">121</div></div>
+  <div class="ft"><div>알람이 <code>Firing</code> 에서 <code>Inactive</code> 로 돌아오는 것까지 봐야 복구가 끝난 것입니다.</div><div class="no">123</div></div>
 </section></div>
 
-<!-- 122 · 실습 · RB-M01 과 RB-OBS 채우기 -->
+<!-- 124 · 장애 대응 · rb-m01.sh 가 한 일 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
+  <main>
+    <h2 class="head"><code>rb-m01.sh</code> 가 한 일</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># SECONDARY 한 대의 mongod 를 9초 멈추고 1초 푸는 것을 되풀이</span>
+ansible &lt;SECONDARY&gt; -m shell -a <span class="s">"pkill -STOP -x mongod"</span> --become
+ansible &lt;SECONDARY&gt; -m shell -a <span class="s">"pkill -CONT -x mongod"</span> --become</pre>
+      </div>
+      <ul class="pts">
+        <li><b><code>SIGSTOP</code> 을 쓰는 이유</b>: 프로세스를 정지시키면 SECONDARY 로 판정돼 세트에서 빠짐. 멈추기만 하면 <b>세트에는 남은 채 oplog 만 못 읽어</b> 지연이 쌓임</li>
+        <li><b>9 대 1 인 이유</b>: 푸는 1초에 하트비트에 답해 무응답 판정을 피함. 4초 멈추고 1초 푸는 값으로는 거의 따라잡아 지연이 6초에서 멈춤</li>
+        <li><b>그동안 PRIMARY 에 쓰기를 계속 미는 이유</b>: 쓰기가 없으면 밀릴 것이 없어 지연이 쌓이지 않음</li>
+      </ul>
+      <div class="callout">
+        <b>지연이 우상향한 것은 「멈춘 시간이 푸는 시간보다 길어서」입니다.</b><br>
+        <code>--restore</code> 는 <code>SIGCONT</code> 를 보내고 쓰기 루프를 정리합니다. 재개하면 밀린 oplog 를 재생해 따라잡습니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div></div><div class="no">124</div></div>
+</section></div>
+
+<!-- 125 · 실습 · RB-M01 과 RB-OBS 채우기 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3800,12 +3882,12 @@ source: 10.0.1.6:27017
     <div class="body">
       <ol class="steps">
         <li><code>RB-M01</code> 을 8절 구조로 작성</li>
-        <li>3절 「즉시 확인」에 <b>p.118 의 1단계부터 5단계까지</b>를 넣음</li>
+        <li>3절 「즉시 확인」에 <b>「RB-M01 복제 지연 증가」의 1단계부터 5단계까지</b>를 넣음</li>
         <li>4절에 다섯 후보와 <b>윈도우 대비 지연 비율의 갈림 기준</b>을 넣음</li>
         <li>5절에 완화와 복구를 넣되 윈도우 초과 분기에 경고를 붙임</li>
-        <li>6절에 p.121 의 체크 항목을 넣음</li>
+        <li>6절에 「RB-M01 예상 출력」의 체크 항목을 넣음</li>
         <li><code>RB-OBS</code> 에 MongoDB 지표 칸을 추가하고 「넘어갈 런북」에 <code>RB-M01</code> 을 적음</li>
-        <li><b>MongoDB 의 메모리 지표 이름과 이번에 본 값을 적어 둠.</b> p.159 대비표의 재료</li>
+        <li><b>MongoDB 의 메모리 지표 이름과 이번에 본 값을 적어 둠.</b></li>
       </ol>
       <div class="callout">
         <b>갈림 기준을 숫자로 적습니다.</b><br>
@@ -3813,12 +3895,12 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>RB-M01</code> 8절이 채워지고 <code>RB-OBS</code> 에 MongoDB 줄이 생깁니다.</div><div class="no">122</div></div>
+  <div class="ft"><div>완료 판정: <code>RB-M01</code> 8절이 채워지고 <code>RB-OBS</code> 에 MongoDB 줄이 생깁니다.</div><div class="no">125</div></div>
 </section></div>
 
-<!-- 123 · 실습 · RB-M01 작성 예시 -->
+<!-- 126 · 실습 · RB-M01 작성 예시 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현</div><div>MongoDB 8.3.x</div></div>
   <main>
     <h2 class="head"><code>RB-M01</code> 작성 예시</h2>
     <div class="headrule"></div>
@@ -3855,10 +3937,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">123</div></div>
+  <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">126</div></div>
 </section></div>
 
-<!-- 124 · 구성 · MongoDB 리소스 정리 -->
+<!-- 127 · 구성 · MongoDB 리소스 정리 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 09</span> &nbsp;MongoDB 대표 장애와 재현<span class="lab">실습</span></div><div>MongoDB 8.3.x</div></div>
   <main>
@@ -3894,10 +3976,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>apply</code> 가 끝나고 ops 노드의 인벤토리에서 <code>[mongo]</code> 그룹이 사라집니다.</div><div class="no">124</div></div>
+  <div class="ft"><div>완료 판정: <code>apply</code> 가 끝나고 ops 노드의 인벤토리에서 <code>[mongo]</code> 그룹이 사라집니다.</div><div class="no">127</div></div>
 </section></div>
 
-<!-- 125 · 챕터 · Kafka 지표와 알람 규칙 -->
+<!-- 128 · 챕터 · Kafka 지표와 알람 규칙 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">10</div></div>
   <h2>Kafka 지표와 알람 규칙</h2>
@@ -3906,7 +3988,7 @@ source: 10.0.1.6:27017
   </div>
 </section></div>
 
-<!-- 126 · 구성 · Kafka 구성 -->
+<!-- 129 · 구성 · Kafka 구성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3926,10 +4008,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>failed=0</code> 이고 4대가 모두 나옵니다. 명령은 ops 노드의 <code>~/ansible</code> 에서 실행합니다.</div><div class="no">126</div></div>
+  <div class="ft"><div>완료 판정: <code>failed=0</code> 이고 4대가 모두 나옵니다. 명령은 ops 노드의 <code>~/ansible</code> 에서 실행합니다.</div><div class="no">129</div></div>
 </section></div>
 
-<!-- 127 · 실습 · Kafka 전환 확인 -->
+<!-- 130 · 실습 · Kafka 전환 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3956,14 +4038,14 @@ source: 10.0.1.6:27017
       </div>
       <div class="callout">
         <b>앞 서비스 job 이 남아 있으면 인벤토리를 갱신하지 않은 것입니다.</b><br>
-        없는 노드까지 수집 대상으로 삼아 <code>DOWN</code> 으로 남습니다. p.124 의 6번과 7번으로 돌아가 인벤토리를 다시 덮어씁니다.
+        없는 노드까지 수집 대상으로 삼아 <code>DOWN</code> 으로 남습니다. 인벤토리를 받아 옮기는 6번과 7번으로 돌아가 인벤토리를 다시 덮어씁니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 위 다섯 줄을 모두 확인합니다.</div><div class="no">127</div></div>
+  <div class="ft"><div>완료 판정: 위 다섯 줄을 모두 확인합니다.</div><div class="no">130</div></div>
 </section></div>
 
-<!-- 128 · 개념 · Kafka 지표의 출처 -->
+<!-- 131 · 개념 · Kafka 지표의 출처 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -3986,10 +4068,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">128</div></div>
+  <div class="ft"><div></div><div class="no">131</div></div>
 </section></div>
 
-<!-- 129 · 개념 · Broker 정지와 지표의 관계 -->
+<!-- 132 · 개념 · Broker 정지와 지표의 관계 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4033,10 +4115,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">129</div></div>
+  <div class="ft"><div></div><div class="no">132</div></div>
 </section></div>
 
-<!-- 130 · 개념 · 복제 지표 -->
+<!-- 133 · 개념 · Kafka 복제 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4060,10 +4142,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>min.insync.replicas</code> 는 <code>acks=all</code> 쓰기를 받는 최소 복제본 수입니다. 알람 등급이 갈리는 이유가 이것입니다.</div><div class="no">130</div></div>
+  <div class="ft"><div><code>min.insync.replicas</code> 는 <code>acks=all</code> 쓰기를 받는 최소 복제본 수입니다. 알람 등급이 갈리는 이유가 이것입니다.</div><div class="no">133</div></div>
 </section></div>
 
-<!-- 131 · 개념 · 처리와 디스크 지표 -->
+<!-- 134 · 개념 · 처리와 디스크 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4084,10 +4166,10 @@ source: 10.0.1.6:27017
       </table>
     </div>
   </main>
-  <div class="ft"><div>Kafka 장애 원인 1순위가 Kafka 지표에 없습니다. 디스크가 차면 로그 디렉터리가 offline 되는데 그 신호는 <code>node_exporter</code> 에만 있습니다.</div><div class="no">131</div></div>
+  <div class="ft"><div>Kafka 장애 원인 1순위가 Kafka 지표에 없습니다. 디스크가 차면 로그 디렉터리가 offline 되는데 그 신호는 <code>node_exporter</code> 에만 있습니다.</div><div class="no">134</div></div>
 </section></div>
 
-<!-- 132 · 개념 · 대시보드에 없는 지표 -->
+<!-- 135 · 개념 · 대시보드에 없는 지표 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4109,10 +4191,10 @@ source: 10.0.1.6:27017
       </div>
     </div>
   </main>
-  <div class="ft"><div>셋은 이 실습 환경의 Prometheus 에 들어오지 않습니다. unclean leader election 은 기본값이 꺼져 있어 여기서는 발생하지 않습니다. Kafka 의 MBean 은 수천 개이므로 운영에서 쓰는 것만 수집합니다.</div><div class="no">132</div></div>
+  <div class="ft"><div>셋은 이 실습 환경의 Prometheus 에 들어오지 않습니다. unclean leader election 은 기본값이 꺼져 있어 여기서는 발생하지 않습니다. Kafka 의 MBean 은 수천 개이므로 운영에서 쓰는 것만 수집합니다.</div><div class="no">135</div></div>
 </section></div>
 
-<!-- 133 · 실습 · JMX 지표 확인 -->
+<!-- 136 · 실습 · JMX 지표 확인 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4143,10 +4225,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 네 지표가 나오고 <code>ActiveControllerCount</code> 의 합이 정확히 1입니다.</div><div class="no">133</div></div>
+  <div class="ft"><div>완료 판정: 네 지표가 나오고 <code>ActiveControllerCount</code> 의 합이 정확히 1입니다.</div><div class="no">136</div></div>
 </section></div>
 
-<!-- 134 · 실습 · Topic 과 Consumer Group 생성 -->
+<!-- 137 · 실습 · Topic 과 Consumer Group 생성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4176,10 +4258,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>lab.events</code> 가 Partition 3개로 서고 <code>lab-cg</code> 의 <code>LAG</code> 이 0에 가깝습니다. 이 Topic 과 그룹을 챕터 11 에서 그대로 씁니다.</div><div class="no">134</div></div>
+  <div class="ft"><div>완료 판정: <code>lab.events</code> 가 Partition 3개로 서고 <code>lab-cg</code> 의 <code>LAG</code> 이 0에 가깝습니다. 이 Topic 과 그룹을 챕터 11 에서 그대로 씁니다.</div><div class="no">137</div></div>
 </section></div>
 
-<!-- 135 · 실습 · Kafka 알람 규칙 작성 -->
+<!-- 138 · 실습 · Kafka 알람 규칙 작성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 10</span> &nbsp;Kafka 지표와 알람 규칙<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4199,7 +4281,7 @@ sum(kafka_controller_active_controller_count)</pre>
         <div class="col">
           <div class="warn">
             <b>Lag 은 정상 운영에서도 0이 아닙니다.</b><br>
-            p.134 에서 본 평상시 값을 기준으로 잡습니다. 0을 임계로 두면 항상 발동합니다.
+            앞서 본 평상시 값을 기준으로 잡습니다. 0을 임계로 두면 항상 발동합니다.
           </div>
           <div class="callout">
             <b>세 서비스 모두 같은 자리에서 규칙을 씁니다.</b><br>
@@ -4209,9 +4291,9 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 알람 규칙이 여섯 건이 되고 새 규칙이 <code>Inactive</code> 로 보입니다. 발동은 챕터 11 의 Lag 재현에서 관찰합니다.</div><div class="no">135</div></div>
+  <div class="ft"><div>완료 판정: 알람 규칙이 여섯 건이 되고 새 규칙이 <code>Inactive</code> 로 보입니다. 발동은 챕터 11 의 Lag 재현에서 관찰합니다.</div><div class="no">138</div></div>
 </section></div>
-<!-- 136 · 챕터 · Kafka 대표 장애와 재현 -->
+<!-- 139 · 챕터 · Kafka 대표 장애와 재현 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">11</div></div>
   <h2>Kafka 대표 장애와 재현</h2>
@@ -4220,7 +4302,7 @@ sum(kafka_controller_active_controller_count)</pre>
   </div>
 </section></div>
 
-<!-- 137 · 개념 · Kafka 대표 장애 (1) -->
+<!-- 140 · 개념 · Kafka 대표 장애 (1) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4240,10 +4322,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div><b>강조한 행을 직접 재현합니다.</b> Consumer Lag 이 <code>RB-K01</code> 입니다. 디스크 고갈은 재현하지 않지만 실제 운영에서 가장 자주 나오는 장애입니다.</div><div class="no">137</div></div>
+  <div class="ft"><div><b>강조한 행을 직접 재현합니다.</b> Consumer Lag 이 <code>RB-K01</code> 입니다. 디스크 고갈은 재현하지 않지만 실제 운영에서 가장 자주 나오는 장애입니다.</div><div class="no">140</div></div>
 </section></div>
 
-<!-- 138 · 개념 · Kafka 대표 장애 (2) -->
+<!-- 141 · 개념 · Kafka 대표 장애 (2) -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4266,10 +4348,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">138</div></div>
+  <div class="ft"><div></div><div class="no">141</div></div>
 </section></div>
 
-<!-- 139 · 개념 · 디스크 고갈과 log dir offline -->
+<!-- 142 · 개념 · 디스크 고갈과 log dir offline -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4295,10 +4377,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">139</div></div>
+  <div class="ft"><div></div><div class="no">142</div></div>
 </section></div>
 
-<!-- 140 · 개념 · min.insync.replicas 미달 -->
+<!-- 143 · 개념 · min.insync.replicas 미달 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4324,10 +4406,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">140</div></div>
+  <div class="ft"><div></div><div class="no">143</div></div>
 </section></div>
 
-<!-- 141 · 개념 · controller 와 leader 상실 -->
+<!-- 144 · 개념 · controller 와 leader 상실 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4372,10 +4454,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">141</div></div>
+  <div class="ft"><div></div><div class="no">144</div></div>
 </section></div>
 
-<!-- 142 · 개념 · Retention 오설정 -->
+<!-- 145 · 개념 · Retention 오설정 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4402,10 +4484,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">142</div></div>
+  <div class="ft"><div></div><div class="no">145</div></div>
 </section></div>
 
-<!-- 143 · 개념 · Consumer Lag 의 원인 여섯 -->
+<!-- 146 · 개념 · Consumer Lag 의 원인 여섯 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4425,10 +4507,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div>Lag 만 보고 Consumer 부터 조정하면 원인과 무관한 곳을 바꾸게 됩니다. 여섯 중 넷은 Consumer 쪽에 원인이 없습니다.</div><div class="no">143</div></div>
+  <div class="ft"><div>Lag 만 보고 Consumer 부터 조정하면 원인과 무관한 곳을 바꾸게 됩니다. 여섯 중 넷은 Consumer 쪽에 원인이 없습니다.</div><div class="no">146</div></div>
 </section></div>
 
-<!-- 144 · 개념 · Lag 분포로 가르는 첫 갈래 -->
+<!-- 147 · 개념 · Lag 분포로 가르는 첫 갈래 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4477,10 +4559,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">144</div></div>
+  <div class="ft"><div></div><div class="no">147</div></div>
 </section></div>
 
-<!-- 145 · 개념 · Consumer 증설의 한계 -->
+<!-- 148 · 개념 · Consumer 증설의 한계 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4509,10 +4591,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">145</div></div>
+  <div class="ft"><div></div><div class="no">148</div></div>
 </section></div>
 
-<!-- 146 · 실습 · RB-K01 Consumer Lag 증가 -->
+<!-- 149 · 실습 · RB-K01 Consumer Lag 증가 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4525,8 +4607,8 @@ sum(kafka_controller_active_controller_count)</pre>
             <li>ops 노드에서 <code>cd ~/lab/scenarios</code></li>
             <li><code>./rb-k01.sh</code> 실행</li>
             <li>Grafana 의 <b>「Consumer Group 별 Lag」 패널</b>에서 Lag 이 우상향하는 것 확인</li>
-            <li><code>Alerts</code> 화면에서 <b>p.135 의 Lag 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
-            <li>p.134 에서 적어 둔 평상시 <code>LAG</code> 값과 대조</li>
+            <li><code>Alerts</code> 화면에서 <b>Lag 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
+            <li>적어 둔 평상시 <code>LAG</code> 값과 대조</li>
           </ol>
         </div>
         <div class="col">
@@ -4539,10 +4621,10 @@ sum(kafka_controller_active_controller_count)</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: Lag 이 계속 오르고 Lag 규칙이 <code>Firing</code> 입니다. 스크립트는 재현만 하고 원인 감별은 다음 장부터 직접 합니다.</div><div class="no">146</div></div>
+  <div class="ft"><div>완료 판정: Lag 이 계속 오르고 Lag 규칙이 <code>Firing</code> 입니다. 스크립트는 재현만 하고 원인 감별은 다음 장부터 직접 합니다.</div><div class="no">149</div></div>
 </section></div>
 
-<!-- 147 · 장애 대응 · RB-K01 감별 절차 -->
+<!-- 150 · 장애 대응 · RB-K01 감별 절차 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4560,12 +4642,12 @@ sum(kafka_controller_active_controller_count)</pre>
       </ol>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 여섯 후보 중 하나로 좁혀집니다. 5단계와 6단계는 지표로 갈리지 않습니다.</div><div class="no">147</div></div>
+  <div class="ft"><div>완료 판정: 여섯 후보 중 하나로 좁혀집니다. 5단계와 6단계는 지표로 갈리지 않습니다.</div><div class="no">150</div></div>
 </section></div>
 
-<!-- 148 · 장애 대응 · RB-K01 분포 확인 출력 -->
+<!-- 151 · 장애 대응 · RB-K01 분포 확인 출력 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
     <h2 class="head">Lag 분포 확인</h2>
     <div class="headrule"></div>
@@ -4586,12 +4668,12 @@ lab-cg  lab.events  2          -               235875          -</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div><code>kafka-consumer-groups.sh --describe --group lab-cg</code> 의 실제 출력입니다. 남은 후보는 Consumer 처리 지연, Partition 수 부족, Producer 급증, Rebalance 반복 넷입니다. 조회 시점에 따라 표가 비거나 「has no active members」가 나오기도 합니다.</div><div class="no">148</div></div>
+  <div class="ft"><div><code>kafka-consumer-groups.sh --describe --group lab-cg</code> 의 실제 출력입니다. 남은 후보는 Consumer 처리 지연, Partition 수 부족, Producer 급증, Rebalance 반복 넷입니다. 조회 시점에 따라 표가 비거나 「has no active members」가 나오기도 합니다.</div><div class="no">151</div></div>
 </section></div>
 
-<!-- 149 · 장애 대응 · RB-K01 유입량 배제 -->
+<!-- 152 · 장애 대응 · RB-K01 유입량 배제 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
     <h2 class="head">Producer 급증 배제</h2>
     <div class="headrule"></div>
@@ -4614,12 +4696,12 @@ lab-cg  lab.events  2          -               235875          -</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>Lag 이 늘기 시작한 시각의 유입량을 봅니다.</div><div class="no">149</div></div>
+  <div class="ft"><div>Lag 이 늘기 시작한 시각의 유입량을 봅니다.</div><div class="no">152</div></div>
 </section></div>
 
-<!-- 150 · 장애 대응 · Consumer 로그에서 확정 -->
+<!-- 153 · 장애 대응 · Consumer 로그에서 확정 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
     <h2 class="head">Consumer 로그에서 확정</h2>
     <div class="headrule"></div>
@@ -4644,12 +4726,12 @@ lab-cg  lab.events  2          -               235875          -</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">150</div></div>
+  <div class="ft"><div></div><div class="no">153</div></div>
 </section></div>
 
-<!-- 151 · 장애 대응 · RB-K01 완화와 복구 -->
+<!-- 154 · 장애 대응 · RB-K01 완화와 복구 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
     <h2 class="head">완화와 복구</h2>
     <div class="headrule"></div>
@@ -4677,10 +4759,10 @@ lab-cg  lab.events  2          -               235875          -</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">151</div></div>
+  <div class="ft"><div></div><div class="no">154</div></div>
 </section></div>
 
-<!-- 152 · 장애 대응 · RB-K01 복구 검증 -->
+<!-- 155 · 장애 대응 · RB-K01 복구 검증 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4694,7 +4776,7 @@ lab-cg  lab.events  2          -               235875          -</pre>
         <div>Consumer 로그에 Rebalance 기록이 끊김</div>
         <div>모든 Partition 의 <code>CURRENT-OFFSET</code> 이 함께 전진</div>
         <div><code>UnderReplicatedPartitions</code> 가 0 유지</div>
-        <div>p.135 에서 만든 Lag 규칙이 <code>Inactive</code> 로 돌아옴</div>
+        <div>Lag 규칙이 <code>Inactive</code> 로 돌아옴</div>
       </div>
       <div class="warn">
         <b>주입을 멈추는 것과 Lag 이 사라지는 것은 다릅니다.</b><br>
@@ -4702,10 +4784,38 @@ lab-cg  lab.events  2          -               235875          -</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>알람이 <code>Firing</code> 에서 <code>Inactive</code> 로 돌아오는 것까지 봐야 복구가 끝난 것입니다.</div><div class="no">152</div></div>
+  <div class="ft"><div>알람이 <code>Firing</code> 에서 <code>Inactive</code> 로 돌아오는 것까지 봐야 복구가 끝난 것입니다.</div><div class="no">155</div></div>
 </section></div>
 
-<!-- 153 · 실습 · Broker 상태 일괄 확인 명령 -->
+<!-- 156 · 장애 대응 · rb-k01.sh 가 한 일 -->
+<div class="stage"><section class="slide">
+  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
+  <main>
+    <h2 class="head"><code>rb-k01.sh</code> 가 한 일</h2>
+    <div class="headrule"></div>
+    <div class="body">
+      <table class="cmp">
+        <thead><tr><th>조작</th><th class="hi">값</th><th>효과</th></tr></thead>
+        <tbody>
+          <tr><th>Producer</th><td>초당 2,000건</td><td>Lag 이 쌓일 유입을 만듦</td></tr>
+          <tr><th>Consumer</th><td>3개. 한 줄 읽고 <b>2초 쉼</b></td><td>처리 속도가 유입을 못 따라감</td></tr>
+          <tr><th><code>max.poll.interval.ms</code></th><td><b>20000</b></td><td>쉬는 시간이 이 값을 넘으면 그룹에서 빠져 <b>Rebalance</b> 가 반복됨</td></tr>
+        </tbody>
+      </table>
+      <ul class="pts">
+        <li><b>여섯 원인 중 무엇이었나</b>: Consumer 처리 지연이 아니라 <b>Rebalance 반복</b>. 쉬는 동안 poll 을 못 해 그룹에서 빠지고 다시 들어오는 것이 되풀이됨</li>
+        <li><b>Consumer 를 늘려도 안 되는 이유</b>: 늘린 Consumer 도 같은 이유로 빠짐. Rebalance 가 더 잦아짐</li>
+      </ul>
+      <div class="callout">
+        <b>Lag 분포가 특정 Partition 에 몰리지 않고 전 Partition 에서 함께 오른 것이 단서였습니다.</b><br>
+        한쪽으로 치우치면 키 편향이고, 고르게 오르면 Consumer 쪽 문제입니다.
+      </div>
+    </div>
+  </main>
+  <div class="ft"><div><code>--restore</code> 는 Consumer 와 Producer 를 정리합니다. Topic 은 남으므로 지우려면 안내된 <code>kafka-topics.sh --delete</code> 를 직접 실행합니다.</div><div class="no">156</div></div>
+</section></div>
+
+<!-- 157 · 실습 · Broker 상태 일괄 확인 명령 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4741,10 +4851,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 네 명령이 모두 결과를 냅니다. Broker 에는 공인 IP 가 없습니다.</div><div class="no">153</div></div>
+  <div class="ft"><div>완료 판정: 네 명령이 모두 결과를 냅니다. Broker 에는 공인 IP 가 없습니다.</div><div class="no">157</div></div>
 </section></div>
 
-<!-- 154 · 실습 · RB-K01 과 RB-OBS 채우기 -->
+<!-- 158 · 실습 · RB-K01 과 RB-OBS 채우기 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4753,12 +4863,12 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
     <div class="body">
       <ol class="steps">
         <li><code>RB-K01</code> 을 8절 구조로 작성</li>
-        <li>3절 「즉시 확인」에 <b>p.153 의 네 명령</b>을 넣음</li>
+        <li>3절 「즉시 확인」에 <b>「Broker 상태 일괄 확인 명령」의 네 명령</b>을 넣음</li>
         <li>4절에 여섯 갈래와 <b>분포로 가르는 첫 갈래</b>를 넣음</li>
         <li>5절에 완화와 복구를 넣되 Partition 증설에 경고를 붙임</li>
-        <li>6절에 p.152 의 체크 항목을 넣음</li>
+        <li>6절에 「RB-K01 복구 검증」의 체크 항목을 넣음</li>
         <li><code>RB-OBS</code> 에 Kafka 지표 칸을 추가하고 「넘어갈 런북」에 <code>RB-K01</code> 을 적음</li>
-        <li><b>Kafka 의 메모리 지표 이름과 이번에 본 값을 적어 둠.</b> p.159 대비표의 재료</li>
+        <li><b>Kafka 의 메모리 지표 이름과 이번에 본 값을 적어 둠.</b></li>
       </ol>
       <div class="callout">
         <b>4절에 로그를 보는 단계를 반드시 넣습니다.</b><br>
@@ -4766,12 +4876,12 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>RB-K01</code> 8절이 채워지고 <code>RB-OBS</code> 에 Kafka 줄이 생깁니다.</div><div class="no">154</div></div>
+  <div class="ft"><div>완료 판정: <code>RB-K01</code> 8절이 채워지고 <code>RB-OBS</code> 에 Kafka 줄이 생깁니다.</div><div class="no">158</div></div>
 </section></div>
 
-<!-- 155 · 실습 · RB-K01 작성 예시 -->
+<!-- 159 · 실습 · RB-K01 작성 예시 -->
 <div class="stage"><section class="slide">
-  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
+  <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현</div><div>Kafka 4.3.x</div></div>
   <main>
     <h2 class="head"><code>RB-K01</code> 작성 예시</h2>
     <div class="headrule"></div>
@@ -4808,10 +4918,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">155</div></div>
+  <div class="ft"><div>2·7·8절은 지면상 생략했습니다. 자기 런북에는 여덟 절을 모두 채웁니다.</div><div class="no">159</div></div>
 </section></div>
 
-<!-- 156 · 구성 · Kafka 리소스 정리 -->
+<!-- 160 · 구성 · Kafka 리소스 정리 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 11</span> &nbsp;Kafka 대표 장애와 재현<span class="lab">실습</span></div><div>Kafka 4.3.x</div></div>
   <main>
@@ -4842,10 +4952,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: <code>apply</code> 가 끝나고 ops 노드의 인벤토리에서 <code>[kafka]</code> 그룹이 사라집니다.</div><div class="no">156</div></div>
+  <div class="ft"><div>완료 판정: <code>apply</code> 가 끝나고 ops 노드의 인벤토리에서 <code>[kafka]</code> 그룹이 사라집니다.</div><div class="no">160</div></div>
 </section></div>
 
-<!-- 157 · 챕터 · 메모리 압박 3종과 과정 마무리 -->
+<!-- 161 · 챕터 · 메모리 압박 3종과 과정 마무리 -->
 <div class="stage"><section class="slide section">
   <div class="row"><div class="num">12</div></div>
   <h2>메모리 압박 3종과 과정 마무리</h2>
@@ -4854,7 +4964,7 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
   </div>
 </section></div>
 
-<!-- 158 · 개념 · 서비스별 메모리 사용 주체 -->
+<!-- 162 · 개념 · 서비스별 메모리 사용 주체 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -4898,10 +5008,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">158</div></div>
+  <div class="ft"><div></div><div class="no">162</div></div>
 </section></div>
 
-<!-- 159 · 개념 · 메모리 압박 3종 대비 -->
+<!-- 163 · 개념 · 메모리 압박 3종 대비 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -4923,10 +5033,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div>Kafka 에서 힙을 늘리면 그만큼 page cache 가 줄어 읽기가 디스크로 내려갑니다. 다른 두 서비스와 반대로 작동합니다.</div><div class="no">159</div></div>
+  <div class="ft"><div>Kafka 에서 힙을 늘리면 그만큼 page cache 가 줄어 읽기가 디스크로 내려갑니다. 다른 두 서비스와 반대로 작동합니다.</div><div class="no">163</div></div>
 </section></div>
 
-<!-- 160 · 개념 · 계단식 하락과 점진적 하락 -->
+<!-- 164 · 개념 · 계단식 하락과 점진적 하락 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -4969,10 +5079,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">160</div></div>
+  <div class="ft"><div></div><div class="no">164</div></div>
 </section></div>
 
-<!-- 161 · 개념 · VM 메모리 그래프의 한계 -->
+<!-- 165 · 개념 · VM 메모리 그래프의 한계 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -4994,10 +5104,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">161</div></div>
+  <div class="ft"><div></div><div class="no">165</div></div>
 </section></div>
 
-<!-- 162 · 개념 · 나머지 두 서비스의 같은 상황 -->
+<!-- 166 · 개념 · 나머지 두 서비스의 같은 상황 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -5028,10 +5138,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">162</div></div>
+  <div class="ft"><div></div><div class="no">166</div></div>
 </section></div>
 
-<!-- 163 · 마무리 · 리소스 정리 -->
+<!-- 167 · 마무리 · 리소스 정리 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리<span class="lab">실습</span></div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -5049,10 +5159,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>완료 판정: 런북 다섯 건이 각자 PC 에 있고, 포털의 리소스 그룹 목록에서 그룹이 사라집니다.</div><div class="no">163</div></div>
+  <div class="ft"><div>완료 판정: 런북 다섯 건이 각자 PC 에 있고, 포털의 리소스 그룹 목록에서 그룹이 사라집니다.</div><div class="no">167</div></div>
 </section></div>
 
-<!-- 164 · 마무리 · 2일간의 산출물 -->
+<!-- 168 · 마무리 · 2일간의 산출물 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -5073,10 +5183,10 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">164</div></div>
+  <div class="ft"><div></div><div class="no">168</div></div>
 </section></div>
 
-<!-- 165 · 마무리 · 클라우드 비의존 범위 -->
+<!-- 169 · 마무리 · 클라우드 비의존 범위 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 12</span> &nbsp;메모리 압박 3종과 과정 마무리</div><div>Redis · MongoDB · Kafka</div></div>
   <main>
@@ -5101,7 +5211,7 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>런북에 Azure 고유 도구가 들어가지 않은 것이 그 때문입니다.</div><div class="no">165</div></div>
+  <div class="ft"><div>런북에 Azure 고유 도구가 들어가지 않은 것이 그 때문입니다.</div><div class="no">169</div></div>
 </section></div>
 
 </div>
@@ -5165,4 +5275,4 @@ ansible kafka -m shell -a "df -h /var/lib/kafka"</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 3c02f990eb9451db -->
+<!-- deck-src 0eeac51ec97a971e -->

@@ -484,28 +484,32 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
   <div class="ft"><div>다섯 항목을 전부 채운 뒤 <code>session.tfvars</code> 로 저장합니다.</div><div class="no">6</div></div>
 </section></div>
 
-<!-- 7 · 구축 · Terraform 실행 -->
+<!-- 7 · 구축 · 스택 생성 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축<span class="lab">실습</span></div><div>Redis 8.10.x</div></div>
   <main>
-    <h2 class="head">Terraform 실행</h2>
+    <h2 class="head">스택 생성</h2>
     <div class="headrule"></div>
     <div class="body">
       <ol class="steps">
-        <li><code>cd lab/terraform/01-redis</code> 로 이동</li>
-        <li><code>cp session.tfvars.example session.tfvars</code> 후 변수 파일의 다섯 값 입력</li>
-        <li><code>terraform init</code> 실행</li>
-        <li><code>terraform plan -var-file=session.tfvars</code> 로 생성될 자원 목록 확인</li>
-        <li><code>terraform apply -var-file=session.tfvars</code> 실행</li>
+        <li><code>cd lab/terraform/01-redis</code></li>
+        <li><code>cp session.tfvars.example session.tfvars</code> 후 값 채우기</li>
+        <li><code>terraform init</code></li>
+        <li><code>terraform plan -var-file=session.tfvars</code> 로 자원 수 확인</li>
+        <li><code>terraform apply -var-file=session.tfvars</code></li>
         <li><code>terraform output</code> 으로 ops 노드 공인 IP 확인</li>
       </ol>
       <div class="callout">
+        <b>Terraform 명령만 실습 PC 에서 실행합니다.</b><br>
+        나머지 명령은 ops 노드에서 실행합니다. 마지막 정리에서만 다시 실습 PC 로 돌아옵니다.
+      </div>
+      <div class="callout">
         <b>완료 판정</b><br>
-        <code>Apply complete!</code> 로 끝나고 <code>terraform output</code> 에 ops 노드 공인 IP가 나오면 완료입니다.
+        <code>Apply complete!</code> 로 끝나고 출력 세 개에 값이 전부 채워지면 완료입니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div>실행은 각자 PC에서 합니다. 리소스 그룹도 이 스택이 만들고, 세션이 끝나면 그룹째 지웁니다.</div><div class="no">7</div></div>
+  <div class="ft"><div></div><div class="no">7</div></div>
 </section></div>
 
 <!-- 8 · 구축 · plan 출력 확인 항목 -->
@@ -3820,4 +3824,4 @@ sentinel parallel-syncs mymaster 1</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 3837153b6e74851f -->
+<!-- deck-src b9f7e0a72d12aa8c -->

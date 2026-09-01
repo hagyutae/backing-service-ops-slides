@@ -457,12 +457,12 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
     <div class="headrule"></div>
     <div class="body">
       <div class="codewrap">
-<pre>  <span class="c"># module.mongo["mongo-1"].azurerm_linux_virtual_machine.this will be created</span>
-  <span class="c"># module.mongo["mongo-1"].azurerm_managed_disk.data[0] will be created</span>
-  <span class="c"># module.ops.azurerm_public_ip.this[0] will be created</span>
-  ...
+<pre>Plan: 27 to add, 0 to change, 0 to destroy.
 
-<span class="k">Plan: 27 to add</span>, 0 to change, 0 to destroy.</pre>
+Changes to Outputs:
+  <span class="k">+ ops_public_ip</span>     = (known after apply)
+  <span class="k">+ mongo_private_ips</span> = (known after apply)
+  <span class="k">+ ssh_command</span>       = (known after apply)</pre>
       </div>
       <ul class="pts">
         <li><b>VM 4대</b>: <code>mongo-1</code>·<code>mongo-2</code>·<code>mongo-3</code> 과 <code>ops-1</code></li>
@@ -4576,4 +4576,4 @@ db.orders.find({ status: <span class="s">"refunded"</span>, amount: { : <span cl
 </script>
 </body>
 </html>
-<!-- deck-src 0fc6bc6637792c68 -->
+<!-- deck-src 0a470f300a257d93 -->

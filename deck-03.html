@@ -339,7 +339,7 @@ a:hover{color:var(--accent);}
   <div class="row"><div class="num">01</div></div>
   <h2>인프라 구축</h2>
   <div class="items">
-    <span>VNet · 서브넷</span><span>네트워크 보안 그룹</span><span>VM · 디스크</span><span>가용성 영역</span><span>ops 노드</span>
+    <span>스택 구성</span><span>Terraform 실행</span><span>자원 확인</span><span>네트워크 규칙</span><span>노드 접속</span>
   </div>
 </section></div>
 
@@ -456,28 +456,22 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
     <h2 class="head">생성되는 자원</h2>
     <div class="headrule"></div>
     <div class="body">
+      <div class="codewrap">
+<pre>Plan: 27 to add, 0 to change, 0 to destroy.
 
-      <div class="flow">
-        <div class="st">리소스 그룹</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">VNet · 서브넷</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">네트워크 보안 그룹</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">VM 4대</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">데이터 디스크 4개</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">ops 공인 IP</div>
+Changes to Outputs:
+  <span class="k">+ ops_public_ip</span>     = (known after apply)
+  <span class="k">+ kafka_private_ips</span> = (known after apply)
+  <span class="k">+ ssh_command</span>       = (known after apply)</pre>
       </div>
       <ul class="pts">
-        <li><b>VM 4대</b>: Broker 3대와 ops 1대</li>
-        <li><b>가용성 영역</b>: <code>kafka-1</code>·<code>kafka-2</code>·<code>kafka-3</code> 이 영역 1·2·3에 하나씩</li>
-        <li><b>공인 IP</b>: <code>ops-1</code> 에만 붙음. Broker 에는 없음</li>
+        <li><b>VM 4대</b>: <code>kafka-1</code>·<code>kafka-2</code>·<code>kafka-3</code> 과 <code>ops-1</code></li>
+        <li><b>데이터 디스크 4개</b>: 서비스 노드 256 GiB, ops 노드 64 GiB</li>
+        <li><b>네트워크</b>: VNet 하나, 서브넷 하나, 네트워크 보안 그룹 하나. 공인 IP 는 <code>ops-1</code> 에만 붙음</li>
       </ul>
     </div>
   </main>
-  <div class="ft"><div>사설 IP는 고정입니다. <code>ops-1</code> 이 10.0.1.4, Broker 가 10.0.1.5·10.0.1.6·10.0.1.7 입니다.</div><div class="no">7</div></div>
+  <div class="ft"><div>사설 IP 는 고정입니다. <code>ops-1</code> 이 10.0.1.4, Broker 가 10.0.1.5·10.0.1.6·10.0.1.7 입니다.</div><div class="no">7</div></div>
 </section></div>
 
 <!-- 8 · 구축 · 포털 확인 항목 -->
@@ -487,15 +481,13 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
     <h2 class="head">포털 확인 항목</h2>
     <div class="headrule"></div>
     <div class="body">
-
-      <table class="cmp" style="table-layout:fixed">
-        <colgroup><col style="width:24%"><col style="width:26%"><col class="hi" style="width:50%"></colgroup>
-        <thead><tr><th>확인 대상</th><th>포털 메뉴</th><th class="hi">확인 항목</th></tr></thead>
+      <table class="cmp">
+        <thead><tr><th>확인 대상</th><th>포털 메뉴</th><th class="hi">확인 내용</th></tr></thead>
         <tbody>
-          <tr><th>VM 크기</th><td>가상 머신</td><td><b><code>Standard_D2ds_v5</code></b>. 1일차 두 세션은 E 계열</td></tr>
-          <tr><th>VM과 영역</th><td>가상 머신</td><td><code>kafka-1</code>·<code>kafka-2</code>·<code>kafka-3</code> 이 영역 1·2·3에 하나씩</td></tr>
-          <tr><th>디스크</th><td>디스크</td><td><b>256 GiB</b>, 3,000 IOPS, 125 MB/s</td></tr>
-          <tr><th>인바운드 규칙</th><td>네트워크 보안 그룹</td><td>22·3000·9090이 현재 PC 공인 IP로 제한</td></tr>
+          <tr><th>자원 목록</th><td><code>리소스 그룹</code></td><td>VM 4대, 디스크, NIC, NSG, VNet</td></tr>
+          <tr><th>VM과 영역</th><td><code>가상 머신</code></td><td>서비스 노드 3대가 영역 1·2·3에 하나씩</td></tr>
+          <tr><th>디스크</th><td><code>디스크</code></td><td><b>256 GiB</b>, 3,000 IOPS, 125 MB/s</td></tr>
+          <tr><th>인바운드 규칙</th><td><code>네트워크 보안 그룹</code></td><td>22·3000·9090이 현재 PC 공인 IP로 제한</td></tr>
         </tbody>
       </table>
     </div>
@@ -545,59 +537,48 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
     <h2 class="head">ops 노드 접속</h2>
     <div class="headrule"></div>
     <div class="body">
-
       <div class="codewrap">
 <pre><span class="c"># Git Bash</span>
-ssh -i ~/.ssh/rkm azureuser@&lt;ops 공인 IP&gt;</pre>
+ssh -i <span class="s">~/.ssh/rkm</span> azureuser@<span class="p">&lt;ops 공인 IP&gt;</span></pre>
       </div>
       <ul class="pts">
-        <li><b>접속 대상</b>: <code>terraform output</code> 의 <code>ops_public_ip</code></li>
-        <li><b>Broker 접속</b>: ops 노드 안에서 <code>ssh 10.0.1.5</code> 로 들어감. 키는 부팅 때 배치됨</li>
-        <li><b>이후 모든 명령</b>: ops 노드에서 실행</li>
+        <li><b>접속 대상은 ops 노드뿐.</b> 서비스 노드에는 공인 IP 가 없음</li>
+        <li><b>키의 출처</b>: 세션 1에서 <code>ssh-keygen</code> 으로 만든 자기 키. <code>session.tfvars</code> 의 <code>ssh_public_key_path</code> 가 그 공개키를 가리킴</li>
       </ul>
+      <div class="callout">
+        <b>PuTTY 를 쓰면 키를 <code>.ppk</code> 로 변환해야 합니다.</b><br>
+        Git Bash 의 <code>ssh</code> 는 변환 없이 그대로 씁니다.
+      </div>
     </div>
   </main>
-  <div class="ft"><div>PuTTY 를 쓰면 키를 <code>.ppk</code> 로 변환해야 합니다. Git Bash 의 <code>ssh</code> 는 변환 없이 그대로 씁니다.</div><div class="no">11</div></div>
+  <div class="ft"><div></div><div class="no">11</div></div>
 </section></div>
 
-<!-- 12 · 구축 · 세션 진행 순서 -->
+<!-- 12 · 구축 · 서비스 노드 접근 방식 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>Kafka 4.3.x</div></div>
   <main>
-    <h2 class="head">세션 진행 순서</h2>
+    <h2 class="head">서비스 노드 접근 방식</h2>
     <div class="headrule"></div>
     <div class="body">
+      <div class="codewrap">
+<pre><span class="c"># ansible 명령은 이 자리에서 실행 (인벤토리가 여기 있음)</span>
+cd ~/ansible
 
-      <div class="flow">
-        <div class="st">구성</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">셋의 정의</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">Topic 구성</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">Producer</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">Consumer Group</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">Offset</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">저장 구조</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">KRaft</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">복제</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">Retention</div>
-        <div class="arw">&rarr;</div>
-        <div class="st">Broker 정지</div>
+<span class="c"># 방법 1. ops 노드에서 원격으로 명령만 전달 (기본)</span>
+ansible kafka -m ping
+ansible kafka -a <span class="s">"uptime"</span>
+
+<span class="c"># 방법 2. 노드 안에서 해야 하는 작업만 직접 접속</span>
+ssh 10.0.1.6</pre>
       </div>
       <div class="callout">
-        <b>기본 개념과 데이터 경로를 먼저 다루고 내부 구조를 뒤에 둡니다.</b><br>
-        Broker·Topic·Partition 다음에 메시지를 넣고 빼는 실습까지 다루고, 로그 저장 구조와 KRaft·복제는 그 뒤에 둡니다.
+        <b>이 세션의 명령은 모두 ops 노드에서 실행합니다.</b><br>
+        세 노드를 오가지 않아도 되고, 같은 명령을 세 노드에 한 번에 보낼 수 있습니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">12</div></div>
+  <div class="ft"><div>키는 Terraform 이 배치한 <code>~/.ssh/id_rsa</code> 입니다. 따로 입력할 것이 없습니다.</div><div class="no">12</div></div>
 </section></div>
 
 <!-- 13 · 챕터 · Kafka 구성 -->
@@ -703,7 +684,7 @@ log.dirs={{ kafka_log_dir }}</pre>
       </div>
     </div>
   </main>
-  <div class="ft"><div>세 Broker 노드의 <code>/opt/kafka/config/server.properties</code> 로 배포됩니다. 챕터 02 플레이북이 배포하므로 직접 쓰지 않습니다.</div><div class="no">16</div></div>
+  <div class="ft"><div>ansible 플레이북이 세 Broker 노드의 <code>/opt/kafka/config/server.properties</code> 로 배포합니다. 손으로 쓰지 않습니다.</div><div class="no">16</div></div>
 </section></div>
 
 <!-- 17 · 구성 · advertised.listeners 를 사설 IP 로 두는 근거 -->
@@ -3864,4 +3845,4 @@ terraform destroy -var-file=session.tfvars</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 23e3139aa4f2eee8 -->
+<!-- deck-src 5ae63e8d53915e13 -->

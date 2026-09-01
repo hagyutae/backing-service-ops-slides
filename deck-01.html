@@ -512,11 +512,11 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
   <div class="ft"><div></div><div class="no">7</div></div>
 </section></div>
 
-<!-- 8 · 구축 · plan 출력 확인 항목 -->
+<!-- 8 · 구축 · 생성되는 자원 -->
 <div class="stage"><section class="slide">
   <div class="hd"><div><span class="mod">챕터 01</span> &nbsp;인프라 구축</div><div>Redis 8.10.x</div></div>
   <main>
-    <h2 class="head">plan 출력 확인 항목</h2>
+    <h2 class="head">생성되는 자원</h2>
     <div class="headrule"></div>
     <div class="body">
       <div class="codewrap">
@@ -528,16 +528,13 @@ Changes to Outputs:
   <span class="k">+ ssh_command</span>       = (known after apply)</pre>
       </div>
       <ul class="pts">
-        <li><b>추가 자원 수</b>: 리소스 그룹과 VM 4대에 딸린 NIC·디스크·네트워크 자원, 실습용 키 쌍 포함</li>
-        <li><b>삭제 0</b>: 기존 자원을 지우지 않음</li>
+        <li><b>VM 4대</b>: <code>redis-1</code>·<code>redis-2</code>·<code>redis-3</code> 과 <code>ops-1</code></li>
+        <li><b>데이터 디스크 4개</b>: 서비스 노드와 ops 노드 모두 64 GiB</li>
+        <li><b>네트워크</b>: VNet 하나, 서브넷 하나, 네트워크 보안 그룹 하나. 공인 IP 는 <code>ops-1</code> 에만 붙음</li>
       </ul>
-      <div class="callout">
-        <b><code>plan</code> 에서 삭제 항목이 보이면 실행하지 마세요.</b><br>
-        다른 스택의 상태 파일을 가리키고 있을 수 있습니다.
-      </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">8</div></div>
+  <div class="ft"><div>사설 IP 는 고정입니다. <code>ops-1</code> 이 10.0.1.4, 서비스 노드가 10.0.1.5·10.0.1.6·10.0.1.7 입니다.</div><div class="no">8</div></div>
 </section></div>
 
 <!-- 9 · 구축 · 포털 확인 항목 -->
@@ -548,14 +545,12 @@ Changes to Outputs:
     <div class="headrule"></div>
     <div class="body">
       <table class="cmp">
-        <colgroup><col><col><col class="hi"></colgroup>
         <thead><tr><th>확인 대상</th><th>포털 메뉴</th><th class="hi">확인 내용</th></tr></thead>
         <tbody>
-          <tr><th>자원 목록</th><td>리소스 그룹</td><td>VM 4대, 디스크, NIC, NSG, VNet</td></tr>
-          <tr><th>VM과 영역</th><td>가상 머신</td><td><code>redis-1·redis-2·redis-3</code> 이 영역 1·2·3에 하나씩</td></tr>
-          <tr><th>네트워크</th><td>가상 네트워크</td><td>10.0.0.0/16 안의 서브넷 하나</td></tr>
-          <tr><th>인바운드 규칙</th><td>네트워크 보안 그룹</td><td>22·3000·9090이 현재 PC 공인 IP로 제한</td></tr>
-          <tr><th>디스크</th><td>디스크</td><td>64 GiB, 3,000 IOPS, 125 MB/s</td></tr>
+          <tr><th>자원 목록</th><td><code>리소스 그룹</code></td><td>VM 4대, 디스크, NIC, NSG, VNet</td></tr>
+          <tr><th>VM과 영역</th><td><code>가상 머신</code></td><td>서비스 노드 3대가 영역 1·2·3에 하나씩</td></tr>
+          <tr><th>디스크</th><td><code>디스크</code></td><td><b>64 GiB</b>, 3,000 IOPS, 125 MB/s</td></tr>
+          <tr><th>인바운드 규칙</th><td><code>네트워크 보안 그룹</code></td><td>22·3000·9090이 현재 PC 공인 IP로 제한</td></tr>
         </tbody>
       </table>
     </div>
@@ -615,16 +610,20 @@ Changes to Outputs:
     <div class="headrule"></div>
     <div class="body">
       <div class="codewrap">
-        <div class="cap">Git Bash</div>
-<pre>ssh -i ~/.ssh/rkm azureuser@&lt;ops 공인 IP&gt;</pre>
+<pre><span class="c"># Git Bash</span>
+ssh -i <span class="s">~/.ssh/rkm</span> azureuser@<span class="p">&lt;ops 공인 IP&gt;</span></pre>
       </div>
       <ul class="pts">
-        <li><b>대안</b>: PuTTY. 이 경우 키를 <code>.ppk</code> 로 변환</li>
-        <li><b>접속 후 위치</b>: <code>ops-1</code>. 서비스 노드는 사설 IP로만 접근</li>
+        <li><b>접속 대상은 ops 노드뿐.</b> 서비스 노드에는 공인 IP 가 없음</li>
+        <li><b>키의 출처</b>: 이 세션에서 <code>ssh-keygen</code> 으로 만든 자기 키. <code>session.tfvars</code> 의 <code>ssh_public_key_path</code> 가 그 공개키를 가리킴</li>
       </ul>
+      <div class="callout">
+        <b>PuTTY 를 쓰면 키를 <code>.ppk</code> 로 변환해야 합니다.</b><br>
+        Git Bash 의 <code>ssh</code> 는 변환 없이 그대로 씁니다.
+      </div>
     </div>
   </main>
-  <div class="ft"><div>서비스 노드에는 공인 IP가 없습니다.<br>접속은 ops 노드를 거칩니다. 방법은 다음 장에 있습니다.</div><div class="no">12</div></div>
+  <div class="ft"><div></div><div class="no">12</div></div>
 </section></div>
 
 <!-- 13 · 구축 · 서비스 노드 접근 방식 -->
@@ -635,10 +634,15 @@ Changes to Outputs:
     <div class="headrule"></div>
     <div class="body">
       <div class="codewrap">
-<pre><span class="c"># ops 노드에서 서비스 노드로 직접 접속</span>
-ssh 10.0.1.6
+<pre><span class="c"># ansible 명령은 이 자리에서 실행 (인벤토리가 여기 있음)</span>
+cd ~/ansible
 
-<span class="c"># 세 노드에 같은 명령을 보낼 때는 Ansible 을 쓴다</span></pre>
+<span class="c"># 방법 1. ops 노드에서 원격으로 명령만 전달 (기본)</span>
+ansible redis -m ping
+ansible redis -a <span class="s">"uptime"</span>
+
+<span class="c"># 방법 2. 노드 안에서 해야 하는 작업만 직접 접속</span>
+ssh 10.0.1.6</pre>
       </div>
       <div class="callout">
         <b>이 세션의 명령은 모두 ops 노드에서 실행합니다.</b><br>
@@ -646,7 +650,7 @@ ssh 10.0.1.6
       </div>
     </div>
   </main>
-  <div class="ft"><div>키는 Terraform이 배치한 <code>~/.ssh/id_rsa</code> 입니다. 따로 입력할 것이 없습니다.</div><div class="no">13</div></div>
+  <div class="ft"><div>키는 Terraform 이 배치한 <code>~/.ssh/id_rsa</code> 입니다. 따로 입력할 것이 없습니다.</div><div class="no">13</div></div>
 </section></div>
 
 <!-- 14 · 챕터 · Redis 구성 -->
@@ -3824,4 +3828,4 @@ sentinel parallel-syncs mymaster 1</pre>
 </script>
 </body>
 </html>
-<!-- deck-src b9f7e0a72d12aa8c -->
+<!-- deck-src e0cd836552abb2b3 -->

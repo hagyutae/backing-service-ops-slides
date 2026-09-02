@@ -410,7 +410,7 @@ ssh_public_key_path = "~/.ssh/rkm.pub"</pre>
       <ul class="pts">
         <li><b><code>subscription_id</code></b>: <code>az account show --query id -o tsv</code></li>
         <li><b><code>resource_group_name</code></b>: <code>rkm-&lt;계정 이름&gt;-kafka-rg</code>. 형식이 다르면 <code>apply</code> 전에 멈춤</li>
-        <li><b><code>allowed_cidrs</code></b>: <code>curl -s ifconfig.me</code> 로 확인한 자기 PC 공인 IP</li>
+        <li><b><code>allowed_cidrs</code></b>: <code>curl -s ifconfig.me</code> 로 확인한 실습 PC 공인 IP</li>
       </ul>
       <div class="warn">
         <b>구독 ID와 키는 저장소에 커밋하지 않습니다.</b><br>
@@ -3771,7 +3771,7 @@ CurrentObservers:  []</pre>
     <div class="body">
 
       <div class="codewrap">
-<pre><span class="c"># 자기 PC 의 lab/terraform/03-kafka 에서 실행. ops 노드 아님</span>
+<pre><span class="c"># 실습 PC 의 lab/terraform/03-kafka 에서 실행. ops 노드 아님</span>
 terraform destroy -var-file=session.tfvars</pre>
       </div>
       <ul class="pts">
@@ -3781,7 +3781,7 @@ terraform destroy -var-file=session.tfvars</pre>
       </ul>
       <div class="warn">
         <b><code>destroy</code> 는 리소스 그룹과 그 안의 자원을 전부 삭제합니다.</b><br>
-        되돌릴 수 없습니다. <code>describe</code> 출력과 설정값 기록 중 남길 것을 먼저 자기 PC 로 옮기세요.
+        되돌릴 수 없습니다. <code>describe</code> 출력과 설정값 기록 중 남길 것을 먼저 실습 PC 로 옮기세요.
       </div>
     </div>
   </main>
@@ -3845,4 +3845,4 @@ terraform destroy -var-file=session.tfvars</pre>
 </script>
 </body>
 </html>
-<!-- deck-src 5ae63e8d53915e13 -->
+<!-- deck-src 23f1fc479766379c -->

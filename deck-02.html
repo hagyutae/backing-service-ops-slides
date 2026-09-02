@@ -354,7 +354,7 @@ a:hover{color:var(--accent);}
         <colgroup><col style="width:30%"><col style="width:30%"><col style="width:40%"></colgroup>
         <thead><tr><th>노드</th><th class="hi">사양</th><th>역할</th></tr></thead>
         <tbody>
-          <tr><th><code>mongo-1</code><br><code>mongo-2</code><br><code>mongo-3</code></th><td>Standard_E2bds_v5<br>2 vCPU / 16 GiB<br><b>데이터 디스크 128 GiB</b></td><td>MongoDB 노드</td></tr>
+          <tr><th><code>mongo-1</code><br><code>mongo-2</code><br><code>mongo-3</code></th><td>Standard_D2ds_v5<br>2 vCPU / 8 GiB<br><b>데이터 디스크 128 GiB</b></td><td>MongoDB 노드</td></tr>
           <tr><th><code>ops-1</code></th><td>Standard_D2ds_v5<br>2 vCPU / 8 GiB<br>데이터 디스크 64 GiB</td><td>명령 실행, Prometheus·Grafana</td></tr>
         </tbody>
       </table>
@@ -377,11 +377,11 @@ a:hover{color:var(--accent);}
       <table class="cmp">
         <thead><tr><th>항목</th><th class="hi">내용</th></tr></thead>
         <tbody>
-          <tr><th><code>Standard_E2bds_v5</code><br>2 vCPU / 16 GiB</th><td>working set 과 인덱스를 캐시에 담을 수 있는 vCPU당 메모리를 기준으로 고른 가장 작은 크기</td></tr>
+          <tr><th><code>Standard_D2ds_v5</code><br>2 vCPU / 8 GiB</th><td>범용 계열의 최소 크기. 실습 데이터와 인덱스가 캐시에 통째로 들어감</td></tr>
           <tr><th>OS 와 exporter</th><td>약 1 GiB</td></tr>
-          <tr><th>WiredTiger 캐시</th><td>약 7.31 GiB. 메모리의 절반가량</td></tr>
+          <tr><th>WiredTiger 캐시</th><td>약 3.4 GiB. 메모리의 절반가량</td></tr>
           <tr><th>캐시 밖 사용</th><td>약 2 GiB. 연결마다 쓰는 버퍼, 정렬과 집계</td></tr>
-          <tr><th>파일시스템 캐시 여유</th><td>약 5.3 GiB. 압축된 채로 남아 디스크 재읽기를 줄임</td></tr>
+          <tr><th>파일시스템 캐시 여유</th><td>약 1.4 GiB. 압축된 채로 남아 디스크 재읽기를 줄임</td></tr>
         </tbody>
       </table>
       <div class="callout">
@@ -529,7 +529,7 @@ Changes to Outputs:
       </div>
     </div>
   </main>
-  <div class="ft"><div>세션 1 의 데이터 디스크는 64 GiB 였습니다. Premium SSD v2 에서는 용량과 성능을 따로 지정하므로, 따로 올리지 않는 한 용량을 키워도 IOPS 와 처리량은 그대로입니다.</div><div class="no">10</div></div>
+  <div class="ft"><div>세션 1 의 데이터 디스크는 64 GiB 였습니다. Premium SSD v2 에서는 용량과 성능을 따로 지정하므로, 따로 올리지 않는 한 용량을 키워도 IOPS 와 처리량은 그대로입니다. 디스크 설정은 125 MB/s 지만 <code>D2ds_v5</code> 의 지속 처리량 상한이 85 MB/s 라 실제 처리량은 VM 이 정합니다.</div><div class="no">10</div></div>
 </section></div>
 
 <!-- 11 · 구축 · ops 노드 접속 -->
@@ -1505,18 +1505,18 @@ MONGO_HOST=10.0.1.5 ~/loadgen/contend-mongo.sh <span class="p">8</span> <span cl
     <div class="body">
       <div class="split l">
         <div class="dgm">
-          <svg viewBox="0 0 400 200" role="img" aria-label="물리 메모리 16 GiB 의 배분">
-            <text class="lb sm l" x="6" y="18">물리 메모리 16 GiB</text>
-            <rect class="nd" x="6" y="30" width="388" height="30" rx="5"></rect>
-            <text class="lb sm" x="200" y="50">OS 와 exporter · 약 1 GiB</text>
-            <rect class="nd hi" x="6" y="64" width="388" height="46" rx="5"></rect>
-            <text class="lb" x="200" y="84">WiredTiger 캐시</text>
-            <text class="lb sm" x="200" y="102">약 7.5 GiB</text>
-            <rect class="nd" x="6" y="114" width="388" height="30" rx="5"></rect>
-            <text class="lb sm" x="200" y="134">캐시 밖 사용 · 약 2 GiB</text>
-            <rect class="nd" x="6" y="148" width="388" height="40" rx="5"></rect>
-            <text class="lb sm" x="200" y="166">파일시스템 캐시 여유 · 약 5.5 GiB</text>
-            <text class="lb sm" x="200" y="182">압축된 채로 남아 재읽기를 줄임</text>
+          <svg viewBox="0 0 400 200" role="img" aria-label="물리 메모리 8 GiB 의 배분">
+            <text class="lb sm l" x="6" y="18">물리 메모리 8 GiB</text>
+            <rect class="nd" x="6" y="30" width="388" height="26" rx="5"></rect>
+            <text class="lb sm" x="200" y="48">OS 와 exporter · 약 1 GiB</text>
+            <rect class="nd hi" x="6" y="60" width="388" height="56" rx="5"></rect>
+            <text class="lb" x="200" y="82">WiredTiger 캐시</text>
+            <text class="lb sm" x="200" y="100">약 3.4 GiB</text>
+            <rect class="nd" x="6" y="120" width="388" height="36" rx="5"></rect>
+            <text class="lb sm" x="200" y="143">캐시 밖 사용 · 약 2 GiB</text>
+            <rect class="nd" x="6" y="160" width="388" height="32" rx="5"></rect>
+            <text class="lb sm" x="200" y="176">파일시스템 캐시 여유 · 약 1.4 GiB</text>
+            <text class="lb sm" x="200" y="189">압축된 채로 남아 재읽기를 줄임</text>
           </svg>
         </div>
         <div class="col">
@@ -1855,11 +1855,11 @@ MONGO_HOST=10.0.1.5 ~/loadgen/contend-mongo.sh <span class="p">8</span> <span cl
       </ul>
       <div class="callout">
         <b>지금 값이 이 환경의 기준선입니다.</b><br>
-        캐시 7.31 GiB 에 데이터가 41.7 MiB 라 두 비율 모두 임계값과 거리가 멉니다. 이 여유가 얼마나 줄었는지가 나중에 판단 재료가 됩니다.
+        캐시 상한에 견줘 데이터가 41.7 MiB 라 두 비율 모두 임계값과 거리가 멉니다. 이 여유가 얼마나 줄었는지가 나중에 판단 재료가 됩니다.
       </div>
     </div>
   </main>
-  <div class="ft"><div>16 GiB 노드가 보고하는 물리 메모리는 15.61 GiB 라 상한이 <code>(15.61 − 1) × 0.5 = 7.31 GiB</code> 입니다. 재기동 직후 값은 기동하면서 읽어 올린 카탈로그와 인덱스 메타데이터이고 회차마다 다르므로, 절대값이 아니라 증가분을 봅니다.</div><div class="no">53</div></div>
+  <div class="ft"><div><b>이 출력은 16 GiB 인스턴스에서 잰 것이라 상한이 지금의 두 배입니다.</b> 8 GiB 노드에서는 상한이 약 3.4 GiB 로 잡히고 두 비율은 그만큼 올라갑니다. 재기동 직후 값은 기동하면서 읽어 올린 카탈로그와 인덱스 메타데이터이고 회차마다 다르므로, 절대값이 아니라 증가분을 봅니다.</div><div class="no">53</div></div>
 </section></div>
 
 <!-- 54 · 챕터 · Replica Set과 선출 -->
@@ -4142,7 +4142,7 @@ mongosh <span class="s">"mongodb://&lt;PRIMARY&gt;:27017/lab"</span> -u admin -p
             <li><b><code>mongos</code></b>: 요청을 어느 Shard 로 보낼지 정함. 상태를 갖지 않음</li>
             <li><b>config server</b>: 어느 Chunk 가 어느 Shard 에 있는지를 담음</li>
             <li><b><code>clusterRole</code></b>: Shard 는 <code>shardsvr</code>, config server 는 <code>configsvr</code> 로 기동. 기존 Replica Set 을 편입할 때도 다시 세움</li>
-            <li><b>추가 여섯 대</b>: <code>Standard_D2ds_v5</code>. 기본 캐시 3.5 GiB 로 충분한 규모</li>
+            <li><b>Shard 두 벌과 config server</b>: 모두 <code>Standard_D2ds_v5</code>. 기본 캐시 약 3.4 GiB 로 같음</li>
           </ul>
         </div>
       </div>
@@ -4152,7 +4152,7 @@ mongosh <span class="s">"mongodb://&lt;PRIMARY&gt;:27017/lab"</span> -u admin -p
       </div>
     </div>
   </main>
-  <div class="ft"><div>운영에서는 Shard 를 같은 크기로 맞춥니다. 캐시가 다르면 같은 양의 Chunk 를 받아도 응답이 갈립니다.</div><div class="no">139</div></div>
+  <div class="ft"><div>이 구성은 Shard 두 벌의 크기가 같습니다. 운영에서도 크기를 맞춥니다. 캐시가 다르면 같은 양의 Chunk 를 받아도 응답이 갈립니다. <code>mongos</code> 는 WiredTiger 캐시를 갖지 않습니다.</div><div class="no">139</div></div>
 </section></div>
 
 <!-- 140 · 개념 · 분할 방식 -->
@@ -4576,4 +4576,4 @@ db.orders.find({ status: <span class="s">"refunded"</span>, amount: { : <span cl
 </script>
 </body>
 </html>
-<!-- deck-src 0a470f300a257d93 -->
+<!-- deck-src b90c8a2d367d3044 -->

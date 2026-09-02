@@ -389,7 +389,7 @@ a:hover{color:var(--accent);}
           <table class="cmp">
             <thead><tr><th>항목</th><th>내용</th></tr></thead>
             <tbody>
-              <tr><th style="padding-top:9px;padding-bottom:9px"><code>redis-1</code><br><code>redis-2</code><br><code>redis-3</code></th><td style="padding-top:9px;padding-bottom:9px">Standard_E2bds_v5 (2 vCPU / 16 GiB)<br>Redis와 Sentinel</td></tr>
+              <tr><th style="padding-top:9px;padding-bottom:9px"><code>redis-1</code><br><code>redis-2</code><br><code>redis-3</code></th><td style="padding-top:9px;padding-bottom:9px">Standard_D2ds_v5 (2 vCPU / 8 GiB)<br>Redis와 Sentinel</td></tr>
               <tr><th><code>ops-1</code></th><td>Standard_D2ds_v5 (2 vCPU / 8 GiB)<br>Ansible 실행, 외부 접속 지점</td></tr>
               <tr><th>데이터 디스크</th><td>64 GiB · 3,000 IOPS · 125 MB/s<br>Premium SSD v2</td></tr>
               <tr><th>OS</th><td>전 노드 Ubuntu 24.04 LTS</td></tr>
@@ -417,9 +417,9 @@ a:hover{color:var(--accent);}
         <colgroup><col><col><col class="hi"></colgroup>
         <thead><tr><th>항목</th><th>값</th><th class="hi">근거</th></tr></thead>
         <tbody>
-          <tr><th>인스턴스</th><td>Standard_E2bds_v5 (2 vCPU / 16 GiB)</td><td>메모리 최적화 계열</td></tr>
+          <tr><th>인스턴스</th><td>Standard_D2ds_v5 (2 vCPU / 8 GiB)</td><td>범용 계열의 최소 크기. 실습 데이터와 fork 여유가 들어감</td></tr>
           <tr><th>vCPU</th><td>2</td><td>명령 실행이 단일 스레드이므로 코어를 늘려도 비례하지 않음</td></tr>
-          <tr><th>메모리</th><td>16 GiB</td><td>데이터 용량이 곧 인스턴스 크기</td></tr>
+          <tr><th>메모리</th><td>8 GiB</td><td>데이터 용량이 곧 인스턴스 크기</td></tr>
           <tr><th>계열 제외</th><td>Burstable(B 시리즈)</td><td>크레딧 소진 시 성능이 강등됨</td></tr>
         </tbody>
       </table>
@@ -577,7 +577,7 @@ Changes to Outputs:
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">10</div></div>
+  <div class="ft"><div>캡처는 16 GiB 인스턴스로 만든 스택에서 찍은 것이라 <code>크기</code> 열의 값이 지금과 다릅니다.</div><div class="no">10</div></div>
 </section></div>
 
 <!-- 11 · 구축 · 네트워크와 디스크 확인 -->
@@ -599,7 +599,7 @@ Changes to Outputs:
       </div>
     </div>
   </main>
-  <div class="ft"><div>공인 IP가 바뀌면 접속이 끊깁니다. <code>session.tfvars</code> 의 <code>allowed_cidrs</code> 를 고친 뒤 <code>apply</code> 를 다시 실행합니다.</div><div class="no">11</div></div>
+  <div class="ft"><div>공인 IP가 바뀌면 접속이 끊깁니다. <code>session.tfvars</code> 의 <code>allowed_cidrs</code> 를 고친 뒤 <code>apply</code> 를 다시 실행합니다. 디스크 설정은 125 MB/s 지만 <code>D2ds_v5</code> 의 지속 처리량 상한이 85 MB/s 라 실제 처리량은 VM 이 정합니다.</div><div class="no">11</div></div>
 </section></div>
 
 <!-- 12 · 구축 · ops 노드 접속 -->
@@ -2426,7 +2426,7 @@ aof_last_write_status:ok</pre>
       </table>
     </div>
   </main>
-  <div class="ft"><div><code>always</code> 의 비용은 한 번에 보내는 명령 수가 늘수록 줄어듭니다. 명령 하나마다 fsync 하는 것이 아니라 이벤트 루프 한 번마다 하기 때문입니다. 검증 환경에서 잰 값이므로 디스크에 따라 달라집니다.</div><div class="no">65</div></div>
+  <div class="ft"><div><code>always</code> 의 비용은 한 번에 보내는 명령 수가 늘수록 줄어듭니다. 명령 하나마다 fsync 하는 것이 아니라 이벤트 루프 한 번마다 하기 때문입니다. 16 GiB 인스턴스에서 잰 값이므로 디스크와 노드 크기에 따라 달라집니다.</div><div class="no">65</div></div>
 </section></div>
 
 <!-- 66 · 챕터 · Eviction 정책 -->
@@ -2471,15 +2471,15 @@ aof_last_write_status:ok</pre>
         <colgroup><col style="width:62%"><col class="hi" style="width:38%"></colgroup>
         <thead><tr><th>항목</th><th class="hi">배분</th></tr></thead>
         <tbody>
-          <tr><th>물리 메모리</th><td>16 GiB</td></tr>
+          <tr><th>물리 메모리</th><td>8 GiB</td></tr>
           <tr><th>OS + exporter + Sentinel</th><td>1 GiB</td></tr>
-          <tr><th>Redis <code>maxmemory</code></th><td>8 GiB</td></tr>
-          <tr><th>fork 여유</th><td>약 7 GiB</td></tr>
+          <tr><th>Redis <code>maxmemory</code></th><td>4 GiB</td></tr>
+          <tr><th>fork 여유</th><td>약 3 GiB</td></tr>
         </tbody>
       </table>
       <div class="callout">
-        <b>8 GiB는 물리 메모리의 절반입니다.</b><br>
-        나머지 8 GiB 중 1 GiB는 OS와 exporter, Sentinel이 쓰고 약 7 GiB가 fork 여유로 남습니다. 쓰기가 몰리면 Copy-on-Write로 메모리 사용이 최대 2배까지 늘어납니다.
+        <b>4 GiB는 물리 메모리의 절반입니다.</b><br>
+        나머지 4 GiB 중 1 GiB는 OS와 exporter, Sentinel이 쓰고 약 3 GiB가 fork 여유로 남습니다. 스냅샷이 도는 동안 데이터 전체에 쓰기가 닿는 최악의 경우에만 사용이 2배가 됩니다.
       </div>
     </div>
   </main>
@@ -2796,11 +2796,11 @@ aof_last_write_status:ok</pre>
         <li><code>redis-cli -h 10.0.1.5 CONFIG SET maxmemory-policy allkeys-lru</code> 로 되돌림</li>
         <li><code>REDIS_HOST=10.0.1.5 ~/loadgen/fill.sh 400</code> 으로 다시 적재. 앞서 채운 300보다 커야 새 키가 생김</li>
         <li><code>redis-cli -h 10.0.1.5 INFO stats</code> 의 <code>evicted_keys</code> 와 <code>INFO memory</code> 의 <code>used_memory</code>·<code>mem_fragmentation_ratio</code> 확인</li>
-        <li><code>redis-cli -h 10.0.1.5 CONFIG SET maxmemory 8gb</code> 로 한도를 되돌림</li>
+        <li><code>redis-cli -h 10.0.1.5 CONFIG SET maxmemory 4gb</code> 로 한도를 되돌림</li>
       </ol>
       <div class="callout">
         <b>256 MB는 실습 시간을 줄이려고 낮춘 값입니다.</b><br>
-        이 노드의 실제 설정은 8 GiB이고 마지막 단계에서 되돌립니다. <code>noeviction</code> 에서 <code>OOM</code> 오류가 나고 <code>allkeys-lru</code> 로 바꾼 뒤 <code>evicted_keys</code> 가 증가하면 완료입니다.
+        이 노드의 실제 설정은 4 GiB이고 마지막 단계에서 되돌립니다. <code>noeviction</code> 에서 <code>OOM</code> 오류가 나고 <code>allkeys-lru</code> 로 바꾼 뒤 <code>evicted_keys</code> 가 증가하면 완료입니다.
       </div>
     </div>
   </main>
@@ -2856,7 +2856,7 @@ OK
       </div>
     </div>
   </main>
-  <div class="ft"><div></div><div class="no">80</div></div>
+  <div class="ft"><div>처리량은 16 GiB 인스턴스에서 잰 값입니다. <code>evicted_keys</code> 와 <code>used_memory</code> 는 한도 256 MB 에서 나온 값이라 노드 크기와 무관합니다.</div><div class="no">80</div></div>
 </section></div>
 
 <!-- 81 · 챕터 · 복제 -->
@@ -3828,4 +3828,4 @@ sentinel parallel-syncs mymaster 1</pre>
 </script>
 </body>
 </html>
-<!-- deck-src e0cd836552abb2b3 -->
+<!-- deck-src d41110bbe8dfe722 -->

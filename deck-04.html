@@ -1037,7 +1037,7 @@ slave0:ip=10.0.1.7,port=6379,
 
 <span class="c"># 빠진 replica 에서</span>
 Could not connect to Redis at
-10.0.1.6:6379: Connection refused
+10.0.1.9:6379: Connection refused
 
 <span class="c"># 남아 있는 replica 에서</span>
 master_link_status:up
@@ -1109,6 +1109,7 @@ master_sync_in_progress:0</pre>
             <li><code>Alerts</code> 화면에서 <b>Redis 메모리 규칙</b>이 <code>Firing</code> 이 되는 것 확인</li>
             <li><b>VM 메모리 그래프에 변화가 없는 것</b>도 확인</li>
             <li><code>./rb-r02.sh 2</code> 실행. 정책을 <code>noeviction</code> 으로 바꾸고 <b>상한을 지금 사용량 아래로 내려 쓰기 거부를 유발</b></li>
+            <li><code>redis-cli -h &lt;노드 사설 IP&gt; set probe:oom 1</code> 로 쓰기 거부 확인</li>
           </ol>
         </div>
         <div class="col">
@@ -1271,12 +1272,12 @@ master_sync_in_progress:0</pre>
         <tbody>
           <tr><th>cache used 비율</th><td><code>wiredTiger.cache</code> · <code>mongodb_ss_wt_cache_</code> 계열</td><td>캐시 사용률</td><td>80%가 압박 신호</td></tr>
           <tr><th>dirty 비율</th><td>같은 곳</td><td>아직 디스크에 안 내려간 비율</td><td>20%가 압박 신호</td></tr>
-          <tr><th><b>애플리케이션 스레드가 수행한 eviction</b></th><td>같은 곳</td><td>애플리케이션 스레드가 대신 수행</td><td><b>0이 아니면 이미 심각</b></td></tr>
+          <tr><th><b>요청 스레드가 수행한 eviction</b></th><td>같은 곳</td><td>요청 스레드가 대신 수행</td><td><b>0이 아니면 이미 심각</b></td></tr>
           <tr><th>캐시로 읽어 들인 바이트 증가율</th><td>같은 곳</td><td>디스크에서 캐시로 올라온 양</td><td>크면 working set 이 캐시를 넘은 것</td></tr>
         </tbody>
       </table>
       <div class="callout">
-        <b>애플리케이션 스레드 eviction 이 가장 확실한 신호입니다.</b><br>
+        <b>요청 스레드 eviction 이 가장 확실한 신호입니다.</b><br>
         평소에는 전용 스레드가 eviction 을 처리합니다. 전용 스레드가 따라가지 못해 <b>질의를 처리하던 스레드가 대신하기 시작하면</b> 그 질의는 그만큼 늦어집니다. 사용자가 체감하는 순간입니다.
       </div>
     </div>
@@ -1418,7 +1419,7 @@ master_sync_in_progress:0</pre>
       </div>
       <div class="callout">
         <b>지연이 oplog 윈도우의 몇 퍼센트인지가 복구 수단을 가릅니다.</b><br>
-        재현 중 실측으로 지연 6초에 윈도우 442초였습니다. 1.4% 이므로 따라잡기가 가능한 구간이고, 윈도우를 넘기면 초기 동기화 말고는 수단이 없습니다.
+        재현 중 실측으로 지연 93초에 윈도우 184초였습니다. 50.5% 로 이미 위험한 구간이고, 이 사례처럼 절반을 넘기면 초기 동기화 말고는 수단이 없습니다.
       </div>
     </div>
   </main>
@@ -1562,8 +1563,8 @@ master_sync_in_progress:0</pre>
             <li><code>kafka-topics.sh --bootstrap-server &lt;Broker 사설 IP&gt;:9092 --create --topic lab.events --partitions 3 --replication-factor 3 --config min.insync.replicas=2</code></li>
             <li><code>--describe --topic lab.events</code> 로 <b>Partition 3개와 ISR 3개</b> 확인</li>
             <li><code>kafka-console-producer.sh</code> 로 메시지 몇 건 입력 후 종료</li>
-            <li><code>kafka-console-consumer.sh --group lab-cg --from-beginning</code> 실행 후 종료</li>
-            <li><code>kafka-consumer-groups.sh --describe --group lab-cg</code> 로 <b><code>LAG</code> 열의 평상시 값</b> 확인</li>
+            <li><code>kafka-console-consumer.sh --group ops-cg --from-beginning</code> 실행 후 종료</li>
+            <li><code>kafka-consumer-groups.sh --describe --group ops-cg</code> 로 <b><code>LAG</code> 열의 평상시 값</b> 확인</li>
           </ol>
         </div>
         <div class="col">
@@ -1759,14 +1760,15 @@ master_sync_in_progress:0</pre>
     <div class="headrule"></div>
     <div class="body">
       <div class="codewrap">
-<pre>GROUP   TOPIC       PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG
-lab-cg  lab.events  1          230299          242009          11710
-lab-cg  lab.events  0          -               233869          -
-lab-cg  lab.events  2          -               235875          -</pre>
+        <div class="cap"><code>Consumer group 'ops-cg' has no active members.</code> 가 먼저 뜬 뒤</div>
+<pre>GROUP   TOPIC       PARTITION  CURRENT  LOG-END  LAG
+ops-cg  lab.events  1          230299   242009   11710
+ops-cg  lab.events  0          -        233869   -
+ops-cg  lab.events  2          -        235875   -</pre>
       </div>
       <ul class="pts">
+        <li><b><code>CURRENT-OFFSET</code> 이 있어도 활성 멤버가 없을 수 있음</b>: Consumer 가 전부 그룹에서 빠진 상태</li>
         <li><b><code>CURRENT-OFFSET</code> 이 <code>-</code> 인 Partition</b>: 맡은 Consumer 가 커밋하기 전에 재할당됨</li>
-        <li><b>세 Partition 의 <code>LOG-END-OFFSET</code> 이 비슷함</b>: 유입은 고르게 들어옴. 편중 배제</li>
       </ul>
       <div class="callout">
         <b>「<code>-</code>」 표시를 Lag 숫자보다 먼저 봅니다.</b><br>
@@ -1889,7 +1891,7 @@ lab-cg  lab.events  2          -               235875          -</pre>
           <tr><th>부족 시 증상</th><td>eviction 또는 쓰기 거부</td><td>디스크 IO 로 강등</td><td>page cache 축출</td></tr>
           <tr><th>성능 저하 양상</th><td><b>계단식</b></td><td><b>계단식</b></td><td>점진적</td></tr>
           <tr><th>먼저 보는 지표</th><td>메모리 사용률, <code>evicted_keys</code></td><td>cache used·dirty 비율</td><td>힙 사용률, 디스크 읽기량</td></tr>
-          <tr><th>확정하는 지표</th><td>히트율 하락</td><td>애플리케이션 스레드 eviction</td><td>page cache 대비 디스크 읽기</td></tr>
+          <tr><th>확정하는 지표</th><td>히트율 하락</td><td>요청 스레드 eviction</td><td>page cache 대비 디스크 읽기</td></tr>
           <tr><th>흔한 오설정</th><td><code>maxmemory</code> 미설정</td><td>캐시를 넘는 working set</td><td>힙을 크게 잡음</td></tr>
           <tr><th>대응</th><td>정책 조정, 증설</td><td>인덱스 정리, 증설</td><td>힙을 줄임</td></tr>
           <tr><th><b>잘못된 대응</b></th><td><code>maxmemory</code> 를 물리까지 올림</td><td>캐시를 물리까지 올림</td><td>힙을 늘림</td></tr>
@@ -1936,13 +1938,12 @@ lab-cg  lab.events  2          -               235875          -</pre>
     <div class="headrule"></div>
     <div class="body">
       <ol class="steps">
-        <li>ops 노드에 남긴 기록을 실습 PC 로 내려받음. <code>scp -i ~/.ssh/rkm azureuser@&lt;ops 공인 IP&gt;:~/*.txt .</code></li>
         <li>실습 PC 의 <code>lab/terraform/04-operation</code> 에서 <code>terraform destroy -var-file=session.tfvars</code></li>
         <li>포털에서 리소스 그룹이 사라진 것 확인</li>
       </ol>
       <div class="warn">
         <b><code>destroy</code> 는 VM 열 대와 디스크·네트워크를 전부 삭제합니다. 되돌릴 수 없습니다.</b><br>
-        실습 중에 적어 둔 값과 명령 출력은 ops 노드 안에만 있습니다. 1단계를 건너뛰면 함께 사라집니다.
+        destroy 전에 남길 값은 미리 실습 PC 로 옮겨 둡니다.
       </div>
     </div>
   </main>
@@ -2010,4 +2011,4 @@ lab-cg  lab.events  2          -               235875          -</pre>
 </script>
 </body>
 </html>
-<!-- deck-src eb6e78b746e253b9 -->
+<!-- deck-src 36661e08fd4aa6c4 -->
